@@ -13,6 +13,7 @@ import { FaPhoneSquareAlt, FaRegEyeSlash } from "react-icons/fa";
 import { HiOutlineEye } from "react-icons/hi";
 import toast, { Toaster } from "react-hot-toast";
 import { TextInput } from "flowbite-react";
+import { useRouter } from 'next/navigation'
 
 interface FormData {
   first_name: string;
@@ -25,6 +26,7 @@ interface FormData {
 }
 
 export default function RegisterAccount() {
+  const router = useRouter()
   const [loading, setLoading] = useState(false);
   const [submitEnabled, setSubmitEnabled] = useState(true);
   const [passwordError, setPasswordError] = useState(false);
@@ -114,7 +116,8 @@ export default function RegisterAccount() {
       <div
         className="flex items-center justify-center h-screen w-screen"
         style={{
-          //   backgroundImage: `url(${backgroundImage})`,
+          backgroundImage: `url(https://images.unsplash.com/photo-1613731587985-ea81ea4b3bdc?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)`,
+        //   backgroundImage: `url(${backgroundImage})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -137,9 +140,9 @@ export default function RegisterAccount() {
                 required
             
                 // fullWidth
-                InputProps={{
-                  startAdornment: <HiMail style={{ marginRight: 8 }} />,
-                }}
+                // InputProps={{
+                //   startAdornment: <HiMail style={{ marginRight: 8 }} />,
+                // }}
               />
             </div>
 
@@ -185,9 +188,9 @@ export default function RegisterAccount() {
                 required
             
                 // fullWidth
-                InputProps={{
-                  startAdornment: <span>@</span>,
-                }}
+                // InputProps={{
+                //   startAdornment: <span>@</span>,
+                // }}
               />
             </div>
 
@@ -204,11 +207,11 @@ export default function RegisterAccount() {
                 required
         
                 // fullWidth
-                InputProps={{
-                  startAdornment: (
-                    <FaPhoneSquareAlt style={{ marginRight: 8 }} />
-                  ),
-                }}
+                // InputProps={{
+                //   startAdornment: (
+                //     <FaPhoneSquareAlt style={{ marginRight: 8 }} />
+                //   ),
+                // }}
               />
             </div>
 
@@ -224,16 +227,16 @@ export default function RegisterAccount() {
                 required
             
                 // fullWidth
-                InputProps={{
-                  endAdornment: (
-                    <button
-                      className="absolute right-2 top-2"
-                      onClick={togglePasswordVisibility}
-                    >
-                      {showPassword ? <FaRegEyeSlash /> : <HiOutlineEye />}
-                    </button>
-                  ),
-                }}
+                // InputProps={{
+                //   endAdornment: (
+                //     <button
+                //       className="absolute right-2 top-2"
+                //       onClick={togglePasswordVisibility}
+                //     >
+                //       {showPassword ? <FaRegEyeSlash /> : <HiOutlineEye />}
+                //     </button>
+                //   ),
+                // }}
               />
             </div>
 
@@ -249,16 +252,16 @@ export default function RegisterAccount() {
                 required
     
                 // fullWidth
-                InputProps={{
-                  endAdornment: (
-                    <button
-                      className="absolute right-2 top-2"
-                      onClick={togglePasswordVisibility1}
-                    >
-                      {showPassword1 ? <FaRegEyeSlash /> : <HiOutlineEye />}
-                    </button>
-                  ),
-                }}
+                // InputProps={{
+                //   endAdornment: (
+                //     <button
+                //       className="absolute right-2 top-2"
+                //       onClick={togglePasswordVisibility1}
+                //     >
+                //       {showPassword1 ? <FaRegEyeSlash /> : <HiOutlineEye />}
+                //     </button>
+                //   ),
+                // }}
               />
             </div>
 

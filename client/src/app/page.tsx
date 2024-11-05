@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Button } from "@material-tailwind/react";
-
+import { useRouter } from 'next/navigation'
 export default function Home() {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [isRegistering, setIsRegistering] = useState(false);
@@ -15,7 +15,10 @@ export default function Home() {
   const handleRegister = () => {
     setIsRegistering(true);
     setTimeout(() => setIsRegistering(false), 2000);
+    router.push('/register')
   };
+
+  const router = useRouter()
 
   return (
     <div
