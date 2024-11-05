@@ -130,7 +130,7 @@ export default function RegisterAccount() {
                 id="email"
                 label="อีเมล"
                 type="email"
-                placeholder="name@highlearnhub.com"
+                placeholder="j2@team-survey.com"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
