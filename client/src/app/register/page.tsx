@@ -1,20 +1,19 @@
 "use client";
 
 import React, { useState, FormEvent, ChangeEvent } from "react";
-import { useNavigate } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
 import { HiMail } from "react-icons/hi";
 import { RiLockPasswordFill } from "react-icons/ri";
-// import backgroundImage from "../assets/background.png";
+// import backgroundImage from "../assets/images";
 import conf from "../conf/main";
 import ax from "../conf/ax";
 import { ContextProvider } from "../contexts/Auth.context";
 import { FaPhoneSquareAlt, FaRegEyeSlash } from "react-icons/fa";
-import { HiOutlineEye } from "react-icons/hi";
+// import { HiOutlineEye } from "react-icons/hi";
 import toast, { Toaster } from "react-hot-toast";
 import { TextInput, Label } from "flowbite-react";
 import { useRouter } from "next/navigation";
-import { AiOutlineUser } from "react-icons/ai";
+// import { AiOutlineUser } from "react-icons/ai";
 import { FaUser } from "react-icons/fa";
 
 interface FormData {
@@ -118,7 +117,7 @@ export default function RegisterAccount() {
       <div
         className="flex items-center justify-center h-screen w-screen"
         style={{
-          backgroundImage: `url(https://images.unsplash.com/photo-1495195129352-aeb325a55b65?q=80&w=2952&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)`,
+          backgroundImage: `url(https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExYXd5Ynltczllenpub28wbGc3OWU5dWh0bHhuYTkzNW1ibXFocGxwNiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/BHNfhgU63qrks/giphy.gif)`,
           //   backgroundImage: `url(${backgroundImage})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
@@ -135,7 +134,7 @@ export default function RegisterAccount() {
               <TextInput
                 id="email"
                 type="email"
-                placeholder="j2@team-survey.com"
+                placeholder="name@teamsurvey.com"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
