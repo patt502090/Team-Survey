@@ -12,8 +12,10 @@ import { ContextProvider } from "../contexts/Auth.context";
 import { FaPhoneSquareAlt, FaRegEyeSlash } from "react-icons/fa";
 import { HiOutlineEye } from "react-icons/hi";
 import toast, { Toaster } from "react-hot-toast";
-import { TextInput } from "flowbite-react";
-import { useRouter } from 'next/navigation'
+import { TextInput, Label } from "flowbite-react";
+import { useRouter } from "next/navigation";
+import { AiOutlineUser } from "react-icons/ai";
+import { FaUser } from "react-icons/fa";
 
 interface FormData {
   first_name: string;
@@ -26,7 +28,7 @@ interface FormData {
 }
 
 export default function RegisterAccount() {
-  const router = useRouter()
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [submitEnabled, setSubmitEnabled] = useState(true);
   const [passwordError, setPasswordError] = useState(false);
@@ -65,9 +67,9 @@ export default function RegisterAccount() {
     setShowPassword1(!showPassword1);
   };
 
-  //   const handleLogin = () => {
-  //     navigate("/login");
-  //   };
+  const handleLogin = () => {
+    router.push("/login");
+  };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -116,8 +118,8 @@ export default function RegisterAccount() {
       <div
         className="flex items-center justify-center h-screen w-screen"
         style={{
-          backgroundImage: `url(https://images.unsplash.com/photo-1613731587985-ea81ea4b3bdc?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)`,
-        //   backgroundImage: `url(${backgroundImage})`,
+          backgroundImage: `url(https://images.unsplash.com/photo-1495195129352-aeb325a55b65?q=80&w=2952&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)`,
+          //   backgroundImage: `url(${backgroundImage})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -129,16 +131,16 @@ export default function RegisterAccount() {
           <p className="text-sm mb-5 text-center">กรุณากรอกข้อมูลให้ครบถ้วน</p>
           <form onSubmit={handleSubmit} className="flex flex-wrap gap-2">
             <div className="w-full">
+              <Label htmlFor="email" value="อีเมล" className="text-sm" />
               <TextInput
                 id="email"
-                label="อีเมล"
                 type="email"
                 placeholder="j2@team-survey.com"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
                 required
-            
+                icon={HiMail}
                 // fullWidth
                 // InputProps={{
                 //   startAdornment: <HiMail style={{ marginRight: 8 }} />,
@@ -146,47 +148,45 @@ export default function RegisterAccount() {
               />
             </div>
 
-            <div className="flex-1 md:flex-2">
+            <div className="flex-1 md:flex-2 mt-1">
+              <Label htmlFor="firstName" value="ชื่อจริง" />
               <TextInput
                 id="first_name"
-                label="ชื่อจริง"
                 type="text"
                 placeholder="John"
                 name="first_name"
                 value={formData.first_name}
                 onChange={handleChange}
                 required
-            
                 // fullWidth
               />
             </div>
 
-            <div className="flex-1 md:flex-2">
+            <div className="flex-1 md:flex-2 mt-1">
+              <Label htmlFor="lastName" value="นามสกุล" />
               <TextInput
                 id="last_name"
-                label="นามสกุล"
                 type="text"
                 placeholder="Doe"
                 name="last_name"
                 value={formData.last_name}
                 onChange={handleChange}
                 required
-         
                 // fullWidth
               />
             </div>
 
-            <div className="flex-2 w-full">
+            <div className="flex-2 w-full mt-1">
+              <Label htmlFor="username" value="ชื่อผู้ใช้" />
               <TextInput
                 id="username"
-                label="ชื่อผู้ใช้"
                 type="text"
                 placeholder="johndoe"
                 name="username"
                 value={formData.username}
                 onChange={handleChange}
                 required
-            
+                icon={FaUser}
                 // fullWidth
                 // InputProps={{
                 //   startAdornment: <span>@</span>,
@@ -194,10 +194,10 @@ export default function RegisterAccount() {
               />
             </div>
 
-            <div className="w-full">
+            <div className="w-full mt-1">
+              <Label htmlFor="phone_num" value="เบอร์โทรศัพท์" />
               <TextInput
                 id="phonenum"
-                label="เบอร์โทรศัพท์"
                 type="text"
                 placeholder="191"
                 name="phonenum"
@@ -205,7 +205,6 @@ export default function RegisterAccount() {
                 icon={FaPhoneSquareAlt}
                 onChange={handleChange}
                 required
-        
                 // fullWidth
                 // InputProps={{
                 //   startAdornment: (
@@ -215,17 +214,17 @@ export default function RegisterAccount() {
               />
             </div>
 
-            <div className="w-full relative">
+            <div className="w-full relative mt-1">
+              <Label htmlFor="first_password" value="รหัสผ่าน" />
               <TextInput
                 id="password"
-                label="รหัสผ่าน"
                 type={showPassword ? "text" : "password"}
                 placeholder="123456"
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
                 required
-            
+                icon={RiLockPasswordFill}
                 // fullWidth
                 // InputProps={{
                 //   endAdornment: (
@@ -240,17 +239,17 @@ export default function RegisterAccount() {
               />
             </div>
 
-            <div className="w-full relative">
+            <div className="w-full relative mt-1">
+              <Label htmlFor="sec_password" value="ยืนยันรหัสผ่าน" />
               <TextInput
                 id="confirmPassword"
-                label="ยืนยันรหัสผ่าน"
                 type={showPassword1 ? "text" : "password"}
                 placeholder="123456"
                 name="confirmPassword"
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 required
-    
+                icon={RiLockPasswordFill}
                 // fullWidth
                 // InputProps={{
                 //   endAdornment: (
@@ -284,8 +283,7 @@ export default function RegisterAccount() {
 
           <p className="text-sm text-center cursor-pointer font-medium mb-4">
             หากคุณมีบัญชีผู้ใช้งานแล้ว{" "}
-            <span className="text-blue-700 underline">
-              {/* onClick={handleLogin} */}
+            <span className="text-blue-700 underline" onClick={handleLogin}>
               เข้าสู่ระบบ
             </span>
           </p>

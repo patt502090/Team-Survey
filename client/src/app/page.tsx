@@ -7,6 +7,7 @@ export default function Home() {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [isRegistering, setIsRegistering] = useState(false);
 
+
   const handleLogin = () => {
     setIsLoggingIn(true);
     setTimeout(() => setIsLoggingIn(false), 2000);
