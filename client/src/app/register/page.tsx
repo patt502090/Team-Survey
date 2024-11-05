@@ -117,7 +117,7 @@ export default function RegisterAccount() {
       <div
         className="flex items-center justify-center h-screen w-screen"
         style={{
-          backgroundImage: `url(https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExYXd5Ynltczllenpub28wbGc3OWU5dWh0bHhuYTkzNW1ibXFocGxwNiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/BHNfhgU63qrks/giphy.gif)`,
+          backgroundImage: `url(https://plus.unsplash.com/premium_photo-1664443577580-dd2674e9d359?q=80&w=2942&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)`,
           //   backgroundImage: `url(${backgroundImage})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
@@ -272,8 +272,8 @@ export default function RegisterAccount() {
             <Button
               type="submit"
               className="flex-1 mt-4 mb-6 px-6 mx-auto"
-              variant="contained"
-              color="primary"
+              // variant="contained"
+              color="purple"
               disabled={!submitEnabled || loading}
             >
               สมัครบัญชีผู้ใช้
@@ -282,7 +282,7 @@ export default function RegisterAccount() {
 
           <p className="text-sm text-center cursor-pointer font-medium mb-4">
             หากคุณมีบัญชีผู้ใช้งานแล้ว{" "}
-            <span className="text-blue-700 underline" onClick={handleLogin}>
+            <span className="text-purple-700 underline" onClick={handleLogin}>
               เข้าสู่ระบบ
             </span>
           </p>

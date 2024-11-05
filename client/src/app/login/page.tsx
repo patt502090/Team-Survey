@@ -81,21 +81,21 @@ export default function LoginPage() {
   //   };
 
   const handleRegister = () => {
-    // navigate("/register");
+    router.push("/register");
   };
 
   return (
     <ContextProvider>
       <Toaster position="top-right" reverseOrder={false} />
       <div
-        className="flex items-center justify-center h-screen w-screen"
+        className="flex items-center justify-center h-screen w-screen "
         style={{
-            backgroundImage: `url(https://images.unsplash.com/photo-1614285653636-af3191aa94bd?q=80&w=2950&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)`,
+            backgroundImage: `url(https://plus.unsplash.com/premium_photo-1664443577580-dd2674e9d359?q=80&w=2942&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       >
-        <div className="container max-w-xs md:max-w-md bg-white border-2 rounded-lg shadow-2xl p-6 ">
+        <div className="container max-w-xs md:max-w-md bg-white border-2 rounded-lg shadow-2xl p-6  ">
           <p className="text-lg font-bold mb-4 mt-3 text-center">
             ลงชื่อเข้าใช้
           </p>
