@@ -43,10 +43,7 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
               viewBox="0 0 10 10"
               fill="none"
             >
-              <path
-                d="M5 0L10 5H7V10H3V5H0L5 0Z"
-                fill="currentColor"
-              />
+              <path d="M5 0L10 5H7V10H3V5H0L5 0Z" fill="currentColor" />
             </svg>
           )}
 
@@ -57,10 +54,7 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
               viewBox="0 0 10 10"
               fill="none"
             >
-              <path
-                d="M5 10L0 5H3V0H7V5H10L5 10Z"
-                fill="currentColor"
-              />
+              <path d="M5 10L0 5H3V0H7V5H10L5 10Z" fill="currentColor" />
             </svg>
           )}
         </span>
