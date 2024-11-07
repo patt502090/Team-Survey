@@ -33,7 +33,6 @@ export default function DefaultSidebar() {
     setCollapsed(!collapsed);
   };
 
-
   return (
     <Card
       className={`h-screen w-full transition-all duration-300 p-4 shadow-xl shadow-blue-gray-900/5 ${

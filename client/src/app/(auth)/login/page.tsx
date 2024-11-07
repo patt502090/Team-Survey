@@ -5,9 +5,9 @@ import { Label, TextInput } from "flowbite-react";
 import { HiMail } from "react-icons/hi";
 import { RiLockPasswordFill } from "react-icons/ri";
 // import backgroundImage from "../assets/background.png";
-import conf from "../conf/main";
-import ax from "../conf/ax";
-import { AuthContext, ContextProvider } from "../contexts/Auth.context";
+import conf from "../../../conf/main";
+import ax from "../../../conf/ax";
+import { AuthContext, ContextProvider } from "../../../contexts/Auth.context";
 import toast, { Toaster } from "react-hot-toast";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { HiOutlineEye } from "react-icons/hi";
@@ -90,7 +90,7 @@ export default function LoginPage() {
       <div
         className="flex items-center justify-center h-screen w-screen "
         style={{
-            backgroundImage: `url(https://plus.unsplash.com/premium_photo-1664443577580-dd2674e9d359?q=80&w=2942&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)`,
+          backgroundImage: `url(https://plus.unsplash.com/premium_photo-1664443577580-dd2674e9d359?q=80&w=2942&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}

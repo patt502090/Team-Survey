@@ -1,9 +1,9 @@
-"use client"; 
+"use client";
 
-import React, { useEffect, ReactNode } from 'react';
-import { useSetState } from 'react-use';
-import conf from '../conf/main';
-import ax, { axData } from '../conf/ax';
+import React, { useEffect, ReactNode } from "react";
+import { useSetState } from "react-use";
+import conf from "../conf/main";
+import ax, { axData } from "../conf/ax";
 
 export const AuthContext = React.createContext<AuthContextProps | null>(null);
 
@@ -49,12 +49,17 @@ const updateJwt = (jwt: string | null) => {
 export const ContextProvider: React.FC<{ children: ReactNode }> = (props) => {
   const [state, setState] = useSetState<AuthState>(initialState);
 
-  const setLoginPending = (isLoginPending: boolean) => setState({ isLoginPending });
-  const setLoginSuccess = (isLoggedIn: boolean, user: User | null) => setState({ isLoggedIn, user });
+  const setLoginPending = (isLoginPending: boolean) =>
+    setState({ isLoginPending });
+  const setLoginSuccess = (isLoggedIn: boolean, user: User | null) =>
+    setState({ isLoggedIn, user });
   const setLoginError = (loginError: Error | null) => setState({ loginError });
   const setUserRole = (userRole: string) => setState({ userRole });
 
-  const handleLoginResult = (error: Error | null, result: { user?: User; jwt?: string } | null) => {
+  const handleLoginResult = (
+    error: Error | null,
+    result: { user?: User; jwt?: string } | null
+  ) => {
     setLoginPending(false);
     if (result && result.user) {
       if (result.jwt) {
@@ -107,7 +112,14 @@ export const ContextProvider: React.FC<{ children: ReactNode }> = (props) => {
   );
 };
 
-const fetchLogin = async (username: string, password: string, callback: (error: Error | null, result: { user?: User; jwt?: string } | null) => void) => {
+const fetchLogin = async (
+  username: string,
+  password: string,
+  callback: (
+    error: Error | null,
+    result: { user?: User; jwt?: string } | null
+  ) => void
+) => {
   try {
     const response = await ax.post(conf.loginEndpoint, {
       identifier: username,
@@ -116,21 +128,29 @@ const fetchLogin = async (username: string, password: string, callback: (error: 
     if (response.data.jwt && response.data.user.id > 0) {
       callback(null, response.data);
     } else {
-      callback(new Error('Invalid username and password'), null);
+      callback(new Error("Invalid username and password"), null);
     }
   } catch (e) {
-    callback(new Error('Fail to initiate login'), null);
+    callback(new Error("Fail to initiate login"), null);
   }
 };
 
-const loadPersistedJwt = async (callback: (error: Error | null, result: { user?: User; userRole?: string } | null) => void) => {
+const loadPersistedJwt = async (
+  callback: (
+    error: Error | null,
+    result: { user?: User; userRole?: string } | null
+  ) => void
+) => {
   try {
     const persistedJwt = sessionStorage.getItem(conf.jwtSessionStorageKey);
     if (persistedJwt) {
       axData.jwt = persistedJwt;
       const response = await ax.get(conf.jwtUserEndpoint);
       if (response.data.id > 0) {
-        callback(null, { user: response.data, userRole: response.data.role.name });
+        callback(null, {
+          user: response.data,
+          userRole: response.data.role.name,
+        });
       } else {
         callback(null, null);
       }
@@ -139,6 +159,6 @@ const loadPersistedJwt = async (callback: (error: Error | null, result: { user?:
     }
   } catch (e) {
     console.log(e);
-    callback(new Error('Fail to initiate auto login'), null);
+    callback(new Error("Fail to initiate auto login"), null);
   }
 };
