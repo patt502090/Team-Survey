@@ -3,8 +3,7 @@
 import DefaultSidebar from "../../components/Layouts/Sidebar";
 import MobileNavbar from "../../components/Layouts/MobileNavbar";
 import ResponsiveAppBar from "../../components/Layouts/AppBar";
-import { BreadcrumbsWithIcon } from "../../components/Dashboard/Breadcrumbs";
-import { ControlledSelect } from "../../components/Dashboard/FilterSelect";
+
 import React, { ReactNode } from "react";
 
 interface LayoutProps {
@@ -25,20 +24,7 @@ export default function Layout({ children }: LayoutProps) {
         <div className="hidden md:block bg-white shadow-lg rounded-xl">
           <DefaultSidebar />
         </div>
-
-        {/* Main Dashboard Content */}
-        <main className="flex-1 p-6 space-y-6">
-          {/* Breadcrumbs */}
-          <div className="mb-6">
-            <BreadcrumbsWithIcon />
-          </div>
-          <div className="flex justify-between items-center mb-6">
-            <h1 className="text-3xl font-bold text-gray-800">Dashboard</h1>
-            <ControlledSelect />
-          </div>
-
-          {children}
-        </main>
+        {children}
       </div>
 
       {/* Mobile Navbar at the bottom */}

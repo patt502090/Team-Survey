@@ -5,7 +5,7 @@ export function ControlledSelect() {
   const [value, setValue]:any = React.useState("react");
  
   return (
-    <div className="w-72">
+    <div className=" md:w-72">
       <Select
         label="Select Version"
         value={value}
