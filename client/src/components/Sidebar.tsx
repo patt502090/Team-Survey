@@ -35,7 +35,7 @@ export default function DefaultSidebar() {
 
   return (
     <Card
-      className={`h-screen w-full transition-all duration-300 p-4 shadow-xl shadow-blue-gray-900/5 ${
+      className={`h-screen w-full transition-all duration-300 shadow-xl shadow-blue-gray-900/5 p-4  ${
         collapsed ? "max-w-[4rem]" : "max-w-[17rem]"
       }`}
     >
