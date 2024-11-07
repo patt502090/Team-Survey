@@ -86,6 +86,9 @@
     "Surname_Lastname": {
       "type": "string",
       "required": true
+    },
+    "phoneNumber": {
+      "type": "string"
     }
   }
 }
