@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "sub_districts",
+  "info": {
+    "singularName": "sub-district",
+    "pluralName": "sub-districts",
+    "displayName": "Sub_district",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name_th": {
+      "type": "string"
+    },
+    "name_en": {
+      "type": "string"
+    },
+    "amphure_id": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::district.district",
+      "inversedBy": "sub_districts"
+    },
+    "zib_code": {
+      "type": "integer"
+    },
+    "customers": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::customer.customer",
+      "mappedBy": "sub_district"
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "provinces",
+  "info": {
+    "singularName": "province",
+    "pluralName": "provinces",
+    "displayName": "province"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name_th": {
+      "type": "string"
+    },
+    "name_en": {
+      "type": "string"
+    },
+    "geography_id": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::region.region",
+      "inversedBy": "provinces"
+    },
+    "districts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::district.district",
+      "mappedBy": "province_id"
+    }
+  }
+}

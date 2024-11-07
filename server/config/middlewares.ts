@@ -5,7 +5,14 @@ export default [
   'strapi::cors',
   'strapi::poweredBy',
   'strapi::query',
-  'strapi::body',
+  {
+    name: 'strapi::body',
+    config: {
+      jsonLimit: '50mb', // กำหนดขนาด JSON payload สูงสุด
+      formLimit: '50mb', // กำหนดขนาด Form payload สูงสุด
+      textLimit: '50mb', // กำหนดขนาด Text payload สูงสุด
+    },
+  },
   'strapi::session',
   'strapi::favicon',
   'strapi::public',
