@@ -24,7 +24,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import HomeIcon from "@mui/icons-material/Home";
 import QueryStatsIcon from "@mui/icons-material/QueryStats";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
-
+import GroupsIcon from '@mui/icons-material/Groups';
 export default function DefaultSidebar() {
   const [collapsed, setCollapsed] = useState(false);
 
@@ -107,15 +107,15 @@ export default function DefaultSidebar() {
           </ListItem>
           <ListItem>
             <ListItemPrefix>
-              <ShoppingBagIcon className="h-5 w-5" />
+              <PersonIcon className="h-5 w-5" />
             </ListItemPrefix>
-            E-Commerce
+            User
           </ListItem>
           <ListItem>
             <ListItemPrefix>
-              <InboxIcon className="h-5 w-5" />
+              <GroupsIcon className="h-5 w-5" />
             </ListItemPrefix>
-            Inbox
+            Team
             <ListItemSuffix>
               <Chip
                 value="14"
