@@ -9,6 +9,7 @@ import {
   ListItemSuffix,
   Chip,
   Button,
+  collapse,
 } from "@material-tailwind/react";
 import {
   PresentationChartBarIcon,
@@ -24,13 +25,14 @@ import PersonIcon from "@mui/icons-material/Person";
 import HomeIcon from "@mui/icons-material/Home";
 import QueryStatsIcon from "@mui/icons-material/QueryStats";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
-import GroupsIcon from '@mui/icons-material/Groups';
+import GroupsIcon from "@mui/icons-material/Groups";
 export default function DefaultSidebar() {
   const [collapsed, setCollapsed] = useState(false);
 
   const toggleSidebar = () => {
     setCollapsed(!collapsed);
   };
+
 
   return (
     <Card
@@ -53,7 +55,7 @@ export default function DefaultSidebar() {
           </Typography>
         </div>
       </div>
-      <hr className="mt-3" />
+      {collapse && <hr className="my-3" />}
       <div className="text-center mt-3">
         <AccountBoxIcon
           style={{
@@ -96,7 +98,7 @@ export default function DefaultSidebar() {
           </>
         )}
       </div>
-      <hr className="my-3" />
+      {collapse && <hr className="my-3" />}
       {!collapsed && (
         <List>
           <ListItem>

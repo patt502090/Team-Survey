@@ -14,21 +14,22 @@ export default function LabelBottomNavigation() {
   };
 
   return (
-    <BottomNavigation value={value} onChange={handleChange}>
+    <BottomNavigation value={value} onChange={handleChange} className="mb-3">
       <BottomNavigationAction
         label="Home"
         value="Home"
-        icon={<HomeIcon />}
+        icon={<HomeIcon sx={{ fontSize:27 }}/>}
+
       />
       <BottomNavigationAction
         label="CheckID"
         value="CheckID"
-        icon={<SearchIcon/>}
+        icon={<SearchIcon sx={{ fontSize:27 }}/>}
       />
       <BottomNavigationAction
-        label="Scan"
-        value="Scan"
-        icon={<DocumentScannerIcon />}
+        // label="⠀"
+        // value="⠀"
+        icon={<DocumentScannerIcon sx={{ fontSize:27 }}/>}
         sx={{
             transform: "scale(1.3)",
           }}
@@ -36,12 +37,12 @@ export default function LabelBottomNavigation() {
       <BottomNavigationAction
         label="Team"
         value="Team"
-        icon={<GroupIcon />}
+        icon={<GroupIcon sx={{ fontSize:27 }}/>}
       />
       <BottomNavigationAction
         label="Profile"
         value="Profile"
-        icon={<AccountBoxIcon />}
+        icon={<AccountBoxIcon sx={{ fontSize:27 }}/>}
       />
     </BottomNavigation>
   );
