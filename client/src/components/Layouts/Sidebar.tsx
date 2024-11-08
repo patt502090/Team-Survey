@@ -27,6 +27,7 @@ import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArro
 import GroupsIcon from "@mui/icons-material/Groups";
 import ax, { axData } from "@/conf/ax";
 import conf from "@/conf/main";
+
 export default function DefaultSidebar() {
   const [collapsed, setCollapsed] = useState(false);
   const [userData, setUserData] = useState({
@@ -48,7 +49,7 @@ export default function DefaultSidebar() {
         setUserData({
           username: result.data.username,
           role: result.data.role.name,
-          team: result.data.team || "N/A", // Use a default value if team is not available
+          team: result.data.team || "N/A",
         });
         setLoading(false);
       } catch (error) {
@@ -62,7 +63,7 @@ export default function DefaultSidebar() {
 
   return (
     <Card
-      className={`h-screen w-full transition-all duration-300 shadow-xl shadow-blue-gray-900/5 p-4  ${
+      className={`h-screen w-full transition-all duration-300 shadow-xl shadow-blue-gray-900/5 p-4 fixed ${
         collapsed ? "max-w-[4rem]" : "max-w-[17rem]"
       }`}
     >
@@ -80,7 +81,7 @@ export default function DefaultSidebar() {
           </Typography>
         </div>
       </div>
-      {collapsed && <hr className="my-3" />}
+      {!collapsed && <hr className="my-3" />}
       <div className="text-center mt-3">
         <AccountBoxIcon
           style={{
@@ -89,13 +90,26 @@ export default function DefaultSidebar() {
           }}
         />
       </div>
-      <p
-        className={`text-center text-gray-700 mt-1 ${
-          collapsed ? "hidden" : ""
-        }`}
-      >
-        {loading ? "Loading..." : `${userData.username} : ${userData.role}`}
-      </p>
+
+      {/* Display user information conditionally based on role */}
+      {loading ? (
+        <p className="text-center text-gray-700 mt-1">Loading...</p>
+      ) : userData.role === "Admin" ? (
+        <div className="text-center mt-1">
+          <p className="font-medium text-xs md:text-base text-center text-teal-500 ">
+            {userData.username}
+          </p>
+          <p className="text-sm text-gray-500 text-center">{userData.role}</p>
+        </div>
+      ) : (
+        <div className="font-medium text-xs md:text-base text-center text-teal-500  mt-1">
+          <p className="text-gray-700">{userData.username}</p>
+          <p className="text-xs text-gray-500 text-center0">
+            {userData.team} : {userData.role}
+          </p>
+        </div>
+      )}
+
       <div className="flex justify-center my-3">
         {!collapsed && (
           <>
@@ -123,7 +137,7 @@ export default function DefaultSidebar() {
           </>
         )}
       </div>
-      {collapsed && <hr className="my-3" />}
+      {!collapsed && <hr className="my-3" />}
       {!collapsed && (
         <List>
           <ListItem>
@@ -173,12 +187,6 @@ export default function DefaultSidebar() {
           </ListItem>
         </List>
       )}
-      <Button
-        onClick={toggleSidebar}
-        className="absolute bottom-5 left-1/2 transform -translate-x-1/2 mt-10"
-      >
-        {collapsed ? <KeyboardDoubleArrowRightIcon /> : "Collapse"}
-      </Button>
     </Card>
   );
 }
