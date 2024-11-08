@@ -15,11 +15,11 @@ export default function Layout({ children }: LayoutProps) {
     <div className="flex flex-col min-h-screen bg-gray-50">
       {/* Mobile AppBar */}
       <div className="md:hidden w-full">
-        <ResponsiveAppBar />
+        {/* <ResponsiveAppBar /> */}
       </div>
 
       {/* Main Content */}
-      <div className="flex flex-1">
+      <div className="">
         {/* Sidebar */}
         <div className="hidden md:block bg-white shadow-lg rounded-xl">
           <DefaultSidebar />
@@ -28,7 +28,7 @@ export default function Layout({ children }: LayoutProps) {
       </div>
 
       {/* Mobile Navbar at the bottom */}
-      <div className="sticky bottom-0 left-0 right-0 md:hidden bg-white shadow-lg">
+      <div className="fixed bottom-0 md:hidden left-0 right-0 bg-white shadow-lg">
         <MobileNavbar />
       </div>
     </div>
