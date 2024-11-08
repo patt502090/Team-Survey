@@ -13,7 +13,6 @@ import { FaRegEyeSlash } from "react-icons/fa";
 import { HiOutlineEye } from "react-icons/hi";
 import { useRouter } from "next/navigation";
 import { Button } from "@material-tailwind/react";
-import axios from "axios";
 export default function LoginPage() {
   const [loading, setLoading] = useState<boolean>(false);
   const [submitEnabled, setSubmitEnabled] = useState<boolean>(true);
