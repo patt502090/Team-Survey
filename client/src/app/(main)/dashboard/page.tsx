@@ -9,6 +9,9 @@ import { BreadcrumbsWithIcon } from "../../../components/Dashboard/Breadcrumbs";
 import { ControlledSelect } from "../../../components/Dashboard/FilterSelect";
 import LineChartCustom from "@/components/Dashboard/Charts/LineChart";
 import PieChartCustom from "@/components/Dashboard/Charts/PieChart";
+import DashboardStatsGrid from "@/components/Dashboard/DashboardStatsGrid";
+import FilterListCustom from "@/components/Dashboard/FilterMap1";
+import CardStats from "@/components/Dashboard/CardData1";
 
 export default function Dashboard() {
   return (
@@ -16,36 +19,38 @@ export default function Dashboard() {
       <aside className="hidden md:block w-64 bg-white shadow-lg">
         {/* Sidebar content goes here */}
       </aside>
-
+      
       <main className="flex-1 p-6 space-y-6 md:ml-5">
-        <div className="mb-6">
-          <BreadcrumbsWithIcon />
+        <div className="">
+          <BreadcrumbsWithIcon/>
         </div>
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex justify-between items-center ">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
             Dashboard
           </h1>
           <ControlledSelect />
+          {/* <FilterListCustom/> */}
         </div>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
-          <CardDataStats title="Total views" total="$3.456K" rate="0.43%" levelUp>
+        {/* <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
+          <CardDataStats title="Total Surveys Completed" total="3,456" rate="1.2%" levelUp bgColor="bg-blue-100" iconColor="text-blue-600">
             <PersonAddIcon />
           </CardDataStats>
-          <CardDataStats title="Total Profit" total="$45,2K" rate="4.35%" levelUp>
+          <CardDataStats title="Total Surveys Completed" total="1,980" rate="4.3%" levelUp bgColor="bg-blue-100" iconColor="text-blue-600">
             <QueryStatsIcon />
           </CardDataStats>
-          <CardDataStats title="Total Product" total="2.450" rate="2.59%" levelUp>
+          <CardDataStats title="Total Surveys Completed" total="789" rate="2.1%" levelUp bgColor="bg-blue-100" iconColor="text-blue-600">
             <TrackChangesIcon />
           </CardDataStats>
-          <CardDataStats title="Total Users" total="3.456" rate="0.95%" levelDown>
+          <CardDataStats title="Total Surveys Completed" total="54" rate="0.9%" levelDown bgColor="bg-blue-100" iconColor="text-blue-600">
             <GroupsIcon />
           </CardDataStats>
-        </div>
+        </div> */}
+        <CardStats/>
         
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 ">
-          <LineChartCustom />
-          <PieChartCustom />
+          {/* <LineChartCustom />
+          <PieChartCustom /> */}
         </div>
       </main>
     </div>

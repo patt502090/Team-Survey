@@ -96,7 +96,7 @@ export default function DefaultSidebar() {
         <p className="text-center text-gray-700 mt-1">Loading...</p>
       ) : userData.role === "Admin" ? (
         <div className="text-center mt-1">
-          <p className="font-medium text-xs md:text-base text-center text-teal-500 ">
+          <p className="font-medium text-xs md:text-base text-center text-blue-600 ">
             {userData.username}
           </p>
           <p className="text-sm text-gray-500 text-center">{userData.role}</p>

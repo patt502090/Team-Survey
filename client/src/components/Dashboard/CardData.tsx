@@ -6,6 +6,8 @@ interface CardDataStatsProps {
   rate: string;
   levelUp?: boolean;
   levelDown?: boolean;
+  iconColor?: string; 
+  bgColor?: string;
   children: ReactNode;
 }
 
@@ -15,17 +17,19 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
   rate,
   levelUp,
   levelDown,
+  iconColor = "text-purple-500", 
+  bgColor = "bg-blue-100",
   children,
 }) => {
   return (
     <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-md transition-transform transform hover:scale-105 duration-200">
-      <div className="flex justify-center items-center w-14 h-14 rounded-full bg-blue-100 text-blue-500">
+      <div className={`flex justify-center items-center w-12 h-12 rounded-full ${bgColor} ${iconColor}`}>
         {children}
       </div>
 
       <div className="mt-4 flex justify-between items-center">
         <div>
-          <h4 className="text-xl font-semibold text-gray-800">{total}</h4>
+          <h4 className="text-xl font-semibold text-gray-700">{total}</h4>
           <span className="text-sm font-medium text-gray-500">{title}</span>
         </div>
 
