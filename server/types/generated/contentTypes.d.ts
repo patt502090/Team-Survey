@@ -407,7 +407,7 @@ export interface ApiCustomerCustomer extends Struct.CollectionTypeSchema {
     singularName: 'customer';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     Address: Schema.Attribute.String & Schema.Attribute.Required;
@@ -521,6 +521,7 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
 export interface ApiProvinceProvince extends Struct.CollectionTypeSchema {
   collectionName: 'provinces';
   info: {
+    description: '';
     displayName: 'province';
     pluralName: 'provinces';
     singularName: 'province';
@@ -623,7 +624,7 @@ export interface ApiTeamTeam extends Struct.CollectionTypeSchema {
     singularName: 'team';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
