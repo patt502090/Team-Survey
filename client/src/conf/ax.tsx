@@ -7,19 +7,19 @@ export const axData = {
 
 const ax = axios.create({
   baseURL: conf.apiUrlPrefix,
-  withCredentials: true,
+  withCredentials: false,
 });
 
 ax.interceptors.request.use(
   function (config: any) {
-    // Do something before request is sent
-    if (axData.jwt && config.url !== conf.loginEndpoint) {
+    console.log(config)
+    if (axData.jwt) {
       config.headers["Authorization"] = `Bearer ${axData.jwt}`;
+      config.withCredentials = true;  
     }
     return config;
   },
   function (error: any) {
-    // Do something with request error
     return Promise.reject(error);
   }
 );

@@ -13,6 +13,7 @@ import { FaRegEyeSlash } from "react-icons/fa";
 import { HiOutlineEye } from "react-icons/hi";
 import { useRouter } from "next/navigation";
 import { Button } from "@material-tailwind/react";
+import axios from "axios";
 export default function LoginPage() {
   const [loading, setLoading] = useState<boolean>(false);
   const [submitEnabled, setSubmitEnabled] = useState<boolean>(true);
@@ -42,22 +43,24 @@ export default function LoginPage() {
     e.preventDefault();
     setSubmitEnabled(false);
     setLoading(true);
+    // console.log(email,password);
     // login(email, password);
 
     try {
       delete ax.defaults.headers.common["Authorization"];
-      let result = await ax.post(`${conf.apiUrlPrefix}${conf.loginEndpoint}`, {
+      let result = await ax.post(`${conf.loginEndpoint}`, {
         identifier: email,
         password: password,
       });
+      console.log(result)
 
-      result = await ax.get(`${conf.apiUrlPrefix}${conf.jwtUserEndpoint}`);
-      if (result.data.image) {
-        sessionStorage.setItem(
-          "profileURL",
-          `${conf.urlPrefix}${result.data.image.url}`
-        );
-      }
+      result = await ax.get(`${conf.jwtUserEndpoint}`);
+      // if (result.data.image) {
+      //   sessionStorage.setItem(
+      //     "profileURL",
+      //     `${conf.urlPrefix}${result.data.image.url}`
+      //   );
+      // }
       setLoading(false);
       const roleName = result.data.role.name;
       if (roleName) {
