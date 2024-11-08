@@ -83,11 +83,13 @@
       "target": "api::customer.customer",
       "mappedBy": "Assessor"
     },
-    "Surname_Lastname": {
-      "type": "string",
-      "required": true
-    },
     "phoneNumber": {
+      "type": "string"
+    },
+    "first_name": {
+      "type": "string"
+    },
+    "last_name": {
       "type": "string"
     }
   }

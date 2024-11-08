@@ -5,6 +5,7 @@ import MobileNavbar from "../../components/Layouts/MobileNavbar";
 import ResponsiveAppBar from "../../components/Layouts/AppBar";
 
 import React, { ReactNode } from "react";
+import { ContextProvider } from "@/contexts/Auth.context";
 
 interface LayoutProps {
   children: ReactNode;
@@ -12,6 +13,7 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   return (
+    <ContextProvider>
     <div className="flex flex-col min-h-screen bg-gray-50">
       {/* Mobile AppBar */}
       <div className="md:hidden w-full">
@@ -32,5 +34,6 @@ export default function Layout({ children }: LayoutProps) {
         <MobileNavbar />
       </div>
     </div>
+    </ContextProvider>
   );
 }

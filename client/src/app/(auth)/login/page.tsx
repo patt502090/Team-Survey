@@ -3,10 +3,10 @@
 import React, { useState, useContext } from "react";
 import { Label, TextInput } from "flowbite-react";
 import { HiMail } from "react-icons/hi";
-import { RiLockPasswordFill } from "react-icons/ri";
+import { RiContactsBookLine, RiLockPasswordFill } from "react-icons/ri";
 // import backgroundImage from "../assets/background.png";
 import conf from "../../../conf/main";
-import ax from "../../../conf/ax";
+import ax, { axData } from "../../../conf/ax";
 import { AuthContext, ContextProvider } from "../../../contexts/Auth.context";
 import toast, { Toaster } from "react-hot-toast";
 import { FaRegEyeSlash } from "react-icons/fa";
@@ -44,15 +44,19 @@ export default function LoginPage() {
     setSubmitEnabled(false);
     setLoading(true);
     // console.log(email,password);
-    // login(email, password);
-
+    if (login) {
+      login(email, password);
+    }
     try {
       delete ax.defaults.headers.common["Authorization"];
       let result = await ax.post(`${conf.loginEndpoint}`, {
         identifier: email,
         password: password,
       });
-      console.log(result)
+      console.log(result);
+
+      axData.jwt = result.data.jwt;
+      // console.log("ad",axData)
 
       result = await ax.get(`${conf.jwtUserEndpoint}`);
       // if (result.data.image) {
@@ -61,13 +65,24 @@ export default function LoginPage() {
       //     `${conf.urlPrefix}${result.data.image.url}`
       //   );
       // }
+      console.log(result);
       setLoading(false);
       const roleName = result.data.role.name;
       if (roleName) {
-        sessionStorage.setItem(
-          conf.roleSessionStorageKey,
-          roleName === "member" ? conf.memberStorageKey : conf.adminStorageKey
-        );
+        let storageKey;
+
+        if (roleName === "Admin") {
+          storageKey = conf.adminStorageKey;
+        } else if (roleName === "Leader") {
+          storageKey = conf.leaderStorageKey;
+        } else if (roleName === "Worker") {
+          storageKey = conf.workerStorageKey;
+        }
+
+        if (storageKey) {
+          sessionStorage.setItem(conf.roleSessionStorageKey, storageKey);
+        }
+
         // navigate(roleName === "member" ? "/" : "/admin");
         toast.success("เข้าสู่ระบบสำเร็จ!");
       }

@@ -8,10 +8,12 @@ const conf = {
   jwtSessionStorageKey: "auth.jwt",
   roleSessionStorageKey: "auth.role",
   googleConnectEndpoint: "/connect/google",
-  memberStorageKey:
+  workerStorageKey:
     "tugenQcH(!o^he75LFHbX%tn70kJ;.q,~=}uuI1l7BGY_iVF3Hs,/d|EUNUL)KD",
   adminStorageKey:
     "=hru*(kh=+C/2o%{s2S[]aNkLmda)S&,!//BSr_Q<Ug:RwOUp%^pJO*@e`1n<v(",
+  leaderStorageKey:
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~"
 };
 
 export default conf;

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Card,
   Typography,
@@ -9,7 +9,6 @@ import {
   ListItemSuffix,
   Chip,
   Button,
-  collapse,
 } from "@material-tailwind/react";
 import {
   PresentationChartBarIcon,
@@ -26,12 +25,40 @@ import HomeIcon from "@mui/icons-material/Home";
 import QueryStatsIcon from "@mui/icons-material/QueryStats";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import GroupsIcon from "@mui/icons-material/Groups";
+import ax, { axData } from "@/conf/ax";
+import conf from "@/conf/main";
 export default function DefaultSidebar() {
   const [collapsed, setCollapsed] = useState(false);
+  const [userData, setUserData] = useState({
+    username: "",
+    role: "",
+    team: "",
+  });
+  const [loading, setLoading] = useState(true);
 
   const toggleSidebar = () => {
     setCollapsed(!collapsed);
   };
+
+  // Fetch user data on component mount
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const result = await ax.get(`${conf.jwtUserEndpoint}`);
+        setUserData({
+          username: result.data.username,
+          role: result.data.role.name,
+          team: result.data.team || "N/A", // Use a default value if team is not available
+        });
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   return (
     <Card
@@ -44,7 +71,6 @@ export default function DefaultSidebar() {
           {!collapsed && (
             <QueryStatsIcon className="absolute left-14 transform -translate-x-6" />
           )}
-          {/* Centered Title */}
           <Typography
             variant="h6"
             color="blue-gray"
@@ -54,7 +80,7 @@ export default function DefaultSidebar() {
           </Typography>
         </div>
       </div>
-      {collapse && <hr className="my-3" />}
+      {collapsed && <hr className="my-3" />}
       <div className="text-center mt-3">
         <AccountBoxIcon
           style={{
@@ -68,7 +94,7 @@ export default function DefaultSidebar() {
           collapsed ? "hidden" : ""
         }`}
       >
-        Team12 : Worker
+        {loading ? "Loading..." : `${userData.username} : ${userData.role}`}
       </p>
       <div className="flex justify-center my-3">
         {!collapsed && (
@@ -97,7 +123,7 @@ export default function DefaultSidebar() {
           </>
         )}
       </div>
-      {collapse && <hr className="my-3" />}
+      {collapsed && <hr className="my-3" />}
       {!collapsed && (
         <List>
           <ListItem>
@@ -119,7 +145,7 @@ export default function DefaultSidebar() {
             Team
             <ListItemSuffix>
               <Chip
-                value="14"
+                value={userData.team || "N/A"}
                 size="sm"
                 variant="ghost"
                 color="blue-gray"

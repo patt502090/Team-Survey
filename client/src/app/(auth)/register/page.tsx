@@ -15,6 +15,7 @@ import { TextInput, Label } from "flowbite-react";
 import { useRouter } from "next/navigation";
 // import { AiOutlineUser } from "react-icons/ai";
 import { FaUser } from "react-icons/fa";
+import { FaUserCircle } from "react-icons/fa";
 
 interface FormData {
   first_name: string;
@@ -83,11 +84,11 @@ export default function RegisterAccount() {
           first_name: formData.first_name,
           last_name: formData.last_name,
           password: formData.password,
-          phonenum: formData.phonenum,
+          phoneNumber: formData.phonenum,
         };
 
         const result = await ax.post(
-          `${conf.apiUrlPrefix}${conf.registerEndpoint}`,
+          `${conf.registerEndpoint}`,
           postData
         );
         console.log("สมัครข้อมูล:", result.data);
@@ -96,6 +97,7 @@ export default function RegisterAccount() {
         // setTimeout(() => {
         //   navigate("/login");
         // });
+        router.push("/login");
       } else {
         console.error("รหัสผ่านไม่ตรงกัน กรุณากรอกรหัสผ่านใหม่ให้ตรงกัน");
         toast.error("รหัสผ่านไม่ตรงกัน กรุณากรอกรหัสผ่านใหม่ให้ตรงกัน");
@@ -185,7 +187,7 @@ export default function RegisterAccount() {
                 value={formData.username}
                 onChange={handleChange}
                 required
-                icon={FaUser}
+                icon={FaUserCircle}
                 // fullWidth
                 // InputProps={{
                 //   startAdornment: <span>@</span>,
