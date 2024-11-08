@@ -93,7 +93,7 @@ export default function Camera() {
 
   return (
     <div className="flex flex-col items-center p-2 space-y-4">
-      <h2 className="text-xl font-bold ">ขั้นตอนที่ 1 : ถ่ายรูปบัตรประชาชน</h2>
+      <h2 className="text-xl font-bold ">ขั้นตอนที่ 1 ถ่ายรูปบัตรประชาชน</h2>
 
       <video
         ref={videoRef}
