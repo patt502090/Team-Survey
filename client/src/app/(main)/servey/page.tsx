@@ -6,8 +6,10 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import { useState } from "react";
 import Camera from "@/components/Servey/Camera";
+import CustomerInfo from "@/components/Servey/CustomerInfo";
+import CheckInfo from "@/components/Servey/CheckInfo";
 
-const steps = ["ถ่ายรูป", "ข้อมูล", "เช็คข้อมูล"];
+const steps = ["ถ่ายรูป", "ข้อมูล", "ตรวจสอบข้อมูล"];
 
 export default function HorizontalLinearAlternativeLabelStepper() {
   const [activeStep, setActiveStep] = useState(0);
@@ -47,6 +49,7 @@ export default function HorizontalLinearAlternativeLabelStepper() {
 
         {activeStep === 1 && (
           <div>
+            <CustomerInfo />
             <div className="mt-auto flex space-x-4 justify-between px-4 mb-4">
               {activeStep < steps.length - 1 && (
                 <button
@@ -70,8 +73,9 @@ export default function HorizontalLinearAlternativeLabelStepper() {
 
         {activeStep === 2 && (
           <div>
+            <CheckInfo />
             <div className="mt-auto flex space-x-4 justify-between px-4 mb-4">
-              {activeStep < steps.length - 1 && (
+              {activeStep <= steps.length - 1 && (
                 <button
                   onClick={handleNext}
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full sm:w-auto mx-auto"
