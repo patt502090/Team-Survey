@@ -6,6 +6,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import DocumentScannerIcon from "@mui/icons-material/DocumentScanner";
 import GroupIcon from "@mui/icons-material/Group";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import Link from "next/link";
 export default function LabelBottomNavigation() {
   const [value, setValue] = React.useState("recents");
 
@@ -14,17 +15,24 @@ export default function LabelBottomNavigation() {
   };
 
   return (
-    <BottomNavigation value={value} onChange={handleChange} className="mb-3">
+    <BottomNavigation value={value} onChange={handleChange} className="mb-3 border-t-4">
+
+      <Link href="/dashboard">
       <BottomNavigationAction
         label="Home"
         value="Home"
         icon={<HomeIcon sx={{ fontSize: 27 }} />}
-      />
-      <BottomNavigationAction
-        label="CheckID"
-        value="CheckID"
-        icon={<SearchIcon sx={{ fontSize: 27 }} />}
-      />
+        />
+      </Link>
+
+      <Link href="/Checkid">
+        <BottomNavigationAction
+          label="CheckID"
+          value="CheckID"
+          icon={<SearchIcon sx={{ fontSize: 27 }} />}
+          />
+      </Link>
+
       <BottomNavigationAction
         // label="⠀"
         // value="⠀"
@@ -38,11 +46,15 @@ export default function LabelBottomNavigation() {
         value="Team"
         icon={<GroupIcon sx={{ fontSize: 27 }} />}
       />
-      <BottomNavigationAction
-        label="Profile"
-        value="Profile"
-        icon={<AccountBoxIcon sx={{ fontSize: 27 }} />}
-      />
+
+      <Link href="/Profile">
+        <BottomNavigationAction
+          label="Profile"
+          value="Profile"
+          icon={<AccountBoxIcon sx={{ fontSize: 27 }} />}
+          />
+      </Link>  
+
     </BottomNavigation>
   );
 }
