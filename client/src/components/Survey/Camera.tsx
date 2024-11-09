@@ -4,7 +4,12 @@ import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import PartyModeIcon from "@mui/icons-material/PartyMode";
 
-export default function Camera() {
+/*import axios from "axios";
+import { ocrSchema } from "../../modules/ocrSchema";
+interface CameraProps {
+  onOCRProcessed: (data: any) => void;
+}*/
+export default function Camera(/*{ onOCRProcessed }: CameraProps*/) {
   const [image, setImage] = useState<string | null>(null);
   const [facingMode, setFacingMode] = useState<"user" | "environment">(
     "environment"
@@ -64,7 +69,9 @@ export default function Camera() {
           canvasRef.current.width,
           canvasRef.current.height
         );
-        setImage(canvasRef.current.toDataURL("image/png"));
+        const capturedImage = canvasRef.current.toDataURL("image/png");
+        setImage(capturedImage);
+        //processOCR(capturedImage);
       }
     }
   };
@@ -90,6 +97,36 @@ export default function Camera() {
     setFacingMode(newFacingMode);
     startCamera(newFacingMode);
   };
+
+  /*const processOCR = async (image: string) => {
+    try {
+      const formData = new FormData();
+      formData.append("file", image);
+
+      const response = await axios.post(
+        "https://api.aiforthai.in.th/ocr-id-front-iapp",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Apikey: "YH1mYYlQFqKa1VcAUEB0zAxTDhXDk98A",
+          },
+        }
+      );
+      const ocrData = ocrSchema.parse(response.data);
+      onOCRProcessed(ocrData);
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        if (error.response.status === 403) {
+          console.error("Access Denied: API Key or permissions issue");
+          alert("ไม่สามารถเข้าถึง API ได้ กรุณาตรวจสอบ API Key หรือการอนุญาต");
+        }
+      } else {
+        console.error("OCR processing error:", error);
+        alert("เกิดข้อผิดพลาดในการประมวลผล OCR");
+      }
+    }
+  };*/
 
   return (
     <div className="flex flex-col items-center p-2 space-y-4">

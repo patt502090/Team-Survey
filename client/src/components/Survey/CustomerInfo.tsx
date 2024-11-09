@@ -1,6 +1,21 @@
 import React from "react";
 
 const CustomerInfo = () => {
+  //   import React from "react";
+  // import { OCRResponse } from "../../modules/ocrSchema";
+  // import { CustomerProps } from "../../modules/customerSchema";
+  // interface CustomerInfoProps {
+  //   customerData: OCRResponse;
+  // }
+  // const CustomerInfo: React.FC<CustomerInfoProps> = ({ customerData }) => {
+  //   const transformedCustomerData: CustomerProps = {
+  //     Id_Number: customerData.id_number,
+  //     NameTitle: "",
+  //     Name_Th: customerData.th_name,
+  //     Name_Eng: `${customerData.en_fname} ${customerData.en_lname}`,
+  //     Address: customerData.address,
+  //     birthdate: customerData.th_dob,
+  //   };
   return (
     <div className="flex flex-col items-center p-2 space-y-2">
       <h2 className="text-xl font-bold ">ขั้นตอนที่ 2 ข้อมูล</h2>
