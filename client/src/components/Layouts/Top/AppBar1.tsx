@@ -52,8 +52,7 @@ const AppBarCustom = () => {
                         router.push('/Profile')
                       }}>Profile</button></li>
                       <li><button onClick={() => {
-                        sessionStorage.removeItem("auth.jwt");
-                        sessionStorage.removeItem("auth.role");
+                        sessionStorage.clear()
                         router.push("/");
                       }}>Logout</button></li>
                     </ul>

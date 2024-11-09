@@ -6,8 +6,8 @@ export default function Profile() {
     const router = useRouter()
 
     const Logout = () => {
-        sessionStorage.removeItem("auth.jwt"); 
-        sessionStorage.removeItem("auth.role"); 
+        sessionStorage.clear();
+        // localStorage.clear();
         router.push("/");
     };
 
