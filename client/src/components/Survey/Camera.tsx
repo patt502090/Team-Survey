@@ -3,13 +3,12 @@ import { useState, useRef, useEffect } from "react";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import PartyModeIcon from "@mui/icons-material/PartyMode";
-
-/*import axios from "axios";
+import axios from "axios";
 import { ocrSchema } from "../../modules/ocrSchema";
 interface CameraProps {
   onOCRProcessed: (data: any) => void;
-}*/
-export default function Camera(/*{ onOCRProcessed }: CameraProps*/) {
+}
+export default function Camera({ onOCRProcessed }: CameraProps) {
   const [image, setImage] = useState<string | null>(null);
   const [facingMode, setFacingMode] = useState<"user" | "environment">(
     "environment"
@@ -49,7 +48,7 @@ export default function Camera(/*{ onOCRProcessed }: CameraProps*/) {
       const error = err as Error;
       console.error("Cannot access camera:", error);
       if (error.name === "NotAllowedError") {
-        setShowPermissionPopup(true);
+        //setShowPermissionPopup(true);
       } else {
         alert("Cannot access the camera. Please check your camera settings.");
       }
@@ -71,12 +70,12 @@ export default function Camera(/*{ onOCRProcessed }: CameraProps*/) {
         );
         const capturedImage = canvasRef.current.toDataURL("image/png");
         setImage(capturedImage);
-        //processOCR(capturedImage);
+        processOCR(capturedImage);
       }
     }
   };
 
-  const uploadPhoto = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const uploadPhoto = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       const reader = new FileReader();
@@ -84,6 +83,58 @@ export default function Camera(/*{ onOCRProcessed }: CameraProps*/) {
         setImage(e.target?.result as string);
       };
       reader.readAsDataURL(file);
+      const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
+
+      // ตรวจสอบชนิดไฟล์
+      if (!allowedTypes.includes(file.type)) {
+        alert("กรุณาเลือกไฟล์ภาพที่เป็น .JPG, .JPEG หรือ .PNG เท่านั้น");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("file", file, file.name);
+
+      try {
+        // ส่งไฟล์ไปยัง API
+        const response = await axios.post(
+          "https://api.aiforthai.in.th/ocr-id-front-iapp",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Apikey: "YH1mYYlQFqKa1VcAUEB0zAxTDhXDk98A", // แทนที่ด้วย API Key ของคุณ
+            },
+          }
+        );
+
+        // ตรวจสอบผลลัพธ์ที่ได้รับจาก API
+        console.log("OCR Response:", response.data);
+
+        // ประมวลผลข้อมูลจาก OCR
+        const ocrData = ocrSchema.parse(response.data);
+        onOCRProcessed(ocrData);
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          console.error("Error response:", error.response);
+          if (error.response) {
+            if (error.response.status === 403) {
+              console.error("Access Denied: API Key or permissions issue");
+              alert(
+                "ไม่สามารถเข้าถึง API ได้ กรุณาตรวจสอบ API Key หรือการอนุญาต"
+              );
+            } else {
+              console.error("Error details:", error.response.data);
+            }
+          } else {
+            console.error("No response from API");
+          }
+        } else {
+          console.error("OCR processing error:", error);
+          alert("เกิดข้อผิดพลาดในการประมวลผล OCR");
+        }
+      }
+    } else {
+      alert("ไม่พบไฟล์ที่เลือก");
     }
   };
 
@@ -98,10 +149,21 @@ export default function Camera(/*{ onOCRProcessed }: CameraProps*/) {
     startCamera(newFacingMode);
   };
 
-  /*const processOCR = async (image: string) => {
+  const processOCR = async (image: string) => {
     try {
       const formData = new FormData();
-      formData.append("file", image);
+
+      // แปลง base64 เป็น Blob (PNG)
+      const byteString = atob(image.split(",")[1]);
+      const arrayBuffer = new ArrayBuffer(byteString.length);
+      const uint8Array = new Uint8Array(arrayBuffer);
+
+      for (let i = 0; i < byteString.length; i++) {
+        uint8Array[i] = byteString.charCodeAt(i);
+      }
+
+      const blob = new Blob([uint8Array], { type: "image/png" });
+      formData.append("file", blob, "capturedImage.png");
 
       const response = await axios.post(
         "https://api.aiforthai.in.th/ocr-id-front-iapp",
@@ -113,20 +175,35 @@ export default function Camera(/*{ onOCRProcessed }: CameraProps*/) {
           },
         }
       );
+
+      // ตรวจสอบผลลัพธ์ที่ได้รับจาก API
+      console.log("OCR Response:", response.data);
+
       const ocrData = ocrSchema.parse(response.data);
       onOCRProcessed(ocrData);
     } catch (error) {
-      if (axios.isAxiosError(error) && error.response) {
-        if (error.response.status === 403) {
-          console.error("Access Denied: API Key or permissions issue");
-          alert("ไม่สามารถเข้าถึง API ได้ กรุณาตรวจสอบ API Key หรือการอนุญาต");
+      if (axios.isAxiosError(error)) {
+        // ตรวจสอบว่า error.response มีข้อมูลอะไรบ้าง
+        console.error("Error response:", error.response);
+
+        if (error.response) {
+          if (error.response.status === 403) {
+            console.error("Access Denied: API Key or permissions issue");
+            alert(
+              "ไม่สามารถเข้าถึง API ได้ กรุณาตรวจสอบ API Key หรือการอนุญาต"
+            );
+          } else {
+            console.error("Error details:", error.response.data);
+          }
+        } else {
+          console.error("No response from API");
         }
       } else {
         console.error("OCR processing error:", error);
         alert("เกิดข้อผิดพลาดในการประมวลผล OCR");
       }
     }
-  };*/
+  };
 
   return (
     <div className="flex flex-col items-center p-2 space-y-4">

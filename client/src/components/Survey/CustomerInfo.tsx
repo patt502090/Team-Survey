@@ -1,25 +1,22 @@
 import React from "react";
-
-const CustomerInfo = () => {
-  //   import React from "react";
-  // import { OCRResponse } from "../../modules/ocrSchema";
-  // import { CustomerProps } from "../../modules/customerSchema";
-  // interface CustomerInfoProps {
-  //   customerData: OCRResponse;
-  // }
-  // const CustomerInfo: React.FC<CustomerInfoProps> = ({ customerData }) => {
-  //   const transformedCustomerData: CustomerProps = {
-  //     Id_Number: customerData.id_number,
-  //     NameTitle: "",
-  //     Name_Th: customerData.th_name,
-  //     Name_Eng: `${customerData.en_fname} ${customerData.en_lname}`,
-  //     Address: customerData.address,
-  //     birthdate: customerData.th_dob,
-  //   };
+import { OCRResponse } from "../../modules/ocrSchema";
+import { CustomerProps } from "../../modules/customerSchema";
+interface CustomerInfoProps {
+  customerData: OCRResponse;
+}
+const CustomerInfo: React.FC<CustomerInfoProps> = ({ customerData }) => {
+  const transformedCustomerData: CustomerProps = {
+    Id_Number: customerData.id_number,
+    NameTitle: "",
+    Name_Th: customerData.th_name,
+    Name_Eng: `${customerData.en_fname} ${customerData.en_lname}`,
+    Address: customerData.address,
+    birthdate: customerData.th_dob,
+  };
   return (
     <div className="flex flex-col items-center p-2 space-y-2">
       <h2 className="text-xl font-bold ">ขั้นตอนที่ 2 ข้อมูล</h2>
-      <div className="max-w-md w-full space-y-8 p-4 bg-white rounded-xl shadow-lg">
+      {/* <div className="max-w-md w-full space-y-8 p-4 bg-white rounded-xl shadow-lg">
         <div className="grid gap-8 grid-cols-1">
           <div className="flex flex-col">
             <div className="flex flex-col sm:flex-row items-center">
@@ -152,7 +149,23 @@ const CustomerInfo = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}{" "}
+      <h2>ข้อมูลลูกค้า</h2>
+      <p>
+        <strong>ID Number:</strong> {transformedCustomerData.Id_Number}
+      </p>
+      <p>
+        <strong>Name (Thai):</strong> {transformedCustomerData.Name_Th}
+      </p>
+      <p>
+        <strong>Name (English):</strong> {transformedCustomerData.Name_Eng}
+      </p>
+      <p>
+        <strong>Address:</strong> {transformedCustomerData.Address}
+      </p>
+      <p>
+        <strong>Birthdate:</strong> {transformedCustomerData.birthdate}
+      </p>
     </div>
   );
 };
