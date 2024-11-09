@@ -21,12 +21,11 @@ const TeamList = ({ searchQuery }: { searchQuery: string }) => {
                   alt={team.leader}
                   className="w-12 h-12 rounded-full mr-4"
                   onError={(e) => {
-                    e.target.src = "https://images.unsplash.com/photo-1633332755192-727a05c4013d";
+                    e.target.src = "https://i.pinimg.com/736x/8b/16/7a/8b167af653c2399dd93b952a48740620.jpg";
                   }}
                 />
                 <div>
                   <h3 className="text-xl font-semibold">{team.name}</h3>
-                  <p className="text-gray-600 text-sm">{team.description}</p>
                 </div>
               </div>
               <div>
@@ -46,7 +45,7 @@ const TeamList = ({ searchQuery }: { searchQuery: string }) => {
             </div>
             <div className="mt-4">
               <p className="text-sm text-gray-500">
-                Leader: {team.leader} | Members: {team.members} | Surveyed: {team.surveyed}
+                Leader: {team.leader} | Workers: {team.members} | Surveyed: {team.surveyed}
               </p>
             </div>
           </div>

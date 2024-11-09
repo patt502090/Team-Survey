@@ -27,6 +27,7 @@ import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArro
 import GroupsIcon from "@mui/icons-material/Groups";
 import ax, { axData } from "@/conf/ax";
 import conf from "@/conf/main";
+import FactCheckIcon from '@mui/icons-material/FactCheck';
 
 export default function DefaultSidebar() {
   const [collapsed, setCollapsed] = useState(false);
@@ -41,7 +42,6 @@ export default function DefaultSidebar() {
     setCollapsed(!collapsed);
   };
 
-  // Fetch user data on component mount
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -81,7 +81,7 @@ export default function DefaultSidebar() {
           </Typography>
         </div>
       </div>
-      {!collapsed && <hr className="my-3" />}
+      {!collapsed && <hr className="mt-3" />}
       <div className="text-center mt-3">
         <AccountBoxIcon
           style={{
@@ -91,7 +91,6 @@ export default function DefaultSidebar() {
         />
       </div>
 
-      {/* Display user information conditionally based on role */}
       {loading ? (
         <p className="text-center text-gray-700 mt-1">Loading...</p>
       ) : userData.role === "Admin" ? (
@@ -110,10 +109,10 @@ export default function DefaultSidebar() {
         </div>
       )}
 
-      <div className="flex justify-center my-3">
+      {/* <div className="flex justify-center">
         {!collapsed && (
-          <>
-            <Button
+          <> */}
+            {/* <Button
               size="sm"
               color="red"
               className="mr-2 flex items-center px-2 py-1 text-xs"
@@ -125,7 +124,7 @@ export default function DefaultSidebar() {
               />{" "}
               Sign Out
             </Button>
-            <Button
+            <Buttonx
               size="sm"
               color="blue"
               className="flex items-center px-2 py-1 text-xs"
@@ -133,11 +132,11 @@ export default function DefaultSidebar() {
             >
               <PersonIcon className="mr-1" style={{ fontSize: "16px" }} />{" "}
               Profile
-            </Button>
-          </>
+            </Buttonx> */}
+          {/* </>
         )}
-      </div>
-      {!collapsed && <hr className="my-3" />}
+      </div> */}
+      {!collapsed && <hr className="my-4" />}
       {!collapsed && (
         <List>
           <ListItem>
@@ -148,10 +147,11 @@ export default function DefaultSidebar() {
           </ListItem>
           <ListItem>
             <ListItemPrefix>
-              <PersonIcon className="h-5 w-5" />
+              <FactCheckIcon className="h-5 w-5" />
             </ListItemPrefix>
-            User
+            CheckID
           </ListItem>
+
           <ListItem>
             <ListItemPrefix>
               <GroupsIcon className="h-5 w-5" />
@@ -173,12 +173,7 @@ export default function DefaultSidebar() {
             </ListItemPrefix>
             Profile
           </ListItem>
-          <ListItem>
-            <ListItemPrefix>
-              <Cog6ToothIcon className="h-5 w-5" />
-            </ListItemPrefix>
-            Settings
-          </ListItem>
+
           <ListItem>
             <ListItemPrefix>
               <PowerIcon className="h-5 w-5" />

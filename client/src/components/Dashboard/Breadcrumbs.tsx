@@ -1,6 +1,6 @@
 import { Breadcrumbs } from "@material-tailwind/react";
 
-export function BreadcrumbsWithIcon() {
+export function BreadcrumbsWithIcon({ pathName }: { pathName: string }) {
   return (
     <Breadcrumbs>
       <a href="#" className="opacity-60">
@@ -14,7 +14,7 @@ export function BreadcrumbsWithIcon() {
         </svg>
       </a>
       <a href="Dashboard" className="opacity-60">
-        <span>Dashboard</span>
+        <span>{pathName}</span>
       </a>
     </Breadcrumbs>
   );

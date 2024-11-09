@@ -1,12 +1,6 @@
 
-export const stats = [
-    { title: "Total Teams", value: 24, icon: "FiUsers", color: "bg-gradient-to-r from-blue-500 to-teal-400" },
-    { title: "Teams Without Members", value: 3, icon: "FiUserX", color: "bg-gradient-to-r from-rose-400 to-red-500" },
-    { title: "Active Projects", value: 45, icon: "FiSettings", color: "bg-gradient-to-r from-emerald-400 to-green-500" },
-    { title: "Team Achievements", value: 12, icon: "FiAward", color: "bg-gradient-to-r from-violet-400 to-purple-500" }
-  ];
   
-  export const teams = [
+export const teams = [
     {
       id: 1,
       name: "Product Development",

@@ -1,6 +1,6 @@
 "use client";
 
-import DefaultSidebar from "../../components/Layouts/Sidebar";
+import DefaultSidebar from "../../components/Layouts/Side/Sidebar";
 import MobileNavbar from "../../components/Layouts/Down/MobileNavbar";
 import ResponsiveAppBar from "../../components/Layouts/Top/AppBar";
 import AppBarCustom from "../../components/Layouts/Top/AppBar1";

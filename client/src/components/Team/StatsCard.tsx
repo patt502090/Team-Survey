@@ -1,6 +1,8 @@
 import React from "react";
 import { FiUsers, FiUserX, FiSettings, FiAward } from "react-icons/fi";
 
+const icons = [FiUsers, FiUserX, FiSettings, FiAward];
+
 const StatsCard = ({ title, value, icon, color }: { title: string, value: number, icon: any, color: string }) => {
   return (
     <div
@@ -21,4 +23,27 @@ const StatsCard = ({ title, value, icon, color }: { title: string, value: number
   );
 };
 
-export default StatsCard;
+const StatsTeamComponent = () => {
+  const stats = [
+    { title: "Total Teams", value: 100, icon: icons[0], color: "bg-gradient-to-r from-blue-500 to-teal-400" },
+    { title: "Teams Without Members", value: 20, icon: icons[1], color: "bg-gradient-to-r from-indigo-400 to-pink-500" },
+    { title: "Active Projects", value: 10, icon: icons[2], color: "bg-gradient-to-r from-blue-500 to-teal-400" },
+    { title: "Team Achievements", value: 5, icon: icons[3], color: "bg-gradient-to-r from-indigo-400 to-pink-500" },
+  ];
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      {stats.map((stat, index) => (
+        <StatsCard
+          key={index}
+          title={stat.title}
+          value={stat.value}
+          icon={stat.icon}
+          color={stat.color}
+        />
+      ))}
+    </div>
+  );
+};
+
+export default StatsTeamComponent;

@@ -59,10 +59,6 @@ const IDCheckPage: React.FC = () => {
 
   return (
     <div className="flex">
-      {/* Sidebar placeholder */}
-      {/* <div className="w-64 bg-gray-200 min-h-screen"></div> */}
-
-      {/* Main content with left margin for sidebar */}
       <div className="flex-1 md:ml-64 ">
         <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
           <div className="max-w-md mx-auto mt-36 md:mt-20">
@@ -136,12 +132,12 @@ const IDCheckPage: React.FC = () => {
                     {status ? (
                       <>
                         <FaCheckCircle className="h-12 w-12 text-green-500" />
-                        <span className="text-lg font-medium text-green-700">เคยมีประวัติการใช้งาน</span>
+                        <span className="text-lg font-medium text-green-700">มีข้อมูลในระบบแล้ว</span>
                       </>
                     ) : (
                       <>
                         <FaTimesCircle className="h-12 w-12 text-red-500" />
-                        <span className="text-lg font-medium text-red-700">ไม่เคยมีประวัติการใช้งาน</span>
+                        <span className="text-lg font-medium text-red-700">ยังไม่มีข้อมูลในระบบ</span>
                       </>
                     )}
                   </div>
