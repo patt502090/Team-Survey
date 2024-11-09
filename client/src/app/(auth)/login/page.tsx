@@ -122,13 +122,13 @@ export default function LoginPage() {
           <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
             <div className="max-w-md items-center relative">
               <div className="mb-2 block">
-                <Label htmlFor="email4" value="อีเมล" className="text-left " />
+                <Label htmlFor="username" value="ชื่อผู้ใช้" className="text-left " />
               </div>
               <TextInput
-                id="email4"
-                type="email"
+                id="username"
+                // type="email"
                 icon={HiMail}
-                placeholder="name@teamsurvey.com"
+                placeholder="username"
                 value={email}
                 onChange={handleEmailChange}
                 required
@@ -151,7 +151,7 @@ export default function LoginPage() {
                 id="password"
                 type={showPassword ? "text" : "password"}
                 icon={RiLockPasswordFill}
-                placeholder="123456"
+                placeholder="password"
                 value={password}
                 onChange={handlePasswordChange}
                 required

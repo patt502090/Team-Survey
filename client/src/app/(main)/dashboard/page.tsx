@@ -1,17 +1,17 @@
 "use client";
 
-import CardDataStats from "@/components/Dashboard/CardData";
+import CardDataStats from "@/components/Dashboard/CardData/CardData";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import QueryStatsIcon from "@mui/icons-material/QueryStats";
 import TrackChangesIcon from "@mui/icons-material/TrackChanges";
 import GroupsIcon from "@mui/icons-material/Groups";
 import { BreadcrumbsWithIcon } from "../../../components/Dashboard/Breadcrumbs";
-import { ControlledSelect } from "../../../components/Dashboard/FilterSelect";
+import { ControlledSelect } from "../../../components/Dashboard/Filters/FilterSelect";
 import LineChartCustom from "@/components/Dashboard/Charts/LineChart";
 import PieChartCustom from "@/components/Dashboard/Charts/PieChart";
-import DashboardStatsGrid from "@/components/Dashboard/DashboardStatsGrid";
-import FilterListCustom from "@/components/Dashboard/FilterMap1";
-import CardStats from "@/components/Dashboard/CardData1";
+import DashboardStatsGrid from "@/components/Dashboard/Grid/DashboardStatsGrid";
+import FilterListCustom from "@/components/Dashboard/Filters/FilterMap1";
+import CardStats from "@/components/Dashboard/CardData/CardData1";
 
 export default function Dashboard() {
   return (
