@@ -1,6 +1,6 @@
 "use client";
 
-import DefaultSidebar from "../../components/Layouts/Side/Sidebar";
+import DefaultSidebar from "../../components/Layouts/Sidebar";
 import MobileNavbar from "../../components/Layouts/Down/MobileNavbar";
 import ResponsiveAppBar from "../../components/Layouts/Top/AppBar";
 import AppBarCustom from "../../components/Layouts/Top/AppBar1";
@@ -24,14 +24,14 @@ export default function Layout({ children }: LayoutProps) {
           <div className="hidden md:block bg-white shadow-lg rounded-xl">
             <DefaultSidebar />
           </div>
+         
           {children}
         </div>
 
         {/* Mobile Navbar at the bottom */}
-        <div>
+        <div className="md:hidden fixed">
           <AppBarCustom />
-          <div className="fixed bottom-0 md:hidden left-0 right-0 bg-white shadow-lg">
-            <AppBarCustom />
+          <div className="bottom-0 left-0 right-0 bg-white shadow-lg"> 
             <MobileNavbar />
           </div>
         </div>

@@ -12,6 +12,7 @@ import PieChartCustom from "@/components/Dashboard/Charts/PieChart";
 import DashboardStatsGrid from "@/components/Dashboard/Grid/DashboardStatsGrid";
 import FilterListCustom from "@/components/Dashboard/Filters/FilterMap1";
 import CardStats from "@/components/Dashboard/CardData/CardData1";
+import FilterSelectionInterface from "@/components/Dashboard/Filters/FilterMapCustom";
 
 export default function Dashboard() {
   return (
@@ -28,7 +29,8 @@ export default function Dashboard() {
           <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
             Dashboard
           </h1>
-          <ControlledSelect />
+          {/* <ControlledSelect /> */}
+          <FilterSelectionInterface/>
           {/* <FilterListCustom/> */}
         </div>
 
