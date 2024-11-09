@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import { FiUser } from "react-icons/fi";
 import QueryStatsIcon from "@mui/icons-material/QueryStats";
+import { useRouter  } from "next/navigation";
+
 const AppBarCustom = () => {
-  const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+  const router = useRouter()
+  const [showProfileDropdown, setShowProfileDropdown] = useState<boolean>(false);
 
   const toggleProfileDropdown = () => {
     setShowProfileDropdown(!showProfileDropdown);
   };
 
-  const profileOptions = [
-    { id: 1, label: "My Profile", link: "#" },
-    { id: 3, label: "Logout", link: "#" },
-  ];
+  // const profileOptions = [
+  //   { id: 1, label: "My Profile", link: "#" },
+  //   { id: 3, label: "Logout", link: "#" },
+  // ];
 
   return (
     <header className="relative">
@@ -40,8 +43,24 @@ const AppBarCustom = () => {
                   />
                   <FiUser className="h-5 w-5 text-gray-600" />
                 </button>
-
+                
                 {showProfileDropdown && (
+                  <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                    <div className="py-1" role="menu">
+                    <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2">
+                      <li><button onClick={() => {
+                        router.push('/Profile')
+                      }}>Profile</button></li>
+                      <li><button onClick={() => {
+                        sessionStorage.removeItem("auth.jwt");
+                        sessionStorage.removeItem("auth.role");
+                        router.push("/");
+                      }}>Logout</button></li>
+                    </ul>
+                    </div>
+                  </div>
+                )}
+                {/* {showProfileDropdown && (
                   <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
                     <div className="py-1" role="menu">
                       {profileOptions.map((option) => (
@@ -56,7 +75,7 @@ const AppBarCustom = () => {
                       ))}
                     </div>
                   </div>
-                )}
+                )} */}
               </div>
             </div>
           </div>

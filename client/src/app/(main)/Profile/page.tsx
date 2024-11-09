@@ -1,7 +1,16 @@
 "use client";
 import Navbar from "../../../components/Navbar";
+import { useRouter  } from "next/navigation";
 
 export default function Profile() {
+    const router = useRouter()
+
+    const Logout = () => {
+        sessionStorage.removeItem("auth.jwt"); 
+        sessionStorage.removeItem("auth.role"); 
+        router.push("/");
+    };
+
     return (
         <div className="flex flex-col min-h-screen bg-[#F3F4F6]">
         <Navbar/>
@@ -29,7 +38,7 @@ export default function Profile() {
                     <div className="border-4 p-2 font-bold border-l-0 w-44">Admin</div>
                 </div>
             </div>
-            <button className="bg-red-500 rounded-md text-white font-bold p-2 text-xl hover:bg-red-400 shadow-lgs">logout</button>
+            <button onClick={Logout} className="bg-red-500 rounded-md text-white font-bold p-2 text-xl hover:bg-red-400 shadow-lgs hover:shadow-lg">logout</button>
         </main>
         <div className="fixed bottom-0 w-full md:hidden">
           {/* <MobileNavbar /> */}
