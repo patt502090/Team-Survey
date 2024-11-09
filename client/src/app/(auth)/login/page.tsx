@@ -103,6 +103,7 @@ export default function LoginPage() {
     router.push("/register");
   };
 
+
   return (
     <ContextProvider>
       <Toaster position="top-right" reverseOrder={false} />
