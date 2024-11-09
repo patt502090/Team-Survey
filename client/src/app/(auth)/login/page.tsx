@@ -81,6 +81,8 @@ export default function LoginPage() {
         if (storageKey) {
           sessionStorage.setItem(conf.roleSessionStorageKey, storageKey);
         }
+        
+        router.push("/dashboard");
 
         // navigate(roleName === "member" ? "/" : "/admin");
         toast.success("เข้าสู่ระบบสำเร็จ!");
