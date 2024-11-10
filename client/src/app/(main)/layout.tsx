@@ -6,6 +6,7 @@ import ResponsiveAppBar from "../../components/Layouts/Top/AppBar";
 import AppBarCustom from "../../components/Layouts/Top/AppBar1";
 import React, { ReactNode } from "react";
 import { ContextProvider } from "@/contexts/Auth.context";
+import LabelBottomNavigation from "../../components/Layouts/Down/MobileNavbar";
 
 interface LayoutProps {
   children: ReactNode;
@@ -24,16 +25,16 @@ export default function Layout({ children }: LayoutProps) {
           <div className="hidden md:block bg-white shadow-lg rounded-xl">
             <DefaultSidebar />
           </div>
-         
+
           {children}
         </div>
 
         {/* Mobile Navbar at the bottom */}
         <div className="md:hidden fixed">
           <AppBarCustom />
-          <div className="bottom-0 left-0 right-0 bg-white shadow-lg"> 
-            <MobileNavbar />
-          </div>
+        </div>
+        <div className="bottom-0 left-0 right-0 bg-white shadow-lg fixed md:hidden">
+          <LabelBottomNavigation />
         </div>
       </div>
     </ContextProvider>
