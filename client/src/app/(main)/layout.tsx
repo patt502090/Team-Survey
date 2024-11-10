@@ -33,7 +33,7 @@ export default function Layout({ children }: LayoutProps) {
         <div className="md:hidden fixed">
           <AppBarCustom />
         </div>
-        <div className="bottom-0 left-0 right-0 bg-white shadow-lg fixed md:hidden">
+        <div className="bottom-0 bg-white shadow-lg fixed md:hidden">
           <LabelBottomNavigation />
         </div>
       </div>

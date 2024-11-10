@@ -90,8 +90,8 @@ export default function HorizontalLinearAlternativeLabelStepper() {
   };
 
   return (
-    <Box sx={{ width: "100%" }} className="mt-6 sm:mt-8 md:mt-10 lg:mt-12">
-      <Stepper activeStep={activeStep} alternativeLabel>
+    <Box sx={{ width: "100%" }} className=" mt-32 sm:mt-8 md:mt-10 lg:mt-12 md:ml-32 ">
+      <Stepper activeStep={activeStep} alternativeLabel className="">
         {steps.map((label, index) => (
           <Step key={label}>
             <StepLabel>{label}</StepLabel>
@@ -99,7 +99,7 @@ export default function HorizontalLinearAlternativeLabelStepper() {
         ))}
       </Stepper>
 
-      <div className="step-content flex flex-col h-full justify-between">
+      <div className="step-content flex flex-col h-full justify-between ">
         {activeStep === 0 && (
           <div>
             {/* <Camera /> */}
