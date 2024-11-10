@@ -4,7 +4,7 @@ const conf = {
   loginEndpoint: "/auth/local",
   registerEndpoint: "/auth/local/register",
   jwtUserEndpoint:
-    "/users/me?populate=role",
+    "/users/me?populate=*",
   jwtSessionStorageKey: "auth.jwt",
   roleSessionStorageKey: "auth.role",
   googleConnectEndpoint: "/connect/google",

@@ -8,11 +8,6 @@ const IDCheckPage: React.FC = () => {
   const [status, setStatus] = useState<boolean | null>(null);
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
 
   const validateThaiID = (id: string): boolean => {
     if (id.length !== 13) return false;
@@ -53,9 +48,7 @@ const IDCheckPage: React.FC = () => {
     }
   };
 
-  if (!isClient) {
-    return null;
-  }
+
 
   return (
     <div className="flex">
