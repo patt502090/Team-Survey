@@ -49,7 +49,7 @@ const AppBarCustom = () => {
                     <div className="py-1" role="menu">
                     <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2">
                       <li><button onClick={() => {
-                        router.push('/Profile')
+                        router.push('/profile')
                       }}>Profile</button></li>
                       <li><button onClick={() => {
                         sessionStorage.clear()

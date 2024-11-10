@@ -34,7 +34,7 @@ export default function LabelBottomNavigation() {
         value="CheckID"
         icon={<SearchIcon sx={{ fontSize: 27 }} />}
         onClick={() => {
-          router.push("/checkID");
+          router.push("/checkid");
         }}
       />
 

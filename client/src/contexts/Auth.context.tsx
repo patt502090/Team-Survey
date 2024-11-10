@@ -22,7 +22,11 @@ interface User {
   birthdate: string;
   my_team?: {
     documentId: string;
-    TeamName: string;
+    username: string;
+  }
+  team?:{
+    documentId: string;
+    username: string;
   }
   
 }

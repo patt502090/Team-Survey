@@ -50,7 +50,7 @@ export default function DefaultSidebar() {
         setUserData({
           username: result.data.username,
           role: result.data.role.name,
-          team: result.data.team || "N/A",
+          team: result.data.team.TeamName || "N/A",
         });
         setLoading(false);
       } catch (error) {
@@ -120,7 +120,7 @@ export default function DefaultSidebar() {
             </ListItemPrefix>
             Dashboard
           </ListItem>
-          <ListItem className="text-white hover:bg-gray-700" onClick={() => router.push("/checkID")}>
+          <ListItem className="text-white hover:bg-gray-700" onClick={() => router.push("/checkid")}>
             <ListItemPrefix>
               <FactCheckIcon className="h-5 w-5 text-white" />
             </ListItemPrefix>
@@ -134,7 +134,7 @@ export default function DefaultSidebar() {
             Team
             <ListItemSuffix>
               <Chip
-                value={userData.team || "N/A"}
+                value={userData.team.TeamName || "N/A"}
                 size="sm"
                 variant="ghost"
                 color="blue-gray"
