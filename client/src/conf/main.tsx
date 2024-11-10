@@ -13,7 +13,8 @@ const conf = {
   adminStorageKey:
     "=hru*(kh=+C/2o%{s2S[]aNkLmda)S&,!//BSr_Q<Ug:RwOUp%^pJO*@e`1n<v(",
   leaderStorageKey:
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~"
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~",
+  teamEndpoint: "/teams?populate=*&sort[0]=createdAt:desc",
 };
 
 export default conf;
