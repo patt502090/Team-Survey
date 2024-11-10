@@ -12,6 +12,19 @@ interface User {
   role: {
     name: string;
   };
+  documentId: string;
+  email: string;
+  Name_Th: string;
+  Name_Eng: string;
+  NameTitle: string;
+  NameTitle_Eng: string;
+  NameTitle_Th: string;
+  birthdate: string;
+  my_team?: {
+    documentId: string;
+    TeamName: string;
+  }
+  
 }
 
 interface AuthState {

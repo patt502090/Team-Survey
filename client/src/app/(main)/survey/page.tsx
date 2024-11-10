@@ -21,7 +21,7 @@ export default function HorizontalLinearAlternativeLabelStepper() {
   const router = useRouter();
   const context = useContext(AuthContext);
   const ContextState = context ? context.state : null;
-  console.log(ContextState);
+  console.log("ck",ContextState);
   const [activeStep, setActiveStep] = useState(0);
   const [customerData, setCustomerData] = useState<OCRResponse | null>(null);
   const [customerDatatoCheck, setCustomerDatatoCheck] =
@@ -54,21 +54,35 @@ export default function HorizontalLinearAlternativeLabelStepper() {
       const requestData = {
         data: {
           Id_Number: customerDatatoCheck.Id_Number,
-          NameTitle: customerDatatoCheck.NameTitle,
+          NameTitle: "Mr.", /* customerDatatoCheck.NameTitle */ 
           Name_Th: customerDatatoCheck.Name_Th,
           Name_Eng: customerDatatoCheck.Name_Eng,
-          Address: /*customerDatatoCheck.Address*/ "2024-11-10",
-          birthdate: customerDatatoCheck.birthdate,
-          // Assessor: ContextState?.user?.documentId, ตรงนี้ๆ
-          // business_with: ContextState?.user?.r,
+          Address: customerDatatoCheck.Address,
+          birthdate: "2024-11-10",
+          Assessor: ContextState?.user?.documentId,
+          business_with: ContextState?.user?.my_team?.documentId,
           estimate: customerDatatoCheck.estimate,
-          sub_district: customerDatatoCheck.Address,
-          Pic: customerDatatoCheck.Pic, // อาจต้องคอมเม้นตรงนี้ไปก่อนถ้าจะใช้ ax.post
+          sub_district: "z0djf7s3ekitgvsw6afp9ctq",
+          // Pic: customerDatatoCheck.Pic, // อาจต้องคอมเม้นตรงนี้ไปก่อนถ้าจะใช้ ax.post
         },
       };
-      console.log(requestData);
+      // http://localhost:1337/api/sub-districts
 
-      // await ax.post(`${conf.apiUrlPrefix}/customers`, requestData);
+    //   {"data":{
+    //     "Id_Number": "123456789dasdsa0123",
+    //     "NameTitle": "Mr.",
+    //     "Name_Th": "มไย ตัวอย่างdddd นามรอง สาธิตสกุล",
+    //     "Name_Eng": "Sample MiddleNameSatitsakul",
+    //     "Address": "2024-11-10",
+    //     "birthdate": "2024-11-10",
+    //     "Assessor": "p1e0ov8y5d5a72dwe1rd34fk",
+    //     "business_with": "befvxwfev1kz1t6fwf4hmb1e",
+    //     "estimate": "green",
+    //     "sub_district": "z0djf7s3ekitgvsw6afp9ctq"
+    // }}
+      console.log("yuy",requestData);
+
+      await ax.post(`${conf.apiUrlPrefix}/customers`, requestData);
       setShowPopup(true);
     } catch (error) {
       console.error("Error posting customer data:", error);
