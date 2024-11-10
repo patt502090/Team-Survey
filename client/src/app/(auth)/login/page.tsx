@@ -65,6 +65,8 @@ export default function LoginPage() {
       //   );
       // }
       console.log(result);
+      console.log("user: ", result.data);
+      
       setLoading(false);
       const roleName = result.data.role.name;
       if (roleName) {
