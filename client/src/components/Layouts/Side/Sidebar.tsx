@@ -9,10 +9,7 @@ import {
   ListItemSuffix,
   Chip,
 } from "@material-tailwind/react";
-import {
-  UserCircleIcon,
-  PowerIcon,
-} from "@heroicons/react/24/solid";
+import { UserCircleIcon, PowerIcon } from "@heroicons/react/24/solid";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import PersonIcon from "@mui/icons-material/Person";
@@ -23,6 +20,7 @@ import FactCheckIcon from "@mui/icons-material/FactCheck";
 import ax from "@/conf/ax";
 import conf from "@/conf/main";
 import { AuthContext } from "@/contexts/Auth.context";
+import { useRouter } from "next/navigation";
 
 export default function DefaultSidebar() {
   const { state: ContextState, logout } = useContext(AuthContext);
@@ -33,11 +31,16 @@ export default function DefaultSidebar() {
     role: "",
     team: "",
   });
-  console.log("this",user)
+  console.log("this", user);
   const [loading, setLoading] = useState(true);
 
   const toggleSidebar = () => {
     setCollapsed(!collapsed);
+  };
+  const router = useRouter();
+  const handleLogout = () => {
+    logout();
+    router.push("/login");
   };
 
   useEffect(() => {
@@ -63,7 +66,7 @@ export default function DefaultSidebar() {
     <Card
       className={`h-screen w-full transition-all duration-300 shadow-xl shadow-blue-gray-900/5 p-4 fixed  ${
         collapsed ? "max-w-[4rem]" : "max-w-[17rem]"
-      } bg-gray-800 text-white  rounded-none`} 
+      } bg-gray-800 text-white  rounded-none`}
     >
       <div className="p-1 text-center">
         <div className="relative flex justify-center items-center">
@@ -111,20 +114,20 @@ export default function DefaultSidebar() {
       {!collapsed && <hr className="my-4 border-gray-700" />}
       {!collapsed && (
         <List>
-          <ListItem className="text-white hover:bg-gray-700">
+          <ListItem className="text-white hover:bg-gray-700" onClick={() => router.push("/dashboard")}>
             <ListItemPrefix>
               <HomeIcon className="h-5 w-5 text-white" />
             </ListItemPrefix>
             Dashboard
           </ListItem>
-          <ListItem className="text-white hover:bg-gray-700">
+          <ListItem className="text-white hover:bg-gray-700" onClick={() => router.push("/checkID")}>
             <ListItemPrefix>
               <FactCheckIcon className="h-5 w-5 text-white" />
             </ListItemPrefix>
             CheckID
           </ListItem>
 
-          <ListItem className="text-white hover:bg-gray-700">
+          <ListItem className="text-white hover:bg-gray-700" onClick={() => router.push("/team")}>
             <ListItemPrefix>
               <GroupsIcon className="h-5 w-5 text-white" />
             </ListItemPrefix>
@@ -139,14 +142,14 @@ export default function DefaultSidebar() {
               />
             </ListItemSuffix>
           </ListItem>
-          <ListItem className="text-white hover:bg-gray-700">
+          <ListItem className="text-white hover:bg-gray-700" onClick={() => router.push("/profile")}>
             <ListItemPrefix>
               <UserCircleIcon className="h-5 w-5 text-white" />
             </ListItemPrefix>
             Profile
           </ListItem>
 
-          <ListItem className="text-white hover:bg-gray-700">
+          <ListItem className="text-white hover:bg-gray-700" onClick={handleLogout}>
             <ListItemPrefix>
               <PowerIcon className="h-5 w-5 text-white" />
             </ListItemPrefix>

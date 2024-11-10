@@ -2,23 +2,13 @@
 import React, { useState, useEffect, FormEvent } from "react";
 import { FaSearch, FaCheckCircle, FaTimesCircle, FaIdCard } from "react-icons/fa";
 import { BiError } from "react-icons/bi";
+import ax from "@/conf/ax";
 
 const IDCheckPage: React.FC = () => {
   const [idInput, setIdInput] = useState<string>("");
   const [status, setStatus] = useState<boolean | null>(null);
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-
-  const validateThaiID = (id: string): boolean => {
-    if (id.length !== 13) return false;
-    let sum = 0;
-    for (let i = 0; i < 12; i++) {
-      sum += parseFloat(id.charAt(i)) * (13 - i);
-    }
-    const mod = sum % 11;
-    const check = (11 - mod) % 10;
-    return check === parseFloat(id.charAt(12));
-  };
 
   const handleIdCheck = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -39,8 +29,16 @@ const IDCheckPage: React.FC = () => {
 
     try {
       await new Promise((resolve) => setTimeout(resolve, 1500));
-      const isValid = validateThaiID(idInput);
-      setStatus(isValid);
+      
+      const response = await ax.get(`/customers?filters[Id_Number][$eq]=${idInput}`);
+      console.log(response.data.data);
+      const data = response.data.data
+
+      if (data.length > 0) {
+        setStatus(true);
+      } else {
+        setStatus(false);
+      }
     } catch (err) {
       setError("ไม่สามารถตรวจสอบได้ กรุณาลองใหม่อีกครั้ง");
     } finally {
@@ -48,13 +46,11 @@ const IDCheckPage: React.FC = () => {
     }
   };
 
-
-
   return (
     <div className="flex">
-      <div className="flex-1 md:ml-64 ">
+      <div className="flex-1 md:ml-64">
         <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-md mx-auto mt-36 md:mt-20">
+          <div className="max-w-md mx-auto mt-20 md:mt-8">
             <div className="bg-white rounded-2xl shadow-2xl p-8 space-y-6 transform hover:scale-105 transition-transform duration-300">
               <div className="text-center">
                 <div className="flex justify-center mb-4">
@@ -151,56 +147,3 @@ const IDCheckPage: React.FC = () => {
 };
 
 export default IDCheckPage;
-
-
-// import Navbar from "../../../components/Navbar"
-// export default function Checkid(){
-//     return(
-//         <div>
-//             <Navbar/>
-//             <main className="bg-gray-100 h-screen w-full flex flex-col p-4">
-//                 <form className="max-w-md mx-auto w-full py-4 mb-8">   
-//                     <label className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
-//                     <div className="relative shadow-md">
-//                         <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none ">
-//                             <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-//                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-//                             </svg>
-//                         </div>
-//                         <input type="search" id="default-search" className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Mockups, Logos..." required />
-//                         <button type="submit" className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
-//                     </div>
-//                 </form>
-//                 <div className="bg-white w-full rounded-lg shadow-md p-4 flex flex-col gap-4">
-//                     <div className="w-full border-4 rounded-xl border-gray-300 flex items-center p-2">
-//                         <div className="border-r-4 p-2">
-//                             <div className="rounded-full w-12 h-12 bg-gray-400"></div>
-//                         </div>
-//                         <div className="p-2">
-//                             <div className="text-sm font-extrabold">Firstname Lastname</div>
-//                             <div className="font-thin text-sm">Nickname</div>
-//                         </div>
-//                     </div>
-//                     <div className="w-full border-4 rounded-xl border-gray-300 flex items-center p-2">
-//                         <div className="border-r-4 p-2">
-//                             <div className="rounded-full w-12 h-12 bg-gray-400"></div>
-//                         </div>
-//                         <div className="p-2">
-//                             <div className="text-sm font-extrabold">Firstname Lastname</div>
-//                             <div className="font-thin text-sm">Nickname</div>
-//                         </div>
-//                     </div>
-//                     <div className="w-full border-4 rounded-xl border-gray-300 flex items-center p-2">
-//                         <div className="border-r-4 p-2">
-//                             <div className="rounded-full w-12 h-12 bg-gray-400"></div>
-//                         </div>
-//                         <div className="p-2">
-//                             <div className="text-sm font-extrabold">Firstname Lastname</div>
-//                             <div className="font-thin text-sm">Nickname</div>
-//                         </div>
-//                     </div>
-//                 </div>
-//             </main>
-//         </div>
-//     )
-// }
