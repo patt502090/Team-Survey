@@ -65,16 +65,9 @@ export default function Profile() {
     return (
         <div className="flex flex-col min-h-screen bg-gradient-to-r from-blue-50 to-blue-100">
             <Navbar />
-            <main className="flex flex-col items-center container mx-auto p-4">
-                <div className="bg-white rounded-lg p-6 shadow-lg border-2 w-full max-w-md flex flex-col  items-center ">
-                    <button className="btn self-end" onClick={() => document.getElementById('editProfileModal').showModal()}>
-                      <svg className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                          <path stroke="none" d="M0 0h24v24H0z"/>
-                          <path d="M9 7 h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" />
-                          <path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" />
-                          <line x1="16" y1="5" x2="19" y2="8" />
-                      </svg>
-                    </button>
+            <main className="flex flex-col justify-center items-center h-screen container mx-auto p-4 ">
+                <div className="bg-white rounded-lg p-6 shadow-lg border-2 w-full max-w-md flex flex-col">
+
                     <dialog id="editProfileModal" className="modal">
                         <div className="modal-box p-8">
                             <form method="dialog" className="space-y-4" onSubmit={(e) => { e.preventDefault(); EditProfile(); }}>
@@ -96,22 +89,39 @@ export default function Profile() {
                             </form>
                         </div>
                     </dialog>
-                    <img
-                        className="w-32 h-32 rounded-full border-4 border-blue-200 shadow-md mb-4"
-                        src="https://res.cloudinary.com/dboafhu31/image/upload/v1625318266/imagen_2021-07-03_091743_vtbkf8.png"
-                        alt="Profile illustration"
-                    />
-                    {profile ? (
-                        <div className="w-full flex flex-col gap-4">
-                            <ProfileItem label="Name" value={profile.username} />
-                            <ProfileItem label="Username" value={profile.username} />
-                            <ProfileItem label="Role" value={profile.role?.name} />
-                            <ProfileItem label="Email" value={profile.email} />
-                            <ProfileItem label="Phone" value={profile.phoneNumber} />
-                        </div>
-                    ) : (
-                        <p className="text-center text-gray-600">Loading profile...</p>
-                    )}
+                    <div className="self-end border-4">
+                      <button className="btn" onClick={() => document.getElementById('editProfileModal').showModal()}>
+                      <svg className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                          <path stroke="none" d="M0 0h24v24H0z"/>
+                          <path d="M9 7 h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" />
+                          <path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" />
+                          <line x1="16" y1="5" x2="19" y2="8" />
+                      </svg>
+                    </button>
+                    </div>
+                    <div className="min-[0px]:grid min-[0px]:justify-center min-[0px]:items-center lg:flex lg:gap-4">
+                      <div className="justify-self-center lg:borer-r-4 lg:border-r-4 lg:pr-4">
+                        <img
+                          className="w-32 h-32 rounded-full border-4 border-blue-200 shadow-md mb-4"
+                          src="https://res.cloudinary.com/dboafhu31/image/upload/v1625318266/imagen_2021-07-03_091743_vtbkf8.png"
+                          alt="Profile illustration"
+                        />
+                      </div>
+                      <div>
+                        {profile ? (
+                          <div className="w-full flex flex-col gap-4">
+                              <ProfileItem label="Name" value={profile.username} />
+                              <ProfileItem label="Username" value={profile.username} />
+                              <ProfileItem label="Role" value={profile.role?.name} />
+                              <ProfileItem label="Email" value={profile.email} />
+                              <ProfileItem label="Phone" value={profile.phoneNumber} />
+                          </div>
+                        ) : (
+                            <p className="text-center text-gray-600">Loading profile...</p>
+                        )}
+                      </div>
+                    </div>
+
                 </div>
                 <div className="rounded-lg shadow-lg w-full max-w-md flex flex-col items-center mb-16">
                   <button onClick={Logout} className="mt-6 w-full bg-red-500 rounded-md text-white font-bold py-2 px-4 text-xl hover:bg-red-400 transition-shadow duration-200 shadow-md hover:shadow-lg">
