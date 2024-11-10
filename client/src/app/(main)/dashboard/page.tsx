@@ -13,6 +13,7 @@ import DashboardStatsGrid from "@/components/Dashboard/Grid/DashboardStatsGrid";
 import FilterListCustom from "@/components/Dashboard/Filters/FilterMap1";
 import CardStats from "@/components/Dashboard/CardData/CardData1";
 import FilterSelectionInterface from "@/components/Dashboard/Filters/FilterMapCustom";
+import FilterTeamCustom from "@/components/Dashboard/Filters/FilterTeam";
 
 export default function Dashboard() {
   return (
@@ -20,20 +21,20 @@ export default function Dashboard() {
       <aside className="hidden md:block w-64 bg-white shadow-lg">
         {/* Sidebar content goes here */}
       </aside>
-      
+
       <main className="flex-1 p-6 space-y-6 md:ml-5">
         <div className="">
-          <BreadcrumbsWithIcon/>
+          <BreadcrumbsWithIcon pathName="Dashboard"/>
         </div>
         <div className="flex justify-between items-center ">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
             Dashboard
           </h1>
           {/* <ControlledSelect /> */}
-          <FilterSelectionInterface/>
-          {/* <FilterListCustom/> */}
+          {/* <FilterTeamCustom/> */}
+          <FilterSelectionInterface />
         </div>
-
+        {/* <FilterListCustom/> */}
         {/* <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
           <CardDataStats title="Total Surveys Completed" total="3,456" rate="1.2%" levelUp bgColor="bg-blue-100" iconColor="text-blue-600">
             <PersonAddIcon />
@@ -48,8 +49,8 @@ export default function Dashboard() {
             <GroupsIcon />
           </CardDataStats>
         </div> */}
-        <CardStats/>
-        
+        <CardStats />
+
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 ">
           {/* <LineChartCustom />
           <PieChartCustom /> */}

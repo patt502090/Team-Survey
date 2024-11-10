@@ -1,5 +1,9 @@
 module.exports = {
-  crossOrigin: 'use-credentials', // Add crossOrigin attribute to <script> tags
+  crossOrigin: 'use-credentials',
+  reactStrictMode: true,
+  experimental: {
+    reactMode: 'concurrent',
+  },
   async headers() {
     return [
       {

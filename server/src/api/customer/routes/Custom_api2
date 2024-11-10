@@ -1,0 +1,15 @@
+// src/api/region/routes/region.ts
+export default {
+    routes: [
+      {
+        method: 'POST',
+        path: '/check_estimate', // URL ที่จะใช้เรียกใช้งาน API
+        handler: 'check.estimate_checked_d', // ชื่อฟังก์ชันใน Controller
+        config: {
+          policies: [],
+          middlewares: [],
+        },
+      },
+    ],
+  };
+  

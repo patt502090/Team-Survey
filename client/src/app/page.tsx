@@ -9,14 +9,16 @@ export default function Home() {
 
   const handleLogin = () => {
     setIsLoggingIn(true);
-    setTimeout(() => setIsLoggingIn(false), 2000);
     router.push("/login");
+    setTimeout(() => setIsLoggingIn(false), 2000);
+    
   };
 
   const handleRegister = () => {
     setIsRegistering(true);
-    setTimeout(() => setIsRegistering(false), 2000);
     router.push("/register");
+    setTimeout(() => setIsRegistering(false), 2000);
+    
   };
 
   const router = useRouter();
