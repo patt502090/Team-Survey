@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState, useEffect } from "react";
 import {
   Card,
@@ -22,14 +22,18 @@ import GroupsIcon from "@mui/icons-material/Groups";
 import FactCheckIcon from "@mui/icons-material/FactCheck";
 import ax from "@/conf/ax";
 import conf from "@/conf/main";
+import { AuthContext } from "@/contexts/Auth.context";
 
 export default function DefaultSidebar() {
+  const { state: ContextState, logout } = useContext(AuthContext);
+  const { user } = ContextState;
   const [collapsed, setCollapsed] = useState(false);
   const [userData, setUserData] = useState({
     username: "",
     role: "",
     team: "",
   });
+  console.log("this",user)
   const [loading, setLoading] = useState(true);
 
   const toggleSidebar = () => {
