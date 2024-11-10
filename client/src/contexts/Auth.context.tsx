@@ -14,21 +14,19 @@ interface User {
   };
   documentId: string;
   email: string;
-  Name_Th: string;
-  Name_Eng: string;
-  NameTitle: string;
-  NameTitle_Eng: string;
-  NameTitle_Th: string;
-  birthdate: string;
+  first_name: string;
+  last_name: string;
+  phoneNumber: string;
+
   my_team?: {
     documentId: string;
     username: string;
-  }
-  team?:{
+  };
+
+  team?: {
     documentId: string;
     username: string;
-  }
-  
+  };
 }
 
 interface AuthState {

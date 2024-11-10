@@ -26,13 +26,7 @@ export default function DefaultSidebar() {
   const { state: ContextState, logout } = useContext(AuthContext);
   const { user } = ContextState;
   const [collapsed, setCollapsed] = useState(false);
-  const [userData, setUserData] = useState({
-    username: "",
-    role: "",
-    team: "",
-  });
   console.log("this", user);
-  const [loading, setLoading] = useState(true);
 
   const toggleSidebar = () => {
     setCollapsed(!collapsed);
@@ -43,24 +37,26 @@ export default function DefaultSidebar() {
     router.push("/login");
   };
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const result = await ax.get(`${conf.jwtUserEndpoint}`);
-        setUserData({
-          username: result.data.username,
-          role: result.data.role.name,
-          team: result.data.team.TeamName || "N/A",
-        });
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-        setLoading(false);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchUserData = async () => {
+  //     try {
+  //       const result = await ax.get(`${conf.jwtUserEndpoint}`);
+  //       console.log("pp",result.data);
+  //       setUserData({
+  //         username: result.data.username,
+  //         role: result.data.data.role.name,
+  //         team: result.data.data.team.TeamName || "N/A",
+  //       });
+  //       setLoading(false);
+  //     } catch (error) {
+  //       console.error("Error fetching user data:", error);
+  //       setLoading(false);
+  //     }
+  //   };
 
-    fetchUserData();
-  }, []);
+  //   fetchUserData();
+  // }, []);
+  // console.log("user",userData);
 
   return (
     <Card
@@ -93,20 +89,20 @@ export default function DefaultSidebar() {
         />
       </div>
 
-      {loading ? (
-        <p className="text-center text-gray-300 mt-1">Loading...</p>
-      ) : userData.role === "Admin" ? (
+      {user?.role?.name === "Admin" ? (
         <div className="text-center mt-1">
           <p className="font-medium text-xs md:text-base text-center text-blue-300 ">
-            {userData.username}
+            {user?.username}
           </p>
-          <p className="text-sm text-gray-400 text-center">{userData.role}</p>
+          <p className="text-sm text-gray-400 text-center">
+            {user?.role?.name}
+          </p>
         </div>
       ) : (
         <div className="font-medium text-xs md:text-base text-center text-teal-300 mt-1">
-          <p className="text-gray-300">{userData.username}</p>
+          <p className="text-gray-300">{user?.username}</p>
           <p className="text-xs text-gray-400 text-center">
-            {userData.team} : {userData.role}
+            {user?.my_team?.TeamName || "N/A"} : {user?.role?.name}
           </p>
         </div>
       )}
@@ -114,27 +110,36 @@ export default function DefaultSidebar() {
       {!collapsed && <hr className="my-4 border-gray-700" />}
       {!collapsed && (
         <List>
-          <ListItem className="text-white hover:bg-gray-700" onClick={() => router.push("/dashboard")}>
+          <ListItem
+            className="text-white hover:bg-gray-700"
+            onClick={() => router.push("/dashboard")}
+          >
             <ListItemPrefix>
               <HomeIcon className="h-5 w-5 text-white" />
             </ListItemPrefix>
             Dashboard
           </ListItem>
-          <ListItem className="text-white hover:bg-gray-700" onClick={() => router.push("/checkid")}>
+          <ListItem
+            className="text-white hover:bg-gray-700"
+            onClick={() => router.push("/checkid")}
+          >
             <ListItemPrefix>
               <FactCheckIcon className="h-5 w-5 text-white" />
             </ListItemPrefix>
             CheckID
           </ListItem>
 
-          <ListItem className="text-white hover:bg-gray-700" onClick={() => router.push("/team")}>
+          <ListItem
+            className="text-white hover:bg-gray-700"
+            onClick={() => router.push("/team")}
+          >
             <ListItemPrefix>
               <GroupsIcon className="h-5 w-5 text-white" />
             </ListItemPrefix>
             Team
             <ListItemSuffix>
               <Chip
-                value={userData.team.TeamName || "N/A"}
+                value={user?.my_team?.TeamName || "N/A"}
                 size="sm"
                 variant="ghost"
                 color="blue-gray"
@@ -142,14 +147,20 @@ export default function DefaultSidebar() {
               />
             </ListItemSuffix>
           </ListItem>
-          <ListItem className="text-white hover:bg-gray-700" onClick={() => router.push("/profile")}>
+          <ListItem
+            className="text-white hover:bg-gray-700"
+            onClick={() => router.push("/profile")}
+          >
             <ListItemPrefix>
               <UserCircleIcon className="h-5 w-5 text-white" />
             </ListItemPrefix>
             Profile
           </ListItem>
 
-          <ListItem className="text-white hover:bg-gray-700" onClick={handleLogout}>
+          <ListItem
+            className="text-white hover:bg-gray-700"
+            onClick={handleLogout}
+          >
             <ListItemPrefix>
               <PowerIcon className="h-5 w-5 text-white" />
             </ListItemPrefix>
