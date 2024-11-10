@@ -62,7 +62,7 @@ export default function HorizontalLinearAlternativeLabelStepper() {
           Assessor: ContextState?.user?.documentId,
           business_with: ContextState?.user?.my_team?.documentId,
           estimate: customerDatatoCheck.estimate,
-          sub_district: "z0djf7s3ekitgvsw6afp9ctq",
+          sub_district: "z0djf7s3ekitgvsw6afp9ctq"
           // Pic: customerDatatoCheck.Pic, // อาจต้องคอมเม้นตรงนี้ไปก่อนถ้าจะใช้ ax.post
         },
       };
@@ -78,7 +78,7 @@ export default function HorizontalLinearAlternativeLabelStepper() {
     //     "Assessor": "p1e0ov8y5d5a72dwe1rd34fk",
     //     "business_with": "befvxwfev1kz1t6fwf4hmb1e",
     //     "estimate": "green",
-    //     "sub_district": "z0djf7s3ekitgvsw6afp9ctq"
+    //     "sub_district": "z0djf7s3ekitgvsw6afp9ctq" z0djf7s3ekitgvsw6afp9ctq
     // }}
       console.log("yuy",requestData);
 
