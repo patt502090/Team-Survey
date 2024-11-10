@@ -102,7 +102,7 @@ export default function Camera({ onOCRProcessed }: CameraProps) {
           {
             headers: {
               "Content-Type": "multipart/form-data",
-              Apikey: "YH1mYYlQFqKa1VcAUEB0zAxTDhXDk98A", // แทนที่ด้วย API Key ของคุณ
+              Apikey: "IXrE7zgMsbMceYlYwSSQXweO9DN9Owo0", // แทนที่ด้วย API Key ของคุณ
             },
           }
         );
@@ -171,7 +171,7 @@ export default function Camera({ onOCRProcessed }: CameraProps) {
         {
           headers: {
             "Content-Type": "multipart/form-data",
-            Apikey: "YH1mYYlQFqKa1VcAUEB0zAxTDhXDk98A",
+            Apikey: "IXrE7zgMsbMceYlYwSSQXweO9DN9Owo0",
           },
         }
       );
