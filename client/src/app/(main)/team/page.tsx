@@ -1,13 +1,58 @@
-"use client";
-import React, { useState } from "react";
-import { FiUserPlus, FiSearch } from "react-icons/fi";
+"use client"
+import React, { useEffect, useState } from "react";
+import { FiSearch } from "react-icons/fi";
 import TeamList from "../../../components/Team/TeamList";
 import { BreadcrumbsWithIcon } from "@/components/Dashboard/Breadcrumbs";
 import StatsTeamComponent from "../../../components/Team/StatsCard";
-import { Button } from "@material-tailwind/react";
 import { CreateTeamButton } from "@/components/Team/CreateTeamButton";
+import ax from "@/conf/ax";
+import conf from "@/conf/main";
+
+interface Team {
+  id: number;
+  documentId: string;
+  TeamName: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  manager: {
+    username: string;
+  };
+  members: Member[];
+}
+
+interface Member {
+  id: number;
+  documentId: string;
+  username: string;
+  email: string;
+  provider: string;
+  confirmed: boolean;
+  blocked: boolean;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  phoneNumber: string;
+  first_name: string;
+  last_name: string;
+}
+
 const TeamManagement = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [TeamsData, setTeamsData] = useState<Team[]>([]);
+  
+  useEffect(() => {
+    fetchTeamsData();
+  }, []);
+  
+  const fetchTeamsData = async () => {
+    try {
+      const teamsResult = await ax.get(`${conf.teamEndpoint}`);
+      setTeamsData(teamsResult.data.data);
+    } catch (error) {
+      console.error("Error fetching teams data:", error);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 p-8 md:ml-64" role="main">
@@ -45,7 +90,7 @@ const TeamManagement = () => {
       </div>
 
       {/* List Teams */}
-      <TeamList searchQuery={searchQuery} />
+      <TeamList data={{ data: TeamsData }} searchQuery={searchQuery} />
     </div>
   );
 };

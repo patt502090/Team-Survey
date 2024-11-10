@@ -10,6 +10,36 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { FiUserPlus } from "react-icons/fi";
+import Select from "react-select";
+import { FC } from "react";
+import { OptionProps } from "react-select";
+
+const leaderOptions:LeaderOption[] = [
+  { value: "leader1", label: "Leader 1", image: "https://via.placeholder.com/30" },
+  { value: "leader2", label: "Leader 2", image: "https://via.placeholder.com/30" },
+  { value: "leader3", label: "Leader 3", image: "https://via.placeholder.com/30" },
+];
+
+interface LeaderOption {
+  value: string;
+  label: string;
+  image: string;
+}
+
+
+const CustomOption: FC<OptionProps<LeaderOption>> = (props) =>  {
+  const { data, innerRef, innerProps }:any = props;
+  return (
+    <div
+      ref={innerRef}
+      {...innerProps}
+      className="flex items-center p-2 cursor-pointer hover:bg-gray-100"
+    >
+      <img src={data.image} alt={data.label} className="w-6 h-6 rounded-full mr-2" />
+      <span>{data.label}</span>
+    </div>
+  );
+};
 
 export function CreateTeamButton() {
   const [open, setOpen] = React.useState(false);
@@ -31,16 +61,15 @@ export function CreateTeamButton() {
       <Dialog open={open} size="xs" handler={handleOpen}>
         <div className="flex items-center justify-between">
           <DialogHeader className="flex flex-col items-start">
-            {" "}
             <Typography className="mb-1" variant="h4">
-              New message to @{" "}
+              Create Team
             </Typography>
           </DialogHeader>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="currentColor"
-            className="mr-3 h-5 w-5"
+            className="mr-3 h-5 w-5 cursor-pointer"
             onClick={handleOpen}
           >
             <path
@@ -51,23 +80,33 @@ export function CreateTeamButton() {
           </svg>
         </div>
         <DialogBody>
-          <Typography className="mb-10 -mt-7 " color="gray" variant="lead">
-            Write the message and then click button.
-          </Typography>
           <div className="grid gap-6">
-            <Typography className="-mb-1" color="blue-gray" variant="h6">
-              Username
+            <Typography color="blue-gray" variant="h6">
+              Team Name
             </Typography>
-            <Input label="Username" />
-            <Textarea label="Message" />
+            <Input label="Team Name" />
+
+            <Typography color="blue-gray" variant="h6">
+              Leader
+            </Typography>
+            <Select
+              options={leaderOptions}
+              placeholder="Select Leader"
+              components={{ Option: CustomOption }}
+            />
+
+            <Typography color="blue-gray" variant="h6">
+              Note
+            </Typography>
+            <Textarea label="Note" />
           </div>
         </DialogBody>
         <DialogFooter className="space-x-2">
           <Button variant="text" color="gray" onClick={handleOpen}>
-            cancel
+            Cancel
           </Button>
-          <Button variant="gradient" color="gray" onClick={handleOpen}>
-            send message
+          <Button variant="gradient" color="blue" onClick={handleOpen}>
+            Create Team
           </Button>
         </DialogFooter>
       </Dialog>
