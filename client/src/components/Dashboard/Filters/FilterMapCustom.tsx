@@ -20,26 +20,26 @@ const FilterSelectionInterface: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState<boolean>(false);
   const [provinces] = useState<string[]>([
-    "Bangkok",
-    "Chiang Mai",
-    "Phuket",
-    "Ayutthaya",
-    "Krabi"
+    "กรุงเทพมหานคร",
+    "เชียงใหม่",
+    "ภูเก็ต",
+    "พระนครศรีอยุธยา",
+    "กระบี่"
   ]);
 
   const [districts] = useState<Record<string, string[]>>({
-    Bangkok: ["Bang Sue", "Chatuchak", "Din Daeng", "Dusit"],
-    "Chiang Mai": ["Mueang", "Mae Rim", "San Sai", "Doi Saket"],
-    Phuket: ["Mueang", "Kathu", "Thalang"],
-    Ayutthaya: ["Phra Nakhon", "Bang Pa-in", "Bang Sai"],
-    Krabi: ["Mueang", "Ao Nang", "Khlong Thom"]
+    กรุงเทพมหานคร: ["บางซื่อ", "จตุจักร", "ดินแดง", "ดุสิต"],
+    เชียงใหม่: ["เมือง", "แม่ริม", "สันทราย", "ดอยสะเก็ด"],
+    ภูเก็ต: ["เมือง", "กะทู้", "ถลาง"],
+    พระนครศรีอยุธยา: ["พระนคร", "บางปะอิน", "บางไทร"],
+    กระบี่: ["เมือง", "อ่าวนาง", "คลองท่อม"]
   });
 
   const [subDistricts] = useState<Record<string, string[]>>({
-    "Bang Sue": ["Wongsawang", "Bang Sue", "Wong Sawang"],
-    Chatuchak: ["Lat Yao", "Chom Phon", "Chatuchak"],
-    Mueang: ["Chang Moi", "Si Phum", "Hai Ya"],
-    Kathu: ["Patong", "Kamala", "Kathu"]
+    "บางซื่อ": ["วงศ์สว่าง", "บางซื่อ", "วงสว่าง"],
+    จตุจักร: ["ลาดยาว", "จอมพล", "จตุจักร"],
+    เมือง: ["ช้างม่อย", "ศรีภูมิ", "หายยา"],
+    กะทู้: ["ป่าตอง", "กมลา", "กะทู้"]
   });
 
   const handleProvinceChange = (province: string) => {
@@ -95,7 +95,7 @@ const FilterSelectionInterface: React.FC = () => {
             onClick={() => !disabled && setIsOpen(!isOpen)}
           >
             <span className={`${!value ? "text-gray-400" : "text-gray-900"} text-sm truncate`}>
-              {value || (label === "Province" ? "Select Province" : label === "District" ? "Select District" : "Select Sub-district")}
+              {value || (label === "จังหวัด" ? "เลือกจังหวัด" : label === "อำเภอ" ? "เลือกอำเภอ" : "เลือกตำบล")}
             </span>
             <FiChevronDown
               className={`transition-transform ${isOpen ? "transform rotate-180" : ""}`}
@@ -109,7 +109,7 @@ const FilterSelectionInterface: React.FC = () => {
                   <input
                     type="text"
                     className="w-full ml-2 text-sm focus:outline-none"
-                    placeholder="Search..."
+                    placeholder="ค้นหา..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />
@@ -146,7 +146,7 @@ const FilterSelectionInterface: React.FC = () => {
           className="flex items-center space-x-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-lg w-full justify-center"
         >
           <FiFilter />
-          <span>Open Filters</span>
+          <span>เปิดตัวกรอง</span>
         </button>
       </div>
 
@@ -156,7 +156,7 @@ const FilterSelectionInterface: React.FC = () => {
           <div className="fixed inset-y-0 right-0 w-full bg-white shadow-xl">
             <div className="p-4">
               <div className="flex justify-between items-center mb-4">
-                <h2 className="text-lg font-medium">Filters</h2>
+                <h2 className="text-lg font-medium">ตัวกรอง</h2>
                 <button
                   onClick={() => setIsFilterDrawerOpen(false)}
                   className="p-2 hover:bg-gray-100 rounded-full"
@@ -166,14 +166,14 @@ const FilterSelectionInterface: React.FC = () => {
               </div>
               <div className="space-y-4">
                 <SelectDropdown
-                  label="Province"
+                  label="จังหวัด"
                   options={provinces}
                   value={selectedProvince}
                   onChange={handleProvinceChange}
                 />
 
                 <SelectDropdown
-                  label="District"
+                  label="อำเภอ"
                   options={districts[selectedProvince] || []}
                   value={selectedDistrict}
                   onChange={handleDistrictChange}
@@ -181,7 +181,7 @@ const FilterSelectionInterface: React.FC = () => {
                 />
 
                 <SelectDropdown
-                  label="Sub-district"
+                  label="ตำบล"
                   options={subDistricts[selectedDistrict] || []}
                   value={selectedSubDistrict}
                   onChange={handleSubDistrictChange}
@@ -194,7 +194,7 @@ const FilterSelectionInterface: React.FC = () => {
                     className="flex items-center justify-center space-x-2 px-4 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors w-full"
                   >
                     <MdRestartAlt className="text-lg" />
-                    <span className="text-sm">Reset Filters</span>
+                    <span className="text-sm">รีเซ็ตตัวกรอง</span>
                   </button>
                 )}
               </div>
@@ -210,7 +210,7 @@ const FilterSelectionInterface: React.FC = () => {
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-2">
                 <FiFilter className="text-gray-500" />
-                <span className="text-sm font-medium text-gray-700">Filter:</span>
+                <span className="text-sm font-medium text-gray-700">ตัวกรอง:</span>
               </div>
 
               {loading && (
@@ -218,14 +218,14 @@ const FilterSelectionInterface: React.FC = () => {
               )}
 
               <SelectDropdown
-                label="Province"
+                label="จังหวัด"
                 options={provinces}
                 value={selectedProvince}
                 onChange={handleProvinceChange}
               />
 
               <SelectDropdown
-                label="District"
+                label="อำเภอ"
                 options={districts[selectedProvince] || []}
                 value={selectedDistrict}
                 onChange={handleDistrictChange}
@@ -233,7 +233,7 @@ const FilterSelectionInterface: React.FC = () => {
               />
 
               <SelectDropdown
-                label="Sub-district"
+                label="ตำบล"
                 options={subDistricts[selectedDistrict] || []}
                 value={selectedSubDistrict}
                 onChange={handleSubDistrictChange}
@@ -244,27 +244,14 @@ const FilterSelectionInterface: React.FC = () => {
             {(selectedProvince || selectedDistrict || selectedSubDistrict) && (
               <button
                 onClick={handleResetFilters}
-                className="flex items-center space-x-2 px-4 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors"
+                className="px-4 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors"
               >
-                <MdRestartAlt className="text-lg" />
-                <span className="text-sm">Reset Filters</span>
+                รีเซ็ตตัวกรอง
               </button>
             )}
           </div>
         </div>
       </div>
-
-      {/* Selected Filters Display (Both Mobile and Desktop) */}
-      {(selectedProvince || selectedDistrict || selectedSubDistrict) && (
-        <div className="flex items-center text-sm text-gray-600 mt-4">
-          <span className="font-medium mr-2">Selected:</span>
-          <span>
-            {[selectedProvince, selectedDistrict, selectedSubDistrict]
-              .filter(Boolean)
-              .join(", ")}
-          </span>
-        </div>
-      )}
     </div>
   );
 };

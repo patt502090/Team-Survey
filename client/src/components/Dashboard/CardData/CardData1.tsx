@@ -15,39 +15,39 @@ const CardStats: React.FC = () => {
   const stats: Stat[] = [
     {
       id: 1,
-      title: "Team Members",
+      title: "สมาชิกทีม",
       value: 48,
       increase: true,
       percentage: "+12%",
       icon: <FiUsers className="w-4 h-4" />,
-      description: "Active participants",
+      description: "ผู้เข้าร่วมที่ใช้งาน",
     },
     {
       id: 2,
-      title: "Response Rate",
+      title: "อัตราการตอบกลับ",
       value: "86%",
       increase: true,
       percentage: "+5%",
       icon: <FiBarChart2 className="w-4 h-4" />,
-      description: "Survey completion",
+      description: "การกรอกแบบสอบถาม",
     },
     {
       id: 3,
-      title: "Goals Achieved",
+      title: "เป้าหมายที่บรรลุ",
       value: "92%",
       increase: false,
       percentage: "-3%",
       icon: <FiTarget className="w-4 h-4" />,
-      description: "Target metrics",
+      description: "มาตรฐานเป้าหมาย",
     },
     {
       id: 4,
-      title: "Engagement Score",
+      title: "คะแนนการมีส่วนร่วม",
       value: 8.9,
       increase: true,
       percentage: "+0.7",
       icon: <FiTrendingUp className="w-4 h-4" />,
-      description: "Team satisfaction",
+      description: "ความพึงพอใจของทีม",
     },
   ];
 
@@ -59,7 +59,7 @@ const CardStats: React.FC = () => {
             key={stat.id}
             className="bg-white rounded-md p-4 shadow-sm hover:shadow-md transition-all duration-200 transform hover:-translate-y-0.5 border border-gray-100"
             role="region"
-            aria-label={`${stat.title} statistics`}
+            aria-label={`${stat.title} สถิติ`}
             tabIndex={0}
           >
             <div className="flex items-center justify-between mb-2">

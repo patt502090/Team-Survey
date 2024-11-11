@@ -122,7 +122,7 @@ export default function DefaultSidebar() {
             <ListItemPrefix>
               <HomeIcon className="h-5 w-5 text-white" />
             </ListItemPrefix>
-            Dashboard
+            แดชบอร์ด
           </ListItem>
           <ListItem
             className="text-white hover:bg-gray-700"
@@ -131,7 +131,7 @@ export default function DefaultSidebar() {
             <ListItemPrefix>
               <FactCheckIcon className="h-5 w-5 text-white" />
             </ListItemPrefix>
-            CheckID
+            ตรวจสอบบัตร
           </ListItem>
           <ListItem
             className="text-white hover:bg-gray-700"
@@ -140,7 +140,7 @@ export default function DefaultSidebar() {
             <ListItemPrefix>
               <CenterFocusWeakIcon className="h-5 w-5 text-white" />
             </ListItemPrefix>
-            Survey
+            สแกนบัตร
             <ListItemSuffix></ListItemSuffix>
           </ListItem>
           <ListItem
@@ -150,7 +150,7 @@ export default function DefaultSidebar() {
             <ListItemPrefix>
               <GroupsIcon className="h-5 w-5 text-white" />
             </ListItemPrefix>
-            Team
+            ทีม
             <ListItemSuffix>
               <Chip
                 value={user?.my_team?.TeamName || user?.team?.TeamName || "N/A"}
@@ -168,7 +168,7 @@ export default function DefaultSidebar() {
             <ListItemPrefix>
               <UserCircleIcon className="h-5 w-5 text-white" />
             </ListItemPrefix>
-            Profile
+            โปรไฟล์
           </ListItem>
 
           <ListItem
@@ -178,7 +178,7 @@ export default function DefaultSidebar() {
             <ListItemPrefix>
               <PowerIcon className="h-5 w-5 text-white" />
             </ListItemPrefix>
-            Log Out
+            ออกจากระบบ
           </ListItem>
         </List>
       )}

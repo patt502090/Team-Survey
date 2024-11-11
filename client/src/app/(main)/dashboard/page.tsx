@@ -24,11 +24,11 @@ export default function Dashboard() {
 
       <main className="flex-1 p-6 space-y-6 md:ml-5">
         <div className="">
-          <BreadcrumbsWithIcon pathName="Dashboard"/>
+          <BreadcrumbsWithIcon pathName="แดชบอร์ด"/>
         </div>
         <div className="flex justify-between items-center ">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
-            Dashboard
+          แดชบอร์ด
           </h1>
           {/* <ControlledSelect /> */}
           {/* <FilterTeamCustom/> */}
