@@ -102,7 +102,7 @@ export default function DefaultSidebar() {
         <div className="font-medium text-xs md:text-base text-center text-teal-300 mt-1">
           <p className="text-gray-300">{user?.username}</p>
           <p className="text-xs text-gray-400 text-center">
-            {user?.my_team?.TeamName || "N/A"} : {user?.role?.name}
+            {user?.my_team?.TeamName || user?.team?.TeamName ||"N/A"} : {user?.role?.name}
           </p>
         </div>
       )}
@@ -139,7 +139,7 @@ export default function DefaultSidebar() {
             Team
             <ListItemSuffix>
               <Chip
-                value={user?.my_team?.TeamName || "N/A"}
+                value={user?.my_team?.TeamName || user?.team?.TeamName || "N/A"}
                 size="sm"
                 variant="ghost"
                 color="blue-gray"

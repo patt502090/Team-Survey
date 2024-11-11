@@ -1,5 +1,5 @@
-"use client"
-import React, { useEffect, useState } from "react";
+"use client";
+import React, { useContext, useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import TeamList from "../../../components/Team/TeamList";
 import { BreadcrumbsWithIcon } from "@/components/Dashboard/Breadcrumbs";
@@ -7,6 +7,8 @@ import StatsTeamComponent from "../../../components/Team/StatsCard";
 import { CreateTeamButton } from "@/components/Team/CreateTeamButton";
 import ax from "@/conf/ax";
 import conf from "@/conf/main";
+import { AuthContext } from "@/contexts/Auth.context";
+import TeamMembersList from "@/components/Team/TeamMembersList";
 
 interface Team {
   id: number;
@@ -40,11 +42,13 @@ interface Member {
 const TeamManagement = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [TeamsData, setTeamsData] = useState<Team[]>([]);
-  
+  const { state: ContextState } = useContext(AuthContext);
+  const { user } = ContextState;
+
   useEffect(() => {
     fetchTeamsData();
   }, []);
-  
+
   const fetchTeamsData = async () => {
     try {
       const teamsResult = await ax.get(`${conf.teamEndpoint}`);
@@ -55,7 +59,7 @@ const TeamManagement = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8 md:ml-64" role="main">
+    <div className="min-h-screen bg-gray-50 p-8 md:ml-72" role="main">
       <div className="mt-1">
         <BreadcrumbsWithIcon pathName="Team" />
       </div>
@@ -74,23 +78,29 @@ const TeamManagement = () => {
       </div>
 
       {/* Search */}
-      <div className="mb-6">
-        <div className="relative max-w-md mx-auto">
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <FiSearch className="h-5 w-5 text-gray-400" />
+      {user?.role?.name == "Admin" ? (
+        <div className="mb-6">
+          <div className="relative max-w-md mx-auto">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <FiSearch className="h-5 w-5 text-gray-400" />
+            </div>
+            <input
+              type="text"
+              className="block w-full pl-10 pr-3 py-3 border border-gray-200 rounded-xl leading-5 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent shadow-sm"
+              placeholder="Search teams or team leaders..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
           </div>
-          <input
-            type="text"
-            className="block w-full pl-10 pr-3 py-3 border border-gray-200 rounded-xl leading-5 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent shadow-sm"
-            placeholder="Search teams or team leaders..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
         </div>
-      </div>
+      ) : null}
 
       {/* List Teams */}
-      <TeamList data={{ data: TeamsData }} searchQuery={searchQuery} />
+      {user?.role?.name == "Admin" ? (
+        <TeamList data={{ data: TeamsData }} searchQuery={searchQuery} />
+      ) : (
+        <TeamMembersList />
+      )}
     </div>
   );
 };
