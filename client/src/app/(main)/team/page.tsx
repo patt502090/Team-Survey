@@ -39,15 +39,67 @@ interface Member {
   last_name: string;
 }
 
+export interface myTeam {
+  id: number;
+  documentId: string;
+  TeamName: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  members: Member[];
+  manager: Manager;
+}
+
+interface Member {
+  id: number;
+  documentId: string;
+  username: string;
+  email: string;
+  provider: string;
+  confirmed: boolean;
+  blocked: boolean;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  phoneNumber: string;
+  first_name: string;
+  last_name: string;
+  my_customers: any[]; 
+}
+
+export interface Manager {
+  id: number;
+  documentId: string;
+  username: string;
+  email: string;
+  provider: string;
+  confirmed: boolean;
+  blocked: boolean;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  phoneNumber: string;
+  first_name: string;
+  last_name: string;
+}
+
+
 const TeamManagement = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [TeamsData, setTeamsData] = useState<Team[]>([]);
+  const [myTeamData, setMyTeamData] = useState<myTeam | null>(null);
   const { state: ContextState } = useContext(AuthContext);
   const { user } = ContextState;
 
   useEffect(() => {
     fetchTeamsData();
   }, []);
+
+  useEffect(() => {
+    if (user?.team?.documentId || user?.my_team?.documentId) {
+      fetchMyTeamData();
+    }
+  }, [user]);
 
   const fetchTeamsData = async () => {
     try {
@@ -57,6 +109,23 @@ const TeamManagement = () => {
       console.error("Error fetching teams data:", error);
     }
   };
+  // console.log("Teams",user.team.documentId)
+
+  const fetchMyTeamData = async () => {
+    if (!user?.team?.documentId && !user?.my_team?.documentId) {
+      console.log("No team data available for user.");
+      return;
+    }
+  
+    try {
+      const myTeamResult = await ax.get(`/teams/${user?.team.documentId || user?.my_team.documentId}?populate[members][populate]=my_customers`);
+      setMyTeamData(myTeamResult.data.data);
+      // console.log("my", myTeamResult.data.data);
+    } catch (error) {
+      console.log("Error fetching my team data:", error);
+    }
+  };
+  
 
   return (
     <div className="min-h-screen bg-gray-50 p-8 md:ml-72" role="main">
@@ -99,7 +168,7 @@ const TeamManagement = () => {
       {user?.role?.name == "Admin" ? (
         <TeamList data={{ data: TeamsData }} searchQuery={searchQuery} />
       ) : (
-        <TeamMembersList />
+        myTeamData && <TeamMembersList myTeamData={myTeamData} />
       )}
     </div>
   );
