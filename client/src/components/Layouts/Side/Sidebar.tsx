@@ -21,7 +21,7 @@ import ax from "@/conf/ax";
 import conf from "@/conf/main";
 import { AuthContext } from "@/contexts/Auth.context";
 import { useRouter } from "next/navigation";
-
+import CenterFocusWeakIcon from '@mui/icons-material/CenterFocusWeak';
 export default function DefaultSidebar() {
   const { state: ContextState, logout } = useContext(AuthContext);
   const { user } = ContextState;
@@ -102,7 +102,8 @@ export default function DefaultSidebar() {
         <div className="font-medium text-xs md:text-base text-center text-teal-300 mt-1">
           <p className="text-gray-300">{user?.username}</p>
           <p className="text-xs text-gray-400 text-center">
-            {user?.my_team?.TeamName || user?.team?.TeamName ||"N/A"} : {user?.role?.name}
+            {user?.my_team?.TeamName || user?.team?.TeamName || "N/A"} :{" "}
+            {user?.role?.name}
           </p>
         </div>
       )}
@@ -128,10 +129,19 @@ export default function DefaultSidebar() {
             </ListItemPrefix>
             CheckID
           </ListItem>
-
           <ListItem
             className="text-white hover:bg-gray-700"
             onClick={() => router.push("/team")}
+          >
+            <ListItemPrefix>
+              <CenterFocusWeakIcon className="h-5 w-5 text-white" />
+            </ListItemPrefix>
+            Survey
+            <ListItemSuffix></ListItemSuffix>
+          </ListItem>
+          <ListItem
+            className="text-white hover:bg-gray-700"
+            onClick={() => router.push("/survey")}
           >
             <ListItemPrefix>
               <GroupsIcon className="h-5 w-5 text-white" />
