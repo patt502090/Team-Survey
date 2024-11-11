@@ -21,7 +21,7 @@ export default function HorizontalLinearAlternativeLabelStepper() {
   const router = useRouter();
   const context = useContext(AuthContext);
   const ContextState = context ? context.state : null;
-  console.log("ck",ContextState);
+  console.log("ck", ContextState);
   const [activeStep, setActiveStep] = useState(0);
   const [customerData, setCustomerData] = useState<OCRResponse | null>(null);
   const [customerDatatoCheck, setCustomerDatatoCheck] =
@@ -54,7 +54,7 @@ export default function HorizontalLinearAlternativeLabelStepper() {
       const requestData = {
         data: {
           Id_Number: customerDatatoCheck.Id_Number,
-          NameTitle: "Mr.", /* customerDatatoCheck.NameTitle */ 
+          NameTitle: "Mr." /* customerDatatoCheck.NameTitle */,
           Name_Th: customerDatatoCheck.Name_Th,
           Name_Eng: customerDatatoCheck.Name_Eng,
           Address: customerDatatoCheck.Address,
@@ -62,25 +62,25 @@ export default function HorizontalLinearAlternativeLabelStepper() {
           Assessor: ContextState?.user?.documentId,
           business_with: ContextState?.user?.my_team?.documentId,
           estimate: customerDatatoCheck.estimate,
-          sub_district: "z0djf7s3ekitgvsw6afp9ctq"
+          sub_district: "z0djf7s3ekitgvsw6afp9ctq",
           // Pic: customerDatatoCheck.Pic, // อาจต้องคอมเม้นตรงนี้ไปก่อนถ้าจะใช้ ax.post
         },
       };
       // http://localhost:1337/api/sub-districts
 
-    //   {"data":{
-    //     "Id_Number": "123456789dasdsa0123",
-    //     "NameTitle": "Mr.",
-    //     "Name_Th": "มไย ตัวอย่างdddd นามรอง สาธิตสกุล",
-    //     "Name_Eng": "Sample MiddleNameSatitsakul",
-    //     "Address": "2024-11-10",
-    //     "birthdate": "2024-11-10",
-    //     "Assessor": "p1e0ov8y5d5a72dwe1rd34fk",
-    //     "business_with": "befvxwfev1kz1t6fwf4hmb1e",
-    //     "estimate": "green",
-    //     "sub_district": "z0djf7s3ekitgvsw6afp9ctq" z0djf7s3ekitgvsw6afp9ctq
-    // }}
-      console.log("yuy",requestData);
+      //   {"data":{
+      //     "Id_Number": "123456789dasdsa0123",
+      //     "NameTitle": "Mr.",
+      //     "Name_Th": "มไย ตัวอย่างdddd นามรอง สาธิตสกุล",
+      //     "Name_Eng": "Sample MiddleNameSatitsakul",
+      //     "Address": "2024-11-10",
+      //     "birthdate": "2024-11-10",
+      //     "Assessor": "p1e0ov8y5d5a72dwe1rd34fk",
+      //     "business_with": "befvxwfev1kz1t6fwf4hmb1e",
+      //     "estimate": "green",
+      //     "sub_district": "z0djf7s3ekitgvsw6afp9ctq" z0djf7s3ekitgvsw6afp9ctq
+      // }}
+      console.log("yuy", requestData);
 
       await ax.post(`${conf.apiUrlPrefix}/customers`, requestData);
       setShowPopup(true);
@@ -90,7 +90,10 @@ export default function HorizontalLinearAlternativeLabelStepper() {
   };
 
   return (
-    <Box sx={{ width: "100%" }} className=" mt-32 sm:mt-8 md:mt-10 lg:mt-12 md:ml-32 ">
+    <Box
+      sx={{ width: "100%" }}
+      className=" mt-32 sm:mt-8 md:mt-10 lg:mt-12 md:ml-32 "
+    >
       <Stepper activeStep={activeStep} alternativeLabel className="">
         {steps.map((label, index) => (
           <Step key={label}>
@@ -104,10 +107,11 @@ export default function HorizontalLinearAlternativeLabelStepper() {
           <div>
             {/* <Camera /> */}
             <Camera onOCRProcessed={handleOCRProcessed} />
-            <div className="mt-auto flex justify-between px-4 mb-4">
+            <div className="mt-auto items-center flex flex-row  justify-center p-2 space-x-2">
               <button
                 onClick={handleNext}
-                className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full sm:w-auto mx-auto"
+                disabled={!customerData} //มันต้องรอตรงนี้นานนิดหน่อย
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 ถัดไป
               </button>
@@ -124,11 +128,12 @@ export default function HorizontalLinearAlternativeLabelStepper() {
               />
             )}
             {/* <CustomerInfo /> */}
-            <div className="mt-auto flex space-x-4 justify-between px-4 mb-4">
+            <div className="mt-auto items-center flex flex-row  justify-center p-2 space-x-2">
               {activeStep < steps.length - 1 && (
                 <button
                   onClick={handleNext}
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full sm:w-auto mx-auto"
+                  disabled={!customerDatatoCheck}
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   ถัดไป
                 </button>
@@ -136,7 +141,7 @@ export default function HorizontalLinearAlternativeLabelStepper() {
               {activeStep > 0 && (
                 <button
                   onClick={handleBack}
-                  className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded w-full sm:w-auto mx-auto"
+                  className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded w-full sm:w-auto"
                 >
                   ย้อนกลับ
                 </button>
@@ -151,14 +156,15 @@ export default function HorizontalLinearAlternativeLabelStepper() {
               <CheckInfo customerData={customerDatatoCheck} />
             )}
 
-            <div className="mt-auto flex space-x-4 justify-between px-4 mb-4">
+            <div className="mt-auto items-center flex flex-row  justify-center p-2 space-x-2">
               {activeStep <= steps.length - 1 && (
                 <button
                   onClick={() => {
                     handleNext();
                     PostCustomer();
                   }}
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full sm:w-auto mx-auto"
+                  disabled={!customerDatatoCheck}
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   ถัดไป
                 </button>
@@ -166,7 +172,7 @@ export default function HorizontalLinearAlternativeLabelStepper() {
               {activeStep > 0 && (
                 <button
                   onClick={handleBack}
-                  className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded w-full sm:w-auto mx-auto"
+                  className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded w-full sm:w-auto"
                 >
                   ย้อนกลับ
                 </button>
