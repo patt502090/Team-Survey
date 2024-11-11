@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { FiEdit3, FiTrash2 } from "react-icons/fi";
+import { ModalDelateTeam } from "./ModalDeleteTeam";
 
 interface Member {
   id: number;
@@ -34,11 +35,25 @@ interface Team {
 interface TeamListProps {
   searchQuery: string;
   data: { data: Team[] } | null;
+  newFetch: () => void;
 }
 
-const TeamList = ({ searchQuery, data }: TeamListProps) => {
+const TeamList = ({ newFetch ,searchQuery, data }: TeamListProps) => {
   const dataTeam = data && Array.isArray(data.data) ? data.data : [];
-  console.log(dataTeam);
+  // console.log(dataTeam);
+  const [teamToDelete, setTeamToDelete] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const handleOpen = () => setIsModalOpen(true);
+  const handleClose = () => {
+    setIsModalOpen(false) ;
+    setTeamToDelete(null);
+  };
+
+  const handleDeleteTeam = (teamId: string) => {
+    setTeamToDelete(teamId);
+    setIsModalOpen(true);
+  };
 
   const filteredTeams = dataTeam.filter(
     (team) =>
@@ -57,7 +72,7 @@ const TeamList = ({ searchQuery, data }: TeamListProps) => {
             <div className="flex justify-between items-center">
               <div className="flex items-center">
                 <img
-                  alt={team.manager?.username || "Default Username"} 
+                  alt={team.manager?.username || "Default Username"}
                   className="w-12 h-12 rounded-full mr-4"
                   src={
                     team.manager?.profileImage ||
@@ -65,7 +80,7 @@ const TeamList = ({ searchQuery, data }: TeamListProps) => {
                   }
                   onError={(e) => {
                     e.target.src =
-                      "https://i.pinimg.com/736x/8b/16/7a/8b167af653c2399dd93b952a48740620.jpg"; 
+                      "https://i.pinimg.com/736x/8b/16/7a/8b167af653c2399dd93b952a48740620.jpg";
                   }}
                 />
 
@@ -82,24 +97,35 @@ const TeamList = ({ searchQuery, data }: TeamListProps) => {
                 </button>
                 <button
                   className="text-red-500 hover:text-red-600 ml-3"
-                  onClick={() => alert("Delete team")}
+                  onClick={() => handleDeleteTeam(team.documentId)}
                 >
                   <FiTrash2 className="w-5 h-5" />
                 </button>
+
+
               </div>
             </div>
             <div className="mt-4">
               <p className="text-sm text-gray-500">
-                Leader: {team.manager?.username} | Workers:{" "}
-                {team.members.length} | Surveyed: 0
+                หัวหน้าทีม: {team.manager?.username} | จำนวนสมาชิก:{" "}
+                {team.members.length} | เก็บข้อมูลแล้ว: 0
               </p>
               <p className="text-sm text-gray-400 mt-2">
-                Created At: {new Date(team.createdAt).toLocaleDateString()}
+                สร้างเมื่อ: {new Date(team.createdAt).toLocaleDateString()}
               </p>
             </div>
           </div>
         ))}
       </div>
+      {isModalOpen && (
+      <ModalDelateTeam
+        newFetch={newFetch}
+        teamId={teamToDelete}
+        open={isModalOpen}
+        handleOpen={handleOpen}
+        handleClose={handleClose}
+      />
+    )}
     </div>
   );
 };

@@ -65,7 +65,8 @@ export function CreateTeamButton({ newFetch }: CreateTeamButtonProps) {
       const usersData = resultUser.data.map((user: any) => ({
         documentId: user.id,
         username: user.username,
-        image: "https://thumbs.dreamstime.com/z/laptop-computer-user-icon-vector-isolated-white-person-work-online-pictogram-business-worker-analyst-student-coder-customer-316853739.jpg",
+        image:
+          "https://thumbs.dreamstime.com/z/laptop-computer-user-icon-vector-isolated-white-person-work-online-pictogram-business-worker-analyst-student-coder-customer-316853739.jpg",
         id: user.id,
       }));
       console.log("use", usersData);
@@ -89,9 +90,9 @@ export function CreateTeamButton({ newFetch }: CreateTeamButtonProps) {
 
     try {
       const responseCreateTeam = await ax.post("/teams", {
-        data: { TeamName: teamData.teamName , manager: teamData.leaderId},
+        data: { TeamName: teamData.teamName, manager: teamData.leaderId },
       });
-      console.log("use",teamData.leaderId)
+      console.log("use", teamData.leaderId);
       const responseAssignRole = await ax.put("/assign_role", {
         data: {
           teamId: Number(responseCreateTeam.data.data.id),
@@ -99,7 +100,6 @@ export function CreateTeamButton({ newFetch }: CreateTeamButtonProps) {
           roleId: 4,
         },
       });
-
       console.log("Team created successfully:", responseCreateTeam.data);
       console.log("Assign Role successfully:", responseAssignRole.data);
       toast.success("สร้างทีมเสร็จสิ้น!");
@@ -120,13 +120,13 @@ export function CreateTeamButton({ newFetch }: CreateTeamButtonProps) {
         onClick={handleOpen}
       >
         <FiUserPlus className="w-4 h-4" />
-        Create Team
+        สร้างทีม
       </Button>
       <Dialog open={open} size="xs" handler={handleOpen}>
         <div className="flex items-center justify-between">
           <DialogHeader className="flex flex-col items-start">
             <Typography className="mb-1" variant="h4">
-              Create Team
+              สร้างทีม
             </Typography>
           </DialogHeader>
           <svg
@@ -146,17 +146,17 @@ export function CreateTeamButton({ newFetch }: CreateTeamButtonProps) {
         <DialogBody>
           <div className="grid gap-6">
             <Typography color="blue-gray" variant="h6">
-              Team Name
+              ชื่อทีม
             </Typography>
             <Input
-              label="Team Name"
+              label="ชื่อทีม"
               value={teamName}
               onChange={(e) => setTeamName(e.target.value)}
               required
             />
 
             <Typography color="blue-gray" variant="h6">
-              Leader
+              หัวหน้า
             </Typography>
             <Select
               options={user.map((userData) => ({
@@ -167,17 +167,17 @@ export function CreateTeamButton({ newFetch }: CreateTeamButtonProps) {
                 id: userData.id,
               }))}
               required
-              placeholder="Select Leader"
+              placeholder="เลือกหัวหน้า"
               components={{ Option: CustomOption }}
               value={selectedLeader}
               onChange={setSelectedLeader}
             />
 
             <Typography color="blue-gray" variant="h6">
-              Note
+              หมายเหตุ
             </Typography>
             <Textarea
-              label="Note"
+              label="หมายเหตุ"
               value={note}
               onChange={(e) => setNote(e.target.value)}
             />
@@ -185,10 +185,10 @@ export function CreateTeamButton({ newFetch }: CreateTeamButtonProps) {
         </DialogBody>
         <DialogFooter className="space-x-2">
           <Button variant="text" color="gray" onClick={handleOpen}>
-            Cancel
+            ยกเลิก
           </Button>
           <Button variant="gradient" color="blue" onClick={handleCreateTeam}>
-            Create Team
+            สร้างทีม
           </Button>
         </DialogFooter>
       </Dialog>

@@ -13,7 +13,6 @@ export function ModalLogout({ open, handleOpen }: { open: boolean; handleOpen: (
   const { logout } = useContext(AuthContext);
   const router = useRouter();
   const handleLogout = () => {
-    // console.log("Logged out");
     logout();
     handleOpen(); 
     router.push("/login");
@@ -21,9 +20,9 @@ export function ModalLogout({ open, handleOpen }: { open: boolean; handleOpen: (
 
   return (
     <Dialog open={open} handler={handleOpen}>
-      <DialogHeader>Are you sure you want to log out?</DialogHeader>
+      <DialogHeader>คุณต้องการออกจากระบบใช่หรือไม่</DialogHeader>
       <DialogBody>
-        If you log out, you will be redirected to the login page.
+        หากคุณออกจากระบบ คุณจะถูกเปลี่ยนเส้นทางไปยังหน้าล็อกอิน
       </DialogBody>
       <DialogFooter>
         <Button
@@ -32,10 +31,10 @@ export function ModalLogout({ open, handleOpen }: { open: boolean; handleOpen: (
           onClick={handleOpen}
           className="mr-1"
         >
-          <span>Cancel</span>
+          <span>ยกเลิก</span>
         </Button>
         <Button variant="gradient" color="red" onClick={handleLogout}>
-          <span>Confirm</span>
+          <span>ยืนยัน</span>
         </Button>
       </DialogFooter>
     </Dialog>

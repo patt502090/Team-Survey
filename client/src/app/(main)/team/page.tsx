@@ -137,11 +137,13 @@ const TeamManagement = () => {
       </div>
       <div className="flex justify-between items-center mb-6 md:mb-0 mt-6 md:mt-0">
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3  md:mb-6">
-            Team Management
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mt-3 mb-3 md:mb-6 font-poppins tracking-wide">
+            การจัดการทีม
           </h1>
         </div>
-        {user?.role.name == "Admin" ? <CreateTeamButton  newFetch = {fetchTeamsData}/> : null}
+        {user?.role.name == "Admin" ? (
+          <CreateTeamButton newFetch={fetchTeamsData} />
+        ) : null}
       </div>
 
       {/* StatsCard */}
@@ -159,7 +161,7 @@ const TeamManagement = () => {
             <input
               type="text"
               className="block w-full pl-10 pr-3 py-3 border border-gray-200 rounded-xl leading-5 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent shadow-sm"
-              placeholder="Search teams or team leaders..."
+              placeholder="ค้นหาทีมหรือหัวหน้าทีม"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -169,7 +171,11 @@ const TeamManagement = () => {
 
       {/* List Teams */}
       {user?.role?.name == "Admin" ? (
-        <TeamList data={{ data: TeamsData }} searchQuery={searchQuery} />
+        <TeamList
+          newFetch={fetchTeamsData}
+          data={{ data: TeamsData }}
+          searchQuery={searchQuery}
+        />
       ) : (
         myTeamData && <TeamMembersList myTeamData={myTeamData} />
       )}

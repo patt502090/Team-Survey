@@ -10,8 +10,7 @@ interface TeamMembersListProps {
 
 const TeamMembersList: React.FC<TeamMembersListProps> = ({ myTeamData }) => {
   const { state: ContextState } = useContext(AuthContext);
-  const { user } = ContextState;
-
+  const { user } = ContextState; 
   //   console.log("userMe", user);
 
   if (!user?.my_team && !user?.team) {
@@ -105,7 +104,7 @@ const TeamMembersList: React.FC<TeamMembersListProps> = ({ myTeamData }) => {
                 <p className="text-gray-600 text-sm">{"Worker"}</p>
                 <div className="flex items-center mt-2 text-green-600">
                   <FaChartLine className="mr-2" />
-                  <span>{member.my_customers.length} Surveys Completed</span>
+                  <span>เก็บข้อมูลแล้วจำนวน {member.my_customers.length} คน</span>
                 </div>
               </div>
             </div>

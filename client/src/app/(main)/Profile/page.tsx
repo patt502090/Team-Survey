@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Navbar from "../../../components/Navbar";
 import { useRouter } from "next/navigation";
-
+import { Button } from "@material-tailwind/react";
 export default function Profile() {
     const router = useRouter();
     const [profile, setProfile] = useState<any>(null);
@@ -72,20 +72,20 @@ export default function Profile() {
                         <div className="modal-box p-8">
                             <form method="dialog" className="space-y-4" onSubmit={(e) => { e.preventDefault(); EditProfile(); }}>
                                 <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={() => document.getElementById('editProfileModal').close()}>✕</button>
-                                <h3 className="font-bold text-lg">Edit Profile</h3>
+                                <h3 className="font-bold text-lg">แก้ไขข้อมูล</h3>
                                 <div>
-                                    <label className="block font-semibold">Name</label>
+                                    <label className="block font-semibold">ชื่อ</label>
                                     <input type="text" value={editData.name} onChange={(e) => setEditData({ ...editData, name: e.target.value })} className="input input-bordered w-full" />
                                 </div>
                                 <div>
-                                    <label className="block font-semibold">Email</label>
+                                    <label className="block font-semibold">อีเมล</label>
                                     <input type="email" value={editData.email} onChange={(e) => setEditData({ ...editData, email: e.target.value })} className="input input-bordered w-full" />
                                 </div>
                                 <div>
-                                    <label className="block font-semibold">Phone</label>
+                                    <label className="block font-semibold">เบอร์โทร</label>
                                     <input type="text" value={editData.phone} onChange={(e) => setEditData({ ...editData, phone: e.target.value })} className="input input-bordered w-full" />
                                 </div>
-                                <button type="submit" className="btn btn-primary mt-4 w-full bg-blue-500 p-2 text-white" onClick={() => document.getElementById('editProfileModal').close()}>Save Changes</button>
+                                <Button type="submit" className="btn btn-primary mt-4 w-full bg-blue-500 p-3 text-white" onClick={() => document.getElementById('editProfileModal').close()}>บันทึก</Button>
                             </form>
                         </div>
                     </dialog>
@@ -110,14 +110,14 @@ export default function Profile() {
                       <div>
                         {profile ? (
                           <div className="w-full flex flex-col gap-4">
-                              <ProfileItem label="Name" value={profile.username} />
-                              <ProfileItem label="Username" value={profile.username} />
-                              <ProfileItem label="Role" value={profile.role?.name} />
-                              <ProfileItem label="Email" value={profile.email} />
-                              <ProfileItem label="Phone" value={profile.phoneNumber} />
+                              <ProfileItem label="ชื่อ" value={profile.username} />
+                              <ProfileItem label="ชื่อผู้ใช้" value={profile.username} />
+                              <ProfileItem label="ตำแหน่ง" value={profile.role?.name} />
+                              <ProfileItem label="อีเมล" value={profile.email} />
+                              <ProfileItem label="เบอร์โทร" value={profile.phoneNumber} />
                           </div>
                         ) : (
-                            <p className="text-center text-gray-600">Loading profile...</p>
+                            <p className="text-center text-gray-600">กำลังโหลด...</p>
                         )}
                       </div>
                     </div>
@@ -125,7 +125,7 @@ export default function Profile() {
                 </div>
                 <div className="rounded-lg shadow-lg w-full max-w-md flex flex-col items-center mb-16">
                   <button onClick={Logout} className="mt-6 w-full bg-red-500 rounded-md text-white font-bold py-2 px-4 text-xl hover:bg-red-400 transition-shadow duration-200 shadow-md hover:shadow-lg">
-                      Logout
+                      ออกจากระบบ
                   </button>
                 </div>
             </main>

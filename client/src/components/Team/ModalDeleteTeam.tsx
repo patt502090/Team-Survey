@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   Button,
   Dialog,
@@ -8,31 +8,65 @@ import {
 } from "@material-tailwind/react";
 import { AuthContext } from "@/contexts/Auth.context";
 import { useRouter } from "next/navigation";
+import ax from "@/conf/ax";
+import toast from "react-hot-toast";
 
-export function ModalDelateTeam() {
-  const { logout } = useContext(AuthContext);
-  const router = useRouter();
-  
+interface DeleteTeamButtonProps {
+  newFetch: () => void;
+  teamId?: string | null;
+  open: boolean;
+  handleOpen: () => void;
+  handleClose: () => void;
+}
+
+export function ModalDelateTeam({
+  newFetch,
+  teamId,
+  open,
+  handleOpen,
+  handleClose,
+}: DeleteTeamButtonProps) {
+
+  const handleDeleteTeam = async () => {
+    if (teamId == null) return;
+    try {
+      const result = await ax.delete(`teams/${teamId}`);
+    //   console.log("del",teamId);
+    //   console.log("del",result);      
+      toast.success("ลบทีมสำเร็จ");
+      newFetch();
+      handleClose();
+    } catch (error) {
+      console.error("Error deleting team:", error);
+      toast.error("Error deleting team");
+    }
+  };
 
   return (
-    <Dialog open={open} handler={handleOpen}>
-      <DialogHeader>Are you sure you want to log out?</DialogHeader>
-      <DialogBody>
-        If you log out, you will be redirected to the login page.
-      </DialogBody>
-      <DialogFooter>
-        <Button
-          variant="text"
-          color="red"
-          onClick={handleOpen}
-          className="mr-1"
-        >
-          <span>Cancel</span>
-        </Button>
-        <Button variant="gradient" color="red" onClick={handleLogout}>
-          <span>Confirm</span>
-        </Button>
-      </DialogFooter>
-    </Dialog>
+    <>
+      {/* <Button variant="gradient" color="red" onClick={handleOpen}>
+        Delete Team
+      </Button> */}
+
+      <Dialog open={open} handler={handleClose}>
+        <DialogHeader>ยืนยันการลบทีม</DialogHeader>
+        <DialogBody>
+         คุณแน่ใจหรือไม่ว่าต้องการลบทีมนี้?
+        </DialogBody>
+        <DialogFooter>
+          <Button
+            variant="text"
+            color="red"
+            onClick={handleClose}
+            className="mr-1"
+          >
+            <span>ยกเลิก</span>
+          </Button>
+          <Button variant="gradient" color="green" onClick={handleDeleteTeam}>
+            <span>ตกลง</span>
+          </Button>
+        </DialogFooter>
+      </Dialog>
+    </>
   );
 }
