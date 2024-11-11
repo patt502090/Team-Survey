@@ -21,21 +21,25 @@ import ax from "@/conf/ax";
 import conf from "@/conf/main";
 import { AuthContext } from "@/contexts/Auth.context";
 import { useRouter } from "next/navigation";
-import CenterFocusWeakIcon from '@mui/icons-material/CenterFocusWeak';
+import CenterFocusWeakIcon from "@mui/icons-material/CenterFocusWeak";
+import { ModalLogout } from "@/components/ModalLogout";
 export default function DefaultSidebar() {
   const { state: ContextState, logout } = useContext(AuthContext);
   const { user } = ContextState;
-  const [collapsed, setCollapsed] = useState(false);
-  console.log("this", user);
+  const [collapsed, setCollapsed] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
+  // console.log("this", user);
+  const handleOpen = () => setOpen(!open);
+
 
   const toggleSidebar = () => {
     setCollapsed(!collapsed);
   };
   const router = useRouter();
-  const handleLogout = () => {
-    logout();
-    router.push("/login");
-  };
+  // const handleLogout = () => {
+  //   logout();
+  //   router.push("/login");
+  // };
 
   // useEffect(() => {
   //   const fetchUserData = async () => {
@@ -131,7 +135,7 @@ export default function DefaultSidebar() {
           </ListItem>
           <ListItem
             className="text-white hover:bg-gray-700"
-            onClick={() => router.push("/team")}
+            onClick={() => router.push("/survey")}
           >
             <ListItemPrefix>
               <CenterFocusWeakIcon className="h-5 w-5 text-white" />
@@ -141,7 +145,7 @@ export default function DefaultSidebar() {
           </ListItem>
           <ListItem
             className="text-white hover:bg-gray-700"
-            onClick={() => router.push("/survey")}
+            onClick={() => router.push("/team")}
           >
             <ListItemPrefix>
               <GroupsIcon className="h-5 w-5 text-white" />
@@ -169,7 +173,7 @@ export default function DefaultSidebar() {
 
           <ListItem
             className="text-white hover:bg-gray-700"
-            onClick={handleLogout}
+            onClick={handleOpen}
           >
             <ListItemPrefix>
               <PowerIcon className="h-5 w-5 text-white" />
@@ -178,6 +182,7 @@ export default function DefaultSidebar() {
           </ListItem>
         </List>
       )}
+      <ModalLogout open={open} handleOpen={handleOpen} />
     </Card>
   );
 }

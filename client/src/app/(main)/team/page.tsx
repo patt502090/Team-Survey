@@ -9,6 +9,7 @@ import ax from "@/conf/ax";
 import conf from "@/conf/main";
 import { AuthContext } from "@/contexts/Auth.context";
 import TeamMembersList from "@/components/Team/TeamMembersList";
+import { Toaster } from "react-hot-toast";
 
 interface Team {
   id: number;
@@ -64,7 +65,7 @@ interface Member {
   phoneNumber: string;
   first_name: string;
   last_name: string;
-  my_customers: any[]; 
+  my_customers: any[];
 }
 
 export interface Manager {
@@ -82,7 +83,6 @@ export interface Manager {
   first_name: string;
   last_name: string;
 }
-
 
 const TeamManagement = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -116,16 +116,19 @@ const TeamManagement = () => {
       console.log("No team data available for user.");
       return;
     }
-  
+
     try {
-      const myTeamResult = await ax.get(`/teams/${user?.team.documentId || user?.my_team.documentId}?populate[members][populate]=my_customers`);
+      const myTeamResult = await ax.get(
+        `/teams/${
+          user?.team.documentId || user?.my_team.documentId
+        }?populate[members][populate]=my_customers`
+      );
       setMyTeamData(myTeamResult.data.data);
       // console.log("my", myTeamResult.data.data);
     } catch (error) {
       console.log("Error fetching my team data:", error);
     }
   };
-  
 
   return (
     <div className="min-h-screen bg-gray-50 p-8 md:ml-72" role="main">
@@ -138,7 +141,7 @@ const TeamManagement = () => {
             Team Management
           </h1>
         </div>
-        <CreateTeamButton />
+        {user?.role.name == "Admin" ? <CreateTeamButton  newFetch = {fetchTeamsData}/> : null}
       </div>
 
       {/* StatsCard */}
@@ -170,6 +173,7 @@ const TeamManagement = () => {
       ) : (
         myTeamData && <TeamMembersList myTeamData={myTeamData} />
       )}
+      <Toaster position="top-right" reverseOrder={false} />
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, FC, useEffect } from "react";
 import {
   Button,
   Dialog,
@@ -11,40 +11,104 @@ import {
 } from "@material-tailwind/react";
 import { FiUserPlus } from "react-icons/fi";
 import Select from "react-select";
-import { FC } from "react";
 import { OptionProps } from "react-select";
+import ax from "@/conf/ax";
+import toast from "react-hot-toast";
 
-const leaderOptions:LeaderOption[] = [
-  { value: "leader1", label: "Leader 1", image: "https://via.placeholder.com/30" },
-  { value: "leader2", label: "Leader 2", image: "https://via.placeholder.com/30" },
-  { value: "leader3", label: "Leader 3", image: "https://via.placeholder.com/30" },
-];
-
-interface LeaderOption {
-  value: string;
-  label: string;
-  image: string;
+interface CreateTeamButtonProps {
+  newFetch: () => void;
 }
 
+interface LeaderOption {
+  documentId: string;
+  value: string;
+  username: string;
+  image: string;
+  id: string;
+}
 
-const CustomOption: FC<OptionProps<LeaderOption>> = (props) =>  {
-  const { data, innerRef, innerProps }:any = props;
+const CustomOption: FC<OptionProps<LeaderOption>> = (props) => {
+  const { data, innerRef, innerProps }: any = props;
   return (
     <div
       ref={innerRef}
       {...innerProps}
       className="flex items-center p-2 cursor-pointer hover:bg-gray-100"
     >
-      <img src={data.image} alt={data.label} className="w-6 h-6 rounded-full mr-2" />
-      <span>{data.label}</span>
+      <img
+        src={data.image}
+        alt={data.label}
+        className="w-6 h-6 rounded-full mr-2"
+      />
+      <span>{data.username}</span>
     </div>
   );
 };
 
-export function CreateTeamButton() {
-  const [open, setOpen] = React.useState(false);
+export function CreateTeamButton({ newFetch }: CreateTeamButtonProps) {
+  const [open, setOpen] = useState<boolean>(false);
+  const [teamName, setTeamName] = useState<string>("");
+  const [selectedLeader, setSelectedLeader] = useState<LeaderOption | null>(
+    null
+  );
+  const [note, setNote] = useState<string>("");
+  const [user, setUser] = useState<LeaderOption[]>([]);
 
   const handleOpen = () => setOpen(!open);
+
+  const fetchUserNoRole = async () => {
+    try {
+      const resultUser = await ax.get(
+        "/users?populate=role&filters[role][name]=Authenticated"
+      );
+      // console.log("use",resultUser.data);
+      const usersData = resultUser.data.map((user: any) => ({
+        documentId: user.id,
+        username: user.username,
+        image: "https://thumbs.dreamstime.com/z/laptop-computer-user-icon-vector-isolated-white-person-work-online-pictogram-business-worker-analyst-student-coder-customer-316853739.jpg",
+        id: user.id,
+      }));
+      console.log("use", usersData);
+      setUser(usersData);
+    } catch (e) {
+      console.log("Error fetching user data:", e);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserNoRole();
+  }, []);
+
+  const handleCreateTeam = async () => {
+    const teamData = {
+      teamName,
+      leader: selectedLeader?.value,
+      note,
+      leaderId: selectedLeader?.id,
+    };
+
+    try {
+      const responseCreateTeam = await ax.post("/teams", {
+        data: { TeamName: teamData.teamName , manager: teamData.leaderId},
+      });
+      console.log("use",teamData.leaderId)
+      const responseAssignRole = await ax.put("/assign_role", {
+        data: {
+          teamId: Number(responseCreateTeam.data.data.id),
+          userId: Number(teamData.leaderId),
+          roleId: 4,
+        },
+      });
+
+      console.log("Team created successfully:", responseCreateTeam.data);
+      console.log("Assign Role successfully:", responseAssignRole.data);
+      toast.success("สร้างทีมเสร็จสิ้น!");
+      newFetch();
+      setOpen(false);
+    } catch (error) {
+      console.error("Error creating team:", error);
+    }
+  };
 
   return (
     <>
@@ -84,28 +148,46 @@ export function CreateTeamButton() {
             <Typography color="blue-gray" variant="h6">
               Team Name
             </Typography>
-            <Input label="Team Name" />
+            <Input
+              label="Team Name"
+              value={teamName}
+              onChange={(e) => setTeamName(e.target.value)}
+              required
+            />
 
             <Typography color="blue-gray" variant="h6">
               Leader
             </Typography>
             <Select
-              options={leaderOptions}
+              options={user.map((userData) => ({
+                label: userData.username,
+                value: userData.value,
+                image: userData.image,
+                username: userData.username,
+                id: userData.id,
+              }))}
+              required
               placeholder="Select Leader"
               components={{ Option: CustomOption }}
+              value={selectedLeader}
+              onChange={setSelectedLeader}
             />
 
             <Typography color="blue-gray" variant="h6">
               Note
             </Typography>
-            <Textarea label="Note" />
+            <Textarea
+              label="Note"
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+            />
           </div>
         </DialogBody>
         <DialogFooter className="space-x-2">
           <Button variant="text" color="gray" onClick={handleOpen}>
             Cancel
           </Button>
-          <Button variant="gradient" color="blue" onClick={handleOpen}>
+          <Button variant="gradient" color="blue" onClick={handleCreateTeam}>
             Create Team
           </Button>
         </DialogFooter>
