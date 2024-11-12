@@ -1,7 +1,12 @@
 import React from "react";
-import { FiUsers, FiUserX, FiSettings, FiAward } from "react-icons/fi";
+import { FiThumbsUp, FiHelpCircle, FiXCircle, FiUsers } from "react-icons/fi";
 
-const icons = [FiUsers, FiUserX, FiSettings, FiAward];
+const icons = [
+  FiUsers,       
+  FiThumbsUp,  
+  FiHelpCircle, 
+  FiXCircle    
+];
 
 const StatsCard = ({ title, value, icon, color }: { title: string, value: number, icon: any, color: string }) => {
   return (
@@ -23,20 +28,15 @@ const StatsCard = ({ title, value, icon, color }: { title: string, value: number
   );
 };
 
-const StatsTeamComponent = () => {
-  const stats = [
-    { title: "ทีมทั้งหมด", value: 100, icon: icons[0], color: "bg-gradient-to-r from-blue-500 to-teal-400" },
-    { title: "ทีมที่ไม่มีสมาชิก", value: 20, icon: icons[1], color: "bg-gradient-to-r from-indigo-400 to-pink-500" },
-    { title: "หัวหน้าทีมทั้งหมด", value: 10, icon: icons[2], color: "bg-gradient-to-r from-blue-500 to-teal-400" },
-    { title: "จำนวนพนักงาน", value: 5, icon: icons[3], color: "bg-gradient-to-r from-indigo-400 to-pink-500" },
-  ];
+const StatsMyTeamComponent = () => {
 
-  const statsMyteam = [
-    { title: "สมาชิกทั้งหมด", value: 100, icon: icons[0], color: "bg-gradient-to-r from-blue-500 to-teal-400" },
-    { title: "จำนวนพนักงานที่สำรวจวันนี้", value: 20, icon: icons[1], color: "bg-gradient-to-r from-indigo-400 to-pink-500" },
-    { title: "จำนวนงานที่เสร็จสิ้น", value: 10, icon: icons[2], color: "bg-gradient-to-r from-blue-500 to-teal-400" },
-    { title: "จำนวนการสำรวจทั้งหมด", value: 5, icon: icons[3], color: "bg-gradient-to-r from-indigo-400 to-pink-500" },
-  ];
+  const stats = [
+    { title: "สมาชิกในทีมทั้งหมด", value: 8, icon: icons[0], color: "bg-gradient-to-r from-blue-500 to-teal-400" },
+    { title: "ลูกค้าที่สนใจ", value: 20, icon: icons[1], color: "bg-gradient-to-r from-green-400 to-green-600" },
+    { title: "ลูกคาที่ยังไม่แน่ใจ", value: 10, icon: icons[2], color: "bg-gradient-to-r from-yellow-400 to-yellow-600" },
+    { title: "ลูกค้าที่ไม่สนใจ", value: 5, icon: icons[3], color: "bg-gradient-to-r from-red-400 to-red-600" },
+];
+
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -53,4 +53,4 @@ const StatsTeamComponent = () => {
   );
 };
 
-export default StatsTeamComponent;
+export default StatsMyTeamComponent;

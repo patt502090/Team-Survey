@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FiEdit3, FiTrash2 } from "react-icons/fi";
 import { ModalDelateTeam } from "../Modal/ModalDeleteTeam";
+import { MdManageSearch } from "react-icons/md";
 
 interface Member {
   id: number;
@@ -36,17 +37,23 @@ interface TeamListProps {
   searchQuery: string;
   data: { data: Team[] } | null;
   newFetch: () => void;
+  onTeamSelect: (docId: string) => void;
 }
 
-const TeamList = ({ newFetch ,searchQuery, data }: TeamListProps) => {
+const TeamList = ({ newFetch, searchQuery, data, onTeamSelect }: TeamListProps) => {
   const dataTeam = data && Array.isArray(data.data) ? data.data : [];
   // console.log(dataTeam);
   const [teamToDelete, setTeamToDelete] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
+  const handleSelect = (team: Team) => {
+    onTeamSelect(team.documentId); 
+    // console.log("use",team.documentId)
+  };
+
   const handleOpen = () => setIsModalOpen(true);
   const handleClose = () => {
-    setIsModalOpen(false) ;
+    setIsModalOpen(false);
     setTeamToDelete(null);
   };
 
@@ -78,7 +85,7 @@ const TeamList = ({ newFetch ,searchQuery, data }: TeamListProps) => {
                     team.manager?.profileImage ||
                     "https://i.pinimg.com/736x/8b/16/7a/8b167af653c2399dd93b952a48740620.jpg"
                   }
-                  onError={(e:any) => {
+                  onError={(e: any) => {
                     e.target.src =
                       "https://i.pinimg.com/736x/8b/16/7a/8b167af653c2399dd93b952a48740620.jpg";
                   }}
@@ -91,9 +98,9 @@ const TeamList = ({ newFetch ,searchQuery, data }: TeamListProps) => {
               <div>
                 <button
                   className="text-teal-500 hover:text-teal-600"
-                  onClick={() => alert("Edit team")}
+                  onClick={() => handleSelect(team)}
                 >
-                  <FiEdit3 className="w-5 h-5" />
+                  <MdManageSearch className="w-5 h-5 " />
                 </button>
                 <button
                   className="text-red-500 hover:text-red-600 ml-3"
@@ -101,31 +108,29 @@ const TeamList = ({ newFetch ,searchQuery, data }: TeamListProps) => {
                 >
                   <FiTrash2 className="w-5 h-5" />
                 </button>
-
-
               </div>
             </div>
             <div className="mt-4">
               <p className="text-sm text-gray-500">
-                หัวหน้าทีม: {team.manager?.username} | จำนวนสมาชิก:{" "}
-                {team.members.length} | เก็บข้อมูลแล้ว: 0
+                หัวหน้าทีม: {team?.manager?.username} | จำนวนสมาชิก:{" "}
+                {team?.members?.length} | เก็บข้อมูลแล้ว: 0
               </p>
               <p className="text-sm text-gray-400 mt-2">
-                สร้างเมื่อ: {new Date(team.createdAt).toLocaleDateString()}
+                สร้างเมื่อ: {new Date(team?.createdAt).toLocaleDateString()}
               </p>
             </div>
           </div>
         ))}
       </div>
       {isModalOpen && (
-      <ModalDelateTeam
-        newFetch={newFetch}
-        teamId={teamToDelete}
-        open={isModalOpen}
-        handleOpen={handleOpen}
-        handleClose={handleClose}
-      />
-    )}
+        <ModalDelateTeam
+          newFetch={newFetch}
+          teamId={teamToDelete}
+          open={isModalOpen}
+          handleOpen={handleOpen}
+          handleClose={handleClose}
+        />
+      )}
     </div>
   );
 };

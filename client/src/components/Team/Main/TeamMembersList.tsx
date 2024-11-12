@@ -2,7 +2,7 @@ import { AuthContext } from "@/contexts/Auth.context";
 import React, { useContext, useState } from "react";
 import { FaUserTie, FaChartLine, FaStar, FaEllipsisH } from "react-icons/fa";
 import NoTeam from "./TeamNotAvailable";
-import { myTeam } from "@/app/(main)/team/page";
+import { Team } from "@/app/(main)/team/page";
 import {
   Button,
   Dialog,
@@ -14,7 +14,7 @@ import ax from "@/conf/ax";
 import toast from "react-hot-toast";
 
 interface TeamMembersListProps {
-  myTeamData: myTeam;
+  myTeamData: Team;
 }
 
 const TeamMembersList: React.FC<TeamMembersListProps> = ({ myTeamData }) => {
@@ -24,6 +24,7 @@ const TeamMembersList: React.FC<TeamMembersListProps> = ({ myTeamData }) => {
   const [memberDocToKick, setMemberDocToKick] = useState<string | null>(null);
   const [memberIdToKick, setMemberIdToKick] = useState<number | null>(null);
   const [dropdownOpen, setDropdownOpen] = useState<string | null>(null);
+
 
   const handleKickMember = (memberDocId: string, memberId: number) => {
     setMemberDocToKick(memberDocId);
@@ -72,7 +73,7 @@ const TeamMembersList: React.FC<TeamMembersListProps> = ({ myTeamData }) => {
     setIsModalOpen(false);
   };
 
-  if (!user?.my_team && !user?.team) {
+  if (!user?.my_team && !user?.team && !myTeamData) {
     return <NoTeam />;
   }
 
@@ -130,13 +131,13 @@ const TeamMembersList: React.FC<TeamMembersListProps> = ({ myTeamData }) => {
         role="list"
         aria-label="Team Members"
       >
-        {myTeamData?.members.map((member) => (
+        {myTeamData?.members.map((member:any) => (
           <div
             key={member.id}
             className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 transform hover:-translate-y-1 relative"
             role="listitem"
           >
-            {user?.role?.name != "Worker" && (
+            {user?.role?.name == "Team Leader" && (
               <span
                 className="absolute top-2 right-2 bg-gray-300 p-1 rounded-full cursor-pointer"
                 onClick={() => toggleDropdown(member?.documentId)}
