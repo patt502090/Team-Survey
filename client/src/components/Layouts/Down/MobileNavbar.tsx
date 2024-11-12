@@ -21,7 +21,7 @@ export default function LabelBottomNavigation() {
       className="mb-3 border-t-4"
     >
       <BottomNavigationAction
-        label="Home"
+        label="หลัก"
         value="Home"
         icon={<HomeIcon sx={{ fontSize: 27 }} />}
         onClick={() => {
@@ -30,7 +30,7 @@ export default function LabelBottomNavigation() {
       />
 
       <BottomNavigationAction
-        label="CheckID"
+        label="ตรวจสอบ"
         value="CheckID"
         icon={<SearchIcon sx={{ fontSize: 27 }} />}
         onClick={() => {
@@ -50,7 +50,7 @@ export default function LabelBottomNavigation() {
         }}
       />
       <BottomNavigationAction
-        label="Team"
+        label="ทีม"
         value="Team"
         icon={<GroupIcon sx={{ fontSize: 27 }} />}
         onClick={() => {
@@ -59,7 +59,7 @@ export default function LabelBottomNavigation() {
       />
 
       <BottomNavigationAction
-        label="Profile"
+        label="โปรไฟล์"
         value="Profile"
         icon={<AccountBoxIcon sx={{ fontSize: 27 }} />}
         onClick={() => {

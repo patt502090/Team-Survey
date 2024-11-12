@@ -14,7 +14,13 @@ import FilterListCustom from "@/components/Dashboard/Filters/FilterMap1";
 import CardStats from "@/components/Dashboard/CardData/CardData1";
 import FilterSelectionInterface from "@/components/Dashboard/Filters/FilterMapCustom";
 import FilterTeamCustom from "@/components/Dashboard/Filters/FilterTeam";
-import Map from "@/components/Map/Map";
+import { useMemo } from "react";
+import dynamic from 'next/dynamic';
+
+const Map = dynamic(() => import('@/components/Map/Map'), { 
+  loading: () => <p>A map is loading</p>, 
+  ssr: false 
+});
 
 export default function Dashboard() {
   return (

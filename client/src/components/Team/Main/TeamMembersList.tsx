@@ -183,7 +183,7 @@ const TeamMembersList: React.FC<TeamMembersListProps> = ({ myTeamData }) => {
                 <p className="text-gray-600 text-sm">{"สมาชิก"}</p>
                 <div className="flex items-center mt-2 text-green-600">
                   <FaChartLine className="mr-2" />
-                  <span>
+                  <span className="text-xs md:text-base">
                     เก็บข้อมูลแล้วจำนวน {member?.my_customers?.length || "0"} คน
                   </span>
                 </div>
