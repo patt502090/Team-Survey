@@ -17,7 +17,7 @@ const TeamMembersList: React.FC<TeamMembersListProps> = ({ myTeamData }) => {
     return <NoTeam />;
   }
 
-  console.log("My Team: ", myTeamData);
+//   console.log("My Team: ", myTeamData);
 
   return (
     <div
@@ -62,7 +62,7 @@ const TeamMembersList: React.FC<TeamMembersListProps> = ({ myTeamData }) => {
                   <FaUserTie className="text-blue-600" />
                   {myTeamData?.manager?.username || "Team Manager"}
                 </h2>
-                <p className="text-gray-600">{"Team Leader"}</p>
+                <p className="text-gray-600">{"หัวหน้าทีม"}</p>
                 <div className="flex items-center mt-2 text-blue-600">
                   {/* <FaChartLine className="mr-2" /> */}
                   {/* <span>10 Surveys Completed</span> */}
@@ -101,10 +101,10 @@ const TeamMembersList: React.FC<TeamMembersListProps> = ({ myTeamData }) => {
                 <h3 className="text-lg font-semibold text-gray-800">
                   {member.username}
                 </h3>
-                <p className="text-gray-600 text-sm">{"Worker"}</p>
+                <p className="text-gray-600 text-sm">{"พนักงาน"}</p>
                 <div className="flex items-center mt-2 text-green-600">
                   <FaChartLine className="mr-2" />
-                  <span>เก็บข้อมูลแล้วจำนวน {member.my_customers.length} คน</span>
+                  <span>เก็บข้อมูลแล้วจำนวน {member?.my_customers?.length || "0"} คน</span>
                 </div>
               </div>
             </div>

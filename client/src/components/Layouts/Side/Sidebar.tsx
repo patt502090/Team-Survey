@@ -60,7 +60,9 @@ export default function DefaultSidebar() {
 
   //   fetchUserData();
   // }, []);
-  // console.log("user",userData);
+
+  console.log("user",user);
+
 
   return (
     <Card
