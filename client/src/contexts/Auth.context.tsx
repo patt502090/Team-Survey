@@ -109,7 +109,7 @@ export const ContextProvider: React.FC<{ children: ReactNode }> = (props) => {
     updateJwt(null);
     setLoginSuccess(false, null);
     setLoginError(null);
-    setUserRole(null);
+    setUserRole("");
     sessionStorage.removeItem(conf.roleSessionStorageKey);
   };
 

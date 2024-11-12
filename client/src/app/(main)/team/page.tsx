@@ -1,15 +1,16 @@
 "use client";
 import React, { useContext, useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
-import TeamList from "../../../components/Team/TeamList";
+import TeamList from "../../../components/Team/Main/TeamList";
 import { BreadcrumbsWithIcon } from "@/components/Dashboard/Breadcrumbs";
-import StatsTeamComponent from "../../../components/Team/StatsCard";
-import { CreateTeamButton } from "@/components/Team/CreateTeamButton";
+import StatsTeamComponent from "../../../components/Team/Card/StatsCardForAllTeam";
+import { CreateTeamButton } from "@/components/Team/Button/CreateTeamButton";
 import ax from "@/conf/ax";
 import conf from "@/conf/main";
 import { AuthContext } from "@/contexts/Auth.context";
-import TeamMembersList from "@/components/Team/TeamMembersList";
+import TeamMembersList from "@/components/Team/Main/TeamMembersList";
 import { Toaster } from "react-hot-toast";
+import { AddWorkerButton } from "@/components/Team/Button/AddWorkerButton";
 
 interface Team {
   id: number;
@@ -88,8 +89,9 @@ const TeamManagement = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [TeamsData, setTeamsData] = useState<Team[]>([]);
   const [myTeamData, setMyTeamData] = useState<myTeam | null>(null);
-  const { state: ContextState } = useContext(AuthContext);
+  const { state: ContextState } = useContext<any>(AuthContext);
   const { user } = ContextState;
+  const [teamId, setTeamId] = useState<string>("");
 
   useEffect(() => {
     fetchTeamsData();
@@ -111,6 +113,8 @@ const TeamManagement = () => {
   };
   // console.log("Teams",user.team.documentId)
 
+  // console.log(`/teams/${user?.team?.documentId || user?.my_team?.documentId}?populate=*&?populate[members][populate]=my_customers)`);
+
   const fetchMyTeamData = async () => {
     if (!user?.team?.documentId && !user?.my_team?.documentId) {
       console.log("No team data available for user.");
@@ -120,10 +124,13 @@ const TeamManagement = () => {
     try {
       const myTeamResult = await ax.get(
         `/teams/${
-          user?.team.documentId || user?.my_team.documentId
-        }?populate[members][populate]=my_customers`
+          user?.team?.documentId || user?.my_team?.documentId
+        }?populate=*&?populate[members][populate]=my_customers`
       );
-      setMyTeamData(myTeamResult.data.data);
+      console.log(myTeamResult);
+      setMyTeamData(myTeamResult?.data?.data);
+      setTeamId(myTeamResult?.data?.data?.id);
+      // console.log("doc",myTeamResult?.data?.data?.documentId)
       // console.log("my", myTeamResult.data.data);
     } catch (error) {
       console.log("Error fetching my team data:", error);
@@ -143,6 +150,8 @@ const TeamManagement = () => {
         </div>
         {user?.role.name == "Admin" ? (
           <CreateTeamButton newFetch={fetchTeamsData} />
+        ) : user?.role?.name == "Team Leader" ? (
+          <AddWorkerButton newFetchMyTeam={fetchMyTeamData} teamId= {teamId} />
         ) : null}
       </div>
 
