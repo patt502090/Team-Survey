@@ -120,20 +120,19 @@ const Map = () => {
 
   return (
     <div className="w-full max-w-3xl mx-auto">
-      <div className="flex justify-end mb-4">
-        <button
-          onClick={handleBack}
-          disabled={currentLayer === "provinces"}
-          className="px-4 py-2 bg-blue-500 text-white rounded disabled:bg-gray-400"
-        >
-          Back
-        </button>
-      </div>
+      <div className="flex justify-end mb-4"></div>
       <div className="mb-4">
         <p>Selected Province: {selectedProvince || "None"}</p>
         <p>Selected District: {selectedDistrict || "None"}</p>
         <p>Selected Subdistrict: {selectedSubDistrict || "None"}</p>
       </div>
+      <button
+        onClick={handleBack}
+        disabled={currentLayer === "provinces"}
+        className="px-4 py-2 bg-blue-500 text-white rounded disabled:bg-gray-400"
+      >
+        Back
+      </button>
       <MapContainer
         key={`${currentLayer}-${selectedProvince}-${selectedDistrict}-${selectedSubDistrict}`}
         center={[13.736717, 100.523186]}
