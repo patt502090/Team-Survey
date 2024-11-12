@@ -17,7 +17,7 @@ const CheckInfo: React.FC<CheckInfoProps> = ({ customerData }) => {
         <h3 className="text-lg font-semibold">ข้อมูลลูกค้า</h3>
         <div className="flex items-center space-x-4">
           <img
-            className="w-16 h-16 object-cover rounded-full"
+            className="w-24 h-24 object-cover rounded-full"
             src={customerData.Pic}
             alt="Avatar Upload"
           />
