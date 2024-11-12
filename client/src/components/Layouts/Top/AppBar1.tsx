@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { FiUser } from "react-icons/fi";
 import QueryStatsIcon from "@mui/icons-material/QueryStats";
-import { useRouter  } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const AppBarCustom = () => {
-  const router = useRouter()
-  const [showProfileDropdown, setShowProfileDropdown] = useState<boolean>(false);
+  const router = useRouter();
+  const [showProfileDropdown, setShowProfileDropdown] =
+    useState<boolean>(false);
 
   const toggleProfileDropdown = () => {
     setShowProfileDropdown(!showProfileDropdown);
@@ -22,8 +23,10 @@ const AppBarCustom = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex-shrink-0 flex items-center">
-              <QueryStatsIcon/>
-              <span className="ml-2 text-xl font-semibold text-gray-800">Team Survey</span>
+              <QueryStatsIcon />
+              <span className="ml-2 text-xl font-semibold text-gray-800">
+                Team Survey
+              </span>
             </div>
 
             <div className="flex items-center space-x-4">
@@ -36,26 +39,39 @@ const AppBarCustom = () => {
                     src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e"
                     alt="Profile"
                     className="h-8 w-8 rounded-full object-cover"
-                    onError={(e:any) => {
+                    onError={(e: any) => {
                       e.target.onerror = null;
                       e.target.src = "https://via.placeholder.com/32";
                     }}
                   />
                   <FiUser className="h-5 w-5 text-gray-600" />
                 </button>
-                
+
                 {showProfileDropdown && (
                   <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
                     <div className="py-1" role="menu">
-                    <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2">
-                      <li><button onClick={() => {
-                        router.push('/profile')
-                      }}>Profile</button></li>
-                      <li><button onClick={() => {
-                        sessionStorage.clear()
-                        router.push("/");
-                      }}>Logout</button></li>
-                    </ul>
+                      <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2">
+                        <li>
+                          <button
+                            onClick={() => {
+                              router.push("/profile");
+                            }}
+                          >
+                            โปรไฟล์
+                          </button>
+                        </li>
+                        <li>
+                          <button
+                            className="mt-3"
+                            onClick={() => {
+                              sessionStorage.clear();
+                              router.push("/");
+                            }}
+                          >
+                            ออกจากระบบ
+                          </button>
+                        </li>
+                      </ul>
                     </div>
                   </div>
                 )}

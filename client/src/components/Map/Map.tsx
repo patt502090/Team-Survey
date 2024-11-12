@@ -1,4 +1,3 @@
-"use client";
 import React, { useEffect, useState, useCallback } from "react";
 import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
@@ -19,15 +18,11 @@ interface GeoData extends FeatureCollection {
 }
 
 const Map = () => {
-  const [currentLayer, setCurrentLayer] = useState<
-    "provinces" | "districts" | "subdistricts"
-  >("provinces");
+  const [currentLayer, setCurrentLayer] = useState<"provinces" | "districts" | "subdistricts">("provinces");
   const [geoData, setGeoData] = useState<GeoData | null>(null);
   const [selectedProvince, setSelectedProvince] = useState<string | null>(null);
   const [selectedDistrict, setSelectedDistrict] = useState<string | null>(null);
-  const [selectedSubDistrict, setSelectedSubDistrict] = useState<string | null>(
-    null
-  );
+  const [selectedSubDistrict, setSelectedSubDistrict] = useState<string | null>(null);
 
   const loadGeoData = useCallback(async () => {
     try {
@@ -97,7 +92,6 @@ const Map = () => {
     }
 
     setCurrentLayer(nextLayer);
-
     await loadGeoData();
   };
 
@@ -134,12 +128,20 @@ const Map = () => {
         <p>Selected District: {selectedDistrict || "None"}</p>
         <p>Selected Subdistrict: {selectedSubDistrict || "None"}</p>
       </div>
-      <MapContainer
+
+      {/* Conditionally render MapContainer only when geoData is available */}
+      {geoData ? (
+        <MapContainer
         key={`${currentLayer}-${selectedProvince}-${selectedDistrict}-${selectedSubDistrict}`}
         center={[13.736717, 100.523186]}
         zoom={6}
         style={{ height: "400px", width: "600px" }}
         className="border border-gray-300 rounded-lg"
+        whenCreated={(map) => {
+          map.on('load', () => {
+            console.log('Map loaded!');
+          });
+        }}
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         {geoData ? (
@@ -166,6 +168,10 @@ const Map = () => {
           <div>Loading map data...</div>
         )}
       </MapContainer>
+      
+      ) : (
+        <div>Loading map data...</div>
+      )}
     </div>
   );
 };
