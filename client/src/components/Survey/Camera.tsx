@@ -95,22 +95,19 @@ export default function Camera({ onOCRProcessed }: CameraProps) {
       formData.append("file", file, file.name);
 
       try {
-        // ส่งไฟล์ไปยัง API
         const response = await axios.post(
           "https://api.aiforthai.in.th/ocr-id-front-iapp",
           formData,
           {
             headers: {
               "Content-Type": "multipart/form-data",
-              Apikey: "IXrE7zgMsbMceYlYwSSQXweO9DN9Owo0", // แทนที่ด้วย API Key ของคุณ
+              Apikey: "YH1mYYlQFqKa1VcAUEB0zAxTDhXDk98A", // แทนที่ด้วย API Key ของคุณ
             },
           }
         );
 
-        // ตรวจสอบผลลัพธ์ที่ได้รับจาก API
         console.log("OCR Response:", response.data);
 
-        // ประมวลผลข้อมูลจาก OCR
         const ocrData = ocrSchema.parse(response.data);
         onOCRProcessed(ocrData);
       } catch (error) {
@@ -153,7 +150,6 @@ export default function Camera({ onOCRProcessed }: CameraProps) {
     try {
       const formData = new FormData();
 
-      // แปลง base64 เป็น Blob (PNG)
       const byteString = atob(image.split(",")[1]);
       const arrayBuffer = new ArrayBuffer(byteString.length);
       const uint8Array = new Uint8Array(arrayBuffer);
@@ -171,19 +167,17 @@ export default function Camera({ onOCRProcessed }: CameraProps) {
         {
           headers: {
             "Content-Type": "multipart/form-data",
-            Apikey: "IXrE7zgMsbMceYlYwSSQXweO9DN9Owo0",
+            Apikey: "YH1mYYlQFqKa1VcAUEB0zAxTDhXDk98A",
           },
         }
       );
 
-      // ตรวจสอบผลลัพธ์ที่ได้รับจาก API
       console.log("OCR Response:", response.data);
 
       const ocrData = ocrSchema.parse(response.data);
       onOCRProcessed(ocrData);
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        // ตรวจสอบว่า error.response มีข้อมูลอะไรบ้าง
         console.error("Error response:", error.response);
 
         if (error.response) {

@@ -132,7 +132,7 @@ export default function HorizontalLinearAlternativeLabelStepper() {
               {activeStep < steps.length - 1 && (
                 <button
                   onClick={handleNext}
-                  disabled={!customerDatatoCheck}
+                  disabled={!customerDatatoCheck?.estimate}
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   ถัดไป
