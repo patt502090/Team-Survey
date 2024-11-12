@@ -22,7 +22,7 @@ import conf from "@/conf/main";
 import { AuthContext } from "@/contexts/Auth.context";
 import { useRouter } from "next/navigation";
 import CenterFocusWeakIcon from "@mui/icons-material/CenterFocusWeak";
-import { ModalLogout } from "@/components/ModalLogout";
+import { ModalLogout } from "@/components/Others/ModalLogout";
 export default function DefaultSidebar() {
   const { state: ContextState, logout } = useContext(AuthContext);
   const { user } = ContextState;

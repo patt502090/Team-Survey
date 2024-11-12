@@ -1,16 +1,16 @@
 "use client";
 import React, { useContext, useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
-import TeamList from "../../../components/Team/TeamList";
+import TeamList from "../../../components/Team/Main/TeamList";
 import { BreadcrumbsWithIcon } from "@/components/Dashboard/Breadcrumbs";
-import StatsTeamComponent from "../../../components/Team/StatsCard";
-import { CreateTeamButton } from "@/components/Team/CreateTeamButton";
+import StatsTeamComponent from "../../../components/Team/Card/StatsCardForAllTeam";
+import { CreateTeamButton } from "@/components/Team/Button/CreateTeamButton";
 import ax from "@/conf/ax";
 import conf from "@/conf/main";
 import { AuthContext } from "@/contexts/Auth.context";
-import TeamMembersList from "@/components/Team/TeamMembersList";
+import TeamMembersList from "@/components/Team/Main/TeamMembersList";
 import { Toaster } from "react-hot-toast";
-import { AddWorkerButton } from "@/components/Team/AddWorkerButton";
+import { AddWorkerButton } from "@/components/Team/Button/AddWorkerButton";
 
 interface Team {
   id: number;

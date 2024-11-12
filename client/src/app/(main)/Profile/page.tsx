@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Navbar from "../../../components/Navbar";
+import Navbar from "../../../components/Others/Navbar";
 import { useRouter } from "next/navigation";
 import { Button } from "@material-tailwind/react";
 export default function Profile() {

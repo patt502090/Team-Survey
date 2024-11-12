@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FiEdit3, FiTrash2 } from "react-icons/fi";
-import { ModalDelateTeam } from "./ModalDeleteTeam";
+import { ModalDelateTeam } from "../Modal/ModalDeleteTeam";
 
 interface Member {
   id: number;
