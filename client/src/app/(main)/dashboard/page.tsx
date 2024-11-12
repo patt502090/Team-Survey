@@ -14,6 +14,7 @@ import FilterListCustom from "@/components/Dashboard/Filters/FilterMap1";
 import CardStats from "@/components/Dashboard/CardData/CardData1";
 import FilterSelectionInterface from "@/components/Dashboard/Filters/FilterMapCustom";
 import FilterTeamCustom from "@/components/Dashboard/Filters/FilterTeam";
+import Map from "@/components/Map/Map";
 
 export default function Dashboard() {
   return (
@@ -24,11 +25,11 @@ export default function Dashboard() {
 
       <main className="flex-1 p-6 space-y-6 md:ml-5">
         <div className="">
-          <BreadcrumbsWithIcon pathName="แดชบอร์ด"/>
+          <BreadcrumbsWithIcon pathName="แดชบอร์ด" />
         </div>
         <div className="flex justify-between items-center ">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
-          แดชบอร์ด
+            แดชบอร์ด
           </h1>
           {/* <ControlledSelect /> */}
           {/* <FilterTeamCustom/> */}
@@ -55,6 +56,7 @@ export default function Dashboard() {
           {/* <LineChartCustom />
           <PieChartCustom /> */}
         </div>
+        <Map />
       </main>
     </div>
   );
