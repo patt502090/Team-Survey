@@ -78,7 +78,7 @@ const TeamList = ({ newFetch ,searchQuery, data }: TeamListProps) => {
                     team.manager?.profileImage ||
                     "https://i.pinimg.com/736x/8b/16/7a/8b167af653c2399dd93b952a48740620.jpg"
                   }
-                  onError={(e) => {
+                  onError={(e:any) => {
                     e.target.src =
                       "https://i.pinimg.com/736x/8b/16/7a/8b167af653c2399dd93b952a48740620.jpg";
                   }}

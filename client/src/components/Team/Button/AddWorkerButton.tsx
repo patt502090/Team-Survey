@@ -89,7 +89,7 @@ export function AddWorkerButton({ newFetchMyTeam, teamId }: AddWorkerButtonProps
         },
       });
       console.log("Workers added successfully:", responseAddWorkers.data);
-      toast.success("เพิ่มพนักงานเสร็จสิ้น!");
+      toast.success("เพิ่มสมาชิกเสร็จสิ้น!");
       newFetchMyTeam();
       setOpen(false);
     } catch (error) {
@@ -113,7 +113,7 @@ export function AddWorkerButton({ newFetchMyTeam, teamId }: AddWorkerButtonProps
         <div className="flex items-center justify-between">
           <DialogHeader className="flex flex-col items-start">
             <Typography className="mb-1" variant="h4">
-              เพิ่มพนักงาน
+              เพิ่มสมาชิก
             </Typography>
           </DialogHeader>
           <svg

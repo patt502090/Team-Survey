@@ -22,7 +22,7 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
             className="bg-red-500 text-white px-4 py-2 rounded-lg"
             onClick={onConfirm}
           >
-            ยืนยัน
+            ตกลง
           </button>
           <button
             className="bg-gray-500 text-white px-4 py-2 rounded-lg"

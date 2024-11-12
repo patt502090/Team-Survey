@@ -34,7 +34,7 @@ export function ModalLogout({ open, handleOpen }: { open: boolean; handleOpen: (
           <span>ยกเลิก</span>
         </Button>
         <Button variant="gradient" color="red" onClick={handleLogout}>
-          <span>ยืนยัน</span>
+          <span>ตกลง</span>
         </Button>
       </DialogFooter>
     </Dialog>
