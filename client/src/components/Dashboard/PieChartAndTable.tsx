@@ -55,7 +55,7 @@ const CustomerDistribution: React.FC = () => {
   return (
     <div className="p-4 md:p-auto bg-gray-50">
       <div className="mx-auto max-w-full bg-white rounded-lg shadow-lg p-4 md:p-6">
-        <h2 className="text-xl md:text-1xl font-bold text-gray-700 mb-4 md:mb-10 text-center">
+        <h2 className="text-xl md:text-1xl font-bold text-gray-700 mb-4 md:mb-10 text-center ">
         การกระจายประเภทลูกค้า
         </h2>
         

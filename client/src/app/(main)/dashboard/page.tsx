@@ -17,6 +17,7 @@ import FilterTeamCustom from "@/components/Dashboard/Filters/FilterTeam";
 import { useMemo } from "react";
 import dynamic from 'next/dynamic';
 import CustomerDistribution from "@/components/Dashboard/PieChartAndTable";
+import FilterComponent from "@/components/Dashboard/Filters/ButtonFilterAll";
 
 const Map = dynamic(() => import('@/components/Map/Map'), { 
   loading: () => <p>A map is loading</p>, 
@@ -31,17 +32,21 @@ export default function Dashboard() {
       </aside>
 
       <main className="flex-1 p-6 space-y-6 md:ml-5">
-        <div className="">
+        <div className="relative">
           <BreadcrumbsWithIcon pathName="แดชบอร์ด" />
         </div>
-        <div className="flex justify-between items-center ">
+        <div className="">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
             แดชบอร์ด
           </h1>
           {/* <ControlledSelect /> */}
           {/* <FilterTeamCustom/> */}
-          <FilterSelectionInterface />
+       
+           
+          
         </div>
+        <FilterComponent/>
+       
         {/* <FilterListCustom/> */}
         {/* <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
           <CardDataStats title="Total Surveys Completed" total="3,456" rate="1.2%" levelUp bgColor="bg-blue-100" iconColor="text-blue-600">
