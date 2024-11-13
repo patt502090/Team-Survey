@@ -83,6 +83,7 @@ export default function HorizontalLinearAlternativeLabelStepper() {
       console.log("yuy", requestData);
 
       await ax.post(`${conf.apiUrlPrefix}/customers`, requestData);
+      
       setShowPopup(true);
     } catch (error) {
       console.error("Error posting customer data:", error);
