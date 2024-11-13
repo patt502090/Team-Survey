@@ -16,6 +16,7 @@ import FilterSelectionInterface from "@/components/Dashboard/Filters/FilterMapCu
 import FilterTeamCustom from "@/components/Dashboard/Filters/FilterTeam";
 import { useMemo } from "react";
 import dynamic from 'next/dynamic';
+import CustomerDistribution from "@/components/Dashboard/PieChartAndTable";
 
 const Map = dynamic(() => import('@/components/Map/Map'), { 
   loading: () => <p>A map is loading</p>, 
@@ -58,10 +59,11 @@ export default function Dashboard() {
         </div> */}
         <CardStats />
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 ">
-          {/* <LineChartCustom />
-          <PieChartCustom /> */}
-        </div>
+        {/* <div className="grid grid-cols-1 gap-6 md:grid-cols-2 ">
+          <LineChartCustom />
+          <PieChartCustom />
+        </div> */}
+        <CustomerDistribution/>
         {/* <Map /> */}
       </main>
     </div>

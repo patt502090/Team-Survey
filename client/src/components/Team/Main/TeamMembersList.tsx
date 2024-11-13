@@ -14,7 +14,7 @@ import ax from "@/conf/ax";
 import toast from "react-hot-toast";
 
 interface TeamMembersListProps {
-  myTeamData: Team;
+  myTeamData: Team | null;
 }
 
 const TeamMembersList: React.FC<TeamMembersListProps> = ({ myTeamData }) => {

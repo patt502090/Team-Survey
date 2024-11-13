@@ -65,13 +65,13 @@ const TeamManagement = () => {
   const [TeamsData, setTeamsData] = useState<Team[]>([]);
   const [myTeamData, setMyTeamData] = useState<Team | null>(null);
   const [selectedTeam, setSelectedTeam] = useState<string | null>(null);
-  const { state: ContextState } = useContext(AuthContext);
+  const { state: ContextState } = useContext<any>(AuthContext);
   const { user } = ContextState || {};
   const [teamId, setTeamId] = useState<string>("");
 
   useEffect(() => {
     fetchTeamsData();
-  }, []);
+  }, [user?.role?.name === "Admin", selectedTeam]);
 
   useEffect(() => {
     if (user?.team?.documentId || user?.my_team?.documentId || selectedTeam) {
@@ -133,14 +133,17 @@ const TeamManagement = () => {
       </div>
 
       {selectedTeam ? (
-        <div>
-          <div className="flex justify-start">
+        <div className="p-6 bg-white rounded-lg shadow-lg mt-6">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="ml-3 text-2xl font-semibold text-blue-700">
+              รายละเอียดทีม
+            </h2>
             <Button onClick={handleBackToList} color="blue" className="my-6">
               กลับ
             </Button>
           </div>
           <div className="mb-6">
-            <StatsMyTeamComponent />
+            <StatsMyTeamComponent myTeamData={myTeamData}/>
           </div>
           <TeamMembersList myTeamData={myTeamData} />
         </div>
