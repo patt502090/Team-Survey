@@ -52,6 +52,33 @@ export default {
           policies: [],
           middlewares: [],
         },
+      },
+      {
+        method: 'POST',
+        path: '/check_estimate_R_T', // URL ที่จะใช้เรียกใช้งาน API
+        handler: 'check.estimate_checked_Region_Table', // ชื่อฟังก์ชันใน Controller
+        config: {
+          policies: [],
+          middlewares: [],
+        },
+      },
+      {
+        method: 'POST',
+        path: '/check_estimate_P_T', // URL ที่จะใช้เรียกใช้งาน API
+        handler: 'check.estimate_checked_Province_Table', // ชื่อฟังก์ชันใน Controller
+        config: {
+          policies: [],
+          middlewares: [],
+        },
+      },
+      {
+        method: 'POST',
+        path: '/check_estimate_D_T', // URL ที่จะใช้เรียกใช้งาน API
+        handler: 'check.estimate_checked_district_Table', // ชื่อฟังก์ชันใน Controller
+        config: {
+          policies: [],
+          middlewares: [],
+        },
       }
     ],
   };
