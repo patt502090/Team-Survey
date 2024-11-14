@@ -1,4 +1,6 @@
 import { Context } from 'koa';
+import { compileFunction } from 'vm';
+import region from '../../region/controllers/region';
 
 export default {
   async estimate_checked_sd(ctx: Context) {
@@ -6,7 +8,9 @@ export default {
 
     try {
       let Get_s_Districts: any
+      let S_district: any
       if (S_districtData.data.team_id !== null) {
+        S_district = await strapi.entityService.findOne('api::sub-district.sub-district', S_districtData.data.S_district_id);
         const Get_team = await strapi.entityService.findOne('api::team.team', S_districtData.data.team_id);
         if (!Get_team) {
           return ("ไม่เจอทีมอะคุณ Id ผิดป่าว")
@@ -42,6 +46,7 @@ export default {
         }
       });
       ctx.send({
+        s_Districts: S_district.name_th,
         greenCount: statusCount.green,
         yellowCount: statusCount.yellow,
         redCount: statusCount.red,
@@ -139,6 +144,7 @@ export default {
         }
       });
       ctx.send({
+        district: Get_District.name_th,
         greenCount: statusCount.green,
         yellowCount: statusCount.yellow,
         redCount: statusCount.red,
@@ -249,6 +255,7 @@ export default {
       });
 
       ctx.send({
+        province: Get_Province.name_th,
         greenCount: statusCount.green,
         yellowCount: statusCount.yellow,
         redCount: statusCount.red,
@@ -381,6 +388,7 @@ export default {
       });
 
       ctx.send({
+        Region: S_RegionData.data.Region_id,
         greenCount: statusCount.green,
         yellowCount: statusCount.yellow,
         redCount: statusCount.red,
@@ -395,7 +403,7 @@ export default {
   async estimate_checked_all(ctx: Context) {
     const S_districtData = ctx.request.body;
     try {
-      let allCustomers 
+      let allCustomers
       if (S_districtData.data.team_id !== null) {
         const Get_team = await strapi.entityService.findOne('api::team.team', S_districtData.data.team_id);
         if (!Get_team) {
@@ -442,6 +450,16 @@ export default {
     } catch (error) {
       console.error('Error fetching customer data:', error);
       ctx.internalServerError('Failed to fetch customer data');
+    }
+  },
+  async estimate_checked_all_Table(ctx: Context) {
+    let Get_all_region
+    try {
+      Get_all_region = await strapi.entityService.findMany('api::region.region');
+      console.log(Get_all_region)
+    }
+    catch (error) {
+      return error
     }
   }
 

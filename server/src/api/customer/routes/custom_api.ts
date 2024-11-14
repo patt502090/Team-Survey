@@ -43,6 +43,15 @@ export default {
           policies: [],
           middlewares: [],
         },
+      },
+      {
+        method: 'POST',
+        path: '/check_estimate_all_T', // URL ที่จะใช้เรียกใช้งาน API
+        handler: 'check.estimate_checked_all_Table', // ชื่อฟังก์ชันใน Controller
+        config: {
+          policies: [],
+          middlewares: [],
+        },
       }
     ],
   };
