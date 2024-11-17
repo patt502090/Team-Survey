@@ -11,9 +11,9 @@ export default function Profile() {
     const [editData, setEditData] = useState({
         name: "",
         email: "",
-        phone: ""
+        phone: "",
+        picture: null,
     });
-
     const Logout = () => {
         sessionStorage.clear();
         setProfile(null);
@@ -23,7 +23,7 @@ export default function Profile() {
     const GetProfile = async () => {
         try {
             const token = sessionStorage.getItem("auth.jwt");
-            const response = await axios.get(`http://localhost:1337/api/users/me?populate=role`, {
+            const response = await axios.get(`http://localhost:1337/api/users/me?populate=*`, {
                 headers: {
                     "Authorization": `Bearer ${token}`,
                 },
@@ -32,47 +32,73 @@ export default function Profile() {
             setEditData({
                 name: response.data.username,
                 email: response.data.email,
-                phone: response.data.phoneNumber || ""
+                phone: response.data.phoneNumber || "",
+                picture: response.data.picture.url
             });
         } catch (error) {
             console.log("Error fetching profile:", error);
         }
     };
-
+    
     const EditProfile = async () => {
         try {
             const token = sessionStorage.getItem("auth.jwt");
-            const response = await axios.put(`http://localhost:1337/api/users/${profile.id}`, {
-                username: editData.name,
-                email: editData.email,
-                phoneNumber: editData.phone
-            }, {
-                headers: {
-                    "Authorization": `Bearer ${token}`,
+            let pictureId = profile?.picture?.id; 
+    
+                const formData = new FormData();
+                formData.append("files", editData.picture);
+    
+                const uploadResponse = await axios.post("http://localhost:1337/api/upload", formData, {
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                    },
+                });
+    
+                pictureId = uploadResponse.data[0]?.id;
+
+    
+            const response = await axios.put(
+                `http://localhost:1337/api/users/${profile.id}`,
+                {
+                    username: editData.name,
+                    email: editData.email,
+                    phoneNumber: editData.phone,
+                    picture: pictureId
                 },
-            });
+                {
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                    },
+                }
+            );
+    
             setProfile(response.data);
             console.log("Profile updated successfully:", response.data);
+    
         } catch (error) {
-            console.log("Error editing profile:", error);
+            console.error("Error editing profile:", error);
         }
     };
 
     useEffect(() => {
         GetProfile();
-    }, []);
+    }, [profile?.picture?.url]);
 
     return (
         <div className="flex flex-col min-h-screen bg-gradient-to-r from-blue-50 to-blue-100">
             <Navbar />
             <main className="flex flex-col justify-center items-center h-screen container mx-auto p-4 ">
                 <div className="bg-white rounded-lg p-6 shadow-lg border-2 w-full max-w-md flex flex-col">
-
+                
                     <dialog id="editProfileModal" className="modal">
                         <div className="modal-box p-8">
                             <form method="dialog" className="space-y-4" onSubmit={(e) => { e.preventDefault(); EditProfile(); }}>
                                 <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={() => document.getElementById('editProfileModal').close()}>✕</button>
                                 <h3 className="font-bold text-lg">แก้ไขข้อมูล</h3>
+                                <div>
+                                    <label className="block font-semibold">รูปโปรไฟล์</label>
+                                    <input type="file" onChange={(e) => setEditData({ ...editData, picture: e.target.files[0] })} className="file-input file-input-bordered file-input-info w-full max-w-xs p-2" />
+                                </div>
                                 <div>
                                     <label className="block font-semibold">ชื่อ</label>
                                     <input type="text" value={editData.name} onChange={(e) => setEditData({ ...editData, name: e.target.value })} className="input input-bordered w-full" />
@@ -89,7 +115,7 @@ export default function Profile() {
                             </form>
                         </div>
                     </dialog>
-                    <div className="self-end border-4">
+                    <div className="self-end">
                       <button className="btn" onClick={() => document.getElementById('editProfileModal').showModal()}>
                       <svg className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
                           <path stroke="none" d="M0 0h24v24H0z"/>
@@ -103,7 +129,7 @@ export default function Profile() {
                       <div className="justify-self-center lg:borer-r-4 lg:border-r-4 lg:pr-4">
                         <img
                           className="w-32 h-32 rounded-full border-4 border-blue-200 shadow-md mb-4"
-                          src="https://res.cloudinary.com/dboafhu31/image/upload/v1625318266/imagen_2021-07-03_091743_vtbkf8.png"
+                          src={`http://localhost:1337${profile?.picture?.url}`}
                           alt="Profile illustration"
                         />
                       </div>
