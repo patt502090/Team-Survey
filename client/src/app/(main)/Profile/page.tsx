@@ -9,14 +9,13 @@ export default function Profile() {
     const router = useRouter();
     const [profile, setProfile] = useState<any>(null);
     const [editData, setEditData] = useState({
-        name: "",
-        email: "",
+        first: "",
+        last: "",
         phone: "",
         picture: null,
     });
     const Logout = () => {
         sessionStorage.clear();
-        setProfile(null);
         router.push("/");
     };
 
@@ -30,10 +29,10 @@ export default function Profile() {
             });
             setProfile(response.data);
             setEditData({
-                name: response.data.username,
-                email: response.data.email,
-                phone: response.data.phoneNumber || "",
-                picture: response.data.picture.url
+                first: response.data.first_name,
+                last: response.data.last_name,
+                phone: response.data.phoneNumber,
+                picture: response.data?.picture?.url
             });
         } catch (error) {
             console.log("Error fetching profile:", error);
@@ -43,27 +42,24 @@ export default function Profile() {
     const EditProfile = async () => {
         try {
             const token = sessionStorage.getItem("auth.jwt");
-            let pictureId = profile?.picture?.id; 
-    
+            let pictureId = profile?.picture?.id;
+            if (editData.picture) {
                 const formData = new FormData();
                 formData.append("files", editData.picture);
-    
                 const uploadResponse = await axios.post("http://localhost:1337/api/upload", formData, {
                     headers: {
                         "Authorization": `Bearer ${token}`,
                     },
                 });
-    
                 pictureId = uploadResponse.data[0]?.id;
-
-    
+            }
             const response = await axios.put(
                 `http://localhost:1337/api/users/${profile.id}`,
                 {
-                    username: editData.name,
-                    email: editData.email,
+                    first_name: editData.first,
+                    last_name: editData.last,
                     phoneNumber: editData.phone,
-                    picture: pictureId
+                    picture: pictureId || profile?.picture?.id
                 },
                 {
                     headers: {
@@ -100,12 +96,12 @@ export default function Profile() {
                                     <input type="file" onChange={(e) => setEditData({ ...editData, picture: e.target.files[0] })} className="file-input file-input-bordered file-input-info w-full max-w-xs p-2" />
                                 </div>
                                 <div>
-                                    <label className="block font-semibold">ชื่อ</label>
-                                    <input type="text" value={editData.name} onChange={(e) => setEditData({ ...editData, name: e.target.value })} className="input input-bordered w-full" />
+                                    <label className="block font-semibold">ชื่อจริง</label>
+                                    <input type="text" value={editData.first} onChange={(e) => setEditData({ ...editData, first: e.target.value })} className="input input-bordered w-full" />
                                 </div>
                                 <div>
-                                    <label className="block font-semibold">อีเมล</label>
-                                    <input type="email" value={editData.email} onChange={(e) => setEditData({ ...editData, email: e.target.value })} className="input input-bordered w-full" />
+                                    <label className="block font-semibold">นานสกุล</label>
+                                    <input type="text" value={editData.last} onChange={(e) => setEditData({ ...editData, last: e.target.value })} className="input input-bordered w-full" />
                                 </div>
                                 <div>
                                     <label className="block font-semibold">เบอร์โทร</label>
@@ -136,8 +132,7 @@ export default function Profile() {
                       <div>
                         {profile ? (
                           <div className="w-full flex flex-col gap-4">
-                              <ProfileItem label="ชื่อ" value={profile.username} />
-                              <ProfileItem label="ชื่อผู้ใช้" value={profile.username} />
+                              <ProfileItem label="ชื่อผู้ใช้" value={`${profile.first_name} ${profile.last_name}`} />
                               <ProfileItem label="ตำแหน่ง" value={profile.role?.name} />
                               <ProfileItem label="อีเมล" value={profile.email} />
                               <ProfileItem label="เบอร์โทร" value={profile.phoneNumber} />
