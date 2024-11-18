@@ -23,6 +23,7 @@ import ax from "@/conf/ax";
 import conf from "@/conf/main";
 import { Team } from "../team/page";
 import { AuthContext } from "@/contexts/Auth.context";
+import DataTable from "@/components/Dashboard/Table/DataTable";
 
 const Map = dynamic(() => import("@/components/Map/Map"), {
   loading: () => <p>A map is loading</p>,
@@ -47,7 +48,6 @@ export default function Dashboard() {
     }
   };
 
-
   return (
     <div className="flex flex-1">
       <aside className="hidden md:block w-64 bg-white shadow-lg">
@@ -69,7 +69,18 @@ export default function Dashboard() {
         </div>
 
         <CardStats />
-        <CustomerDistribution />
+
+        <div className="p-4 md:p-auto bg-gray-50">
+          <div className="mx-auto max-w-full bg-white rounded-lg shadow-lg p-4 md:p-6">
+            <CustomerDistribution />
+          </div>
+        </div>
+
+        <div className="p-4 md:p-auto bg-gray-50">
+          <div className="mx-auto max-w-full bg-white rounded-lg shadow-lg p-4 md:p-6">
+            <DataTable />
+          </div>
+        </div>
 
         {/* <FilterComponent /> */}
         {/* <FilterListCustom/> */}
