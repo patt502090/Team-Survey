@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { BiLoader } from "react-icons/bi";
 import { IoMdClose } from "react-icons/io";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { FiFilter } from "react-icons/fi";
+import { AuthContext } from "@/contexts/Auth.context";
+import { Button } from "@material-tailwind/react";
 
-const HierarchicalFilter = () => {
+const HierarchicalFilter = ({ teamsData }: any) => {
+  const { state: ContextState } = useContext<any>(AuthContext);
+  const { user } = ContextState || {};
+
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [filters, setFilters] = useState({
@@ -12,50 +17,60 @@ const HierarchicalFilter = () => {
     region: "",
     province: "",
     district: "",
-    subDistrict: ""
+    subDistrict: "",
   });
 
   const [options, setOptions] = useState({
-    teams: [
-      "ทีมทั้งหมด",
-      "ทีม A",
-      "ทีม B",
-      "ทีม C",
-      "ทีม D"
-    ],
+    teams: ["ทีมทั้งหมด", "ทีม A", "ทีม B", "ทีม C", "ทีม D"],
     regions: [
       "ภาคเหนือ",
       "ภาคกลาง",
       "ภาคตะวันออกเฉียงเหนือ",
       "ภาคตะวันออก",
       "ภาคตะวันตก",
-      "ภาคใต้"
+      "ภาคใต้",
     ],
     provinces: {
-      "ภาคเหนือ": ["เชียงใหม่", "เชียงราย", "ลำปาง", "แม่ฮ่องสอน"],
-      "ภาคกลาง": ["กรุงเทพมหานคร", "นนทบุรี", "ปทุมธานี", "พระนครศรีอยุธยา"],
-      "ภาคตะวันออกเฉียงเหนือ": ["ขอนแก่น", "นครราชสีมา", "อุบลราชธานี", "อุดรธานี"],
-      "ภาคตะวันออก": ["ชลบุรี", "ระยอง", "จันทบุรี", "ตราด"],
-      "ภาคตะวันตก": ["กาญจนบุรี", "ราชบุรี", "เพชรบุรี", "ประจวบคีรีขันธ์"],
-      "ภาคใต้": ["ภูเก็ต", "สงขลา", "สุราษฎร์ธานี", "นครศรีธรรมราช"]
+      ภาคเหนือ: ["เชียงใหม่", "เชียงราย", "ลำปาง", "แม่ฮ่องสอน"],
+      ภาคกลาง: ["กรุงเทพมหานคร", "นนทบุรี", "ปทุมธานี", "พระนครศรีอยุธยา"],
+      ภาคตะวันออกเฉียงเหนือ: [
+        "ขอนแก่น",
+        "นครราชสีมา",
+        "อุบลราชธานี",
+        "อุดรธานี",
+      ],
+      ภาคตะวันออก: ["ชลบุรี", "ระยอง", "จันทบุรี", "ตราด"],
+      ภาคตะวันตก: ["กาญจนบุรี", "ราชบุรี", "เพชรบุรี", "ประจวบคีรีขันธ์"],
+      ภาคใต้: ["ภูเก็ต", "สงขลา", "สุราษฎร์ธานี", "นครศรีธรรมราช"],
     },
     districts: {
-      "เชียงใหม่": ["เมืองเชียงใหม่", "สันทราย", "ดอยสะเก็ด", "แม่ริม"],
-      "กรุงเทพมหานคร": ["พระนคร", "ดุสิต", "บางรัก", "ปทุมวัน"],
-      "ภูเก็ต": ["เมืองภูเก็ต", "กะทู้", "ถลาง"]
+      เชียงใหม่: ["เมืองเชียงใหม่", "สันทราย", "ดอยสะเก็ด", "แม่ริม"],
+      กรุงเทพมหานคร: ["พระนคร", "ดุสิต", "บางรัก", "ปทุมวัน"],
+      ภูเก็ต: ["เมืองภูเก็ต", "กะทู้", "ถลาง"],
     },
     subDistricts: {
-      "เมืองเชียงใหม่": ["ศรีภูมิ", "พระสิงห์", "หายยา", "ช้างม่อย"],
-      "พระนคร": ["พระบรมมหาราชวัง", "วังบูรพาภิรมย์", "วัดราชบพิธ", "สำราญราษฎร์"],
-      "เมืองภูเก็ต": ["ตลาดใหญ่", "ตลาดเหนือ", "เกาะแก้ว", "รัษฎา"]
-    }
+      เมืองเชียงใหม่: ["ศรีภูมิ", "พระสิงห์", "หายยา", "ช้างม่อย"],
+      พระนคร: [
+        "พระบรมมหาราชวัง",
+        "วังบูรพาภิรมย์",
+        "วัดราชบพิธ",
+        "สำราญราษฎร์",
+      ],
+      เมืองภูเก็ต: ["ตลาดใหญ่", "ตลาดเหนือ", "เกาะแก้ว", "รัษฎา"],
+    },
   });
 
-  const handleFilterChange = async (level:any, value:string) => {
-    setIsLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 500));
+  console.log(teamsData);
+  const teamOptions = [
+    "ทีมทั้งหมด",
+    ...teamsData.map((team: any) => team.TeamName),
+  ];
 
-    setFilters(prev => {
+  const handleFilterChange = async (level: any, value: string) => {
+    setIsLoading(true);
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    setFilters((prev) => {
       const newFilters = { ...prev, [level]: value };
       if (level === "region") {
         newFilters.province = "";
@@ -79,13 +94,22 @@ const HierarchicalFilter = () => {
       region: "",
       province: "",
       district: "",
-      subDistrict: ""
+      subDistrict: "",
     });
   };
 
-  const DropdownSelect = ({ label, value, onChange, options, disabled = false }:any) => (
+  const DropdownSelect = ({
+    label,
+    value,
+    onChange,
+    options,
+    disabled = false,
+  }: any) => (
     <div className="relative w-full md:w-64 mb-4">
-      <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor={label}>
+      <label
+        className="block text-sm font-medium text-gray-700 mb-1"
+        htmlFor={label}
+      >
         {label}
       </label>
       <div className="relative">
@@ -98,7 +122,7 @@ const HierarchicalFilter = () => {
           aria-label={`Select ${label}`}
         >
           <option value="">เลือก{label}</option>
-          {options?.map((option:any) => (
+          {options?.map((option: any) => (
             <option key={option} value={option}>
               {option}
             </option>
@@ -113,19 +137,19 @@ const HierarchicalFilter = () => {
 
   return (
     <div className="relative">
-      <button
+      <Button
         onClick={() => setIsModalOpen(true)}
         className="flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
       >
         <FiFilter className="w-4 h-4 mr-2" />
         ตัวกรอง
-      </button>
+      </Button>
 
       {isModalOpen && (
         <div className="fixed inset-0 z-50 overflow-y-auto">
           <div className="flex items-center justify-center min-h-screen p-4">
             {/* Modal Backdrop */}
-            <div 
+            <div
               className="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
               onClick={() => setIsModalOpen(false)}
             ></div>
@@ -163,48 +187,76 @@ const HierarchicalFilter = () => {
 
                   <div className="grid grid-cols-1 gap-6">
                     {/* Team Section */}
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                      <h3 className="text-lg font-semibold text-gray-700 mb-4">ทีม</h3>
-                      <DropdownSelect
-                        label="ทีม"
-                        value={filters.team}
-                        onChange={(value) => handleFilterChange("team", value)}
-                        options={options.teams}
-                      />
-                    </div>
+                    {user?.role?.name === "Admin" && (
+                      <div className="bg-gray-50 p-4 rounded-lg">
+                        <h3 className="text-lg font-semibold text-gray-700 mb-4">
+                          ทีม
+                        </h3>
+                        <DropdownSelect
+                          label="ทีม"
+                          value={filters.team}
+                          onChange={(value) =>
+                            handleFilterChange("team", value)
+                          }
+                          options={teamOptions}
+                        />
+                      </div>
+                    )}
 
                     {/* Location Section */}
                     <div className="bg-gray-50 p-4 rounded-lg">
-                      <h3 className="text-lg font-semibold text-gray-700 mb-4">พื้นที่</h3>
+                      <h3 className="text-lg font-semibold text-gray-700 mb-4">
+                        พื้นที่
+                      </h3>
                       <div className="grid grid-cols-1 md:grid-cols-2  gap-6">
                         <DropdownSelect
                           label="ภาค"
                           value={filters.region}
-                          onChange={(value) => handleFilterChange("region", value)}
+                          onChange={(value) =>
+                            handleFilterChange("region", value)
+                          }
                           options={options.regions}
                         />
 
                         <DropdownSelect
                           label="จังหวัด"
                           value={filters.province}
-                          onChange={(value) => handleFilterChange("province", value)}
-                          options={filters.region ? options.provinces[filters.region] : []}
+                          onChange={(value) =>
+                            handleFilterChange("province", value)
+                          }
+                          options={
+                            filters.region
+                              ? options.provinces[filters.region]
+                              : []
+                          }
                           disabled={!filters.region}
                         />
 
                         <DropdownSelect
                           label="อำเภอ"
                           value={filters.district}
-                          onChange={(value) => handleFilterChange("district", value)}
-                          options={filters.province ? options.districts[filters.province] || [] : []}
+                          onChange={(value) =>
+                            handleFilterChange("district", value)
+                          }
+                          options={
+                            filters.province
+                              ? options.districts[filters.province] || []
+                              : []
+                          }
                           disabled={!filters.province}
                         />
 
                         <DropdownSelect
                           label="ตำบล"
                           value={filters.subDistrict}
-                          onChange={(value) => handleFilterChange("subDistrict", value)}
-                          options={filters.district ? options.subDistricts[filters.district] || [] : []}
+                          onChange={(value) =>
+                            handleFilterChange("subDistrict", value)
+                          }
+                          options={
+                            filters.district
+                              ? options.subDistricts[filters.district] || []
+                              : []
+                          }
                           disabled={!filters.district}
                         />
                       </div>
@@ -213,20 +265,28 @@ const HierarchicalFilter = () => {
                 </div>
 
                 <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-                  <h3 className="text-lg font-semibold text-gray-700 mb-2">ตัวกรองที่เลือก:</h3>
+                  <h3 className="text-lg font-semibold text-gray-700 mb-2">
+                    ตัวกรองที่เลือก:
+                  </h3>
                   <div className="flex flex-wrap gap-2">
-                    {Object.entries(filters).map(([key, value]) => (
-                      value && value !== "ทีมทั้งหมด" && (
-                        <span
-                          key={key}
-                          className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800"
-                        >
-                          {key}: {value}
-                        </span>
-                      )
-                    ))}
-                    {!Object.values(filters).some(val => val && val !== "ทีมทั้งหมด") && (
-                      <span className="text-gray-500 text-sm">ยังไม่ได้เลือกตัวกรอง</span>
+                    {Object.entries(filters).map(
+                      ([key, value]) =>
+                        value &&
+                        value !== "ทีมทั้งหมด" && (
+                          <span
+                            key={key}
+                            className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800"
+                          >
+                            {key}: {value}
+                          </span>
+                        )
+                    )}
+                    {!Object.values(filters).some(
+                      (val) => val && val !== "ทีมทั้งหมด"
+                    ) && (
+                      <span className="text-gray-500 text-sm">
+                        ยังไม่ได้เลือกตัวกรอง
+                      </span>
                     )}
                   </div>
                 </div>

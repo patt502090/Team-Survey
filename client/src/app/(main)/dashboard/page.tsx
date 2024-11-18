@@ -14,11 +14,15 @@ import FilterListCustom from "@/components/Dashboard/Filters/FilterMap1";
 import CardStats from "@/components/Dashboard/CardData/CardData1";
 import FilterSelectionInterface from "@/components/Dashboard/Filters/FilterMapCustom";
 import FilterTeamCustom from "@/components/Dashboard/Filters/FilterTeam";
-import { useMemo } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import CustomerDistribution from "@/components/Dashboard/PieChartAndTable";
 import FilterComponent from "@/components/Dashboard/Filters/ButtonFilterAll";
 import HierarchicalFilter from "@/components/Dashboard/Filters/HierarchicalFilter";
+import ax from "@/conf/ax";
+import conf from "@/conf/main";
+import { Team } from "../team/page";
+import { AuthContext } from "@/contexts/Auth.context";
 
 const Map = dynamic(() => import("@/components/Map/Map"), {
   loading: () => <p>A map is loading</p>,
@@ -26,6 +30,24 @@ const Map = dynamic(() => import("@/components/Map/Map"), {
 });
 
 export default function Dashboard() {
+  const { state: ContextState } = useContext<any>(AuthContext);
+  const { user } = ContextState || {};
+
+  useEffect(() => {
+    fetchTeamsData();
+  }, [user?.role?.name === "Admin"]);
+
+  const [teamsData, setTeamsData] = useState<Team[]>([]);
+  const fetchTeamsData = async () => {
+    try {
+      const teamsResult = await ax.get(`${conf.teamEndpoint}`);
+      setTeamsData(teamsResult.data.data);
+    } catch (error) {
+      console.error("Error fetching teams data:", error);
+    }
+  };
+
+
   return (
     <div className="flex flex-1">
       <aside className="hidden md:block w-64 bg-white shadow-lg">
@@ -40,13 +62,16 @@ export default function Dashboard() {
           <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
             แดชบอร์ด
           </h1>
+          <HierarchicalFilter teamsData={teamsData} />
+
           {/* <ControlledSelect /> */}
           {/* <FilterTeamCustom/> */}
-          <HierarchicalFilter/>
         </div>
-        {/* <FilterComponent /> */}
-       
 
+        <CardStats />
+        <CustomerDistribution />
+
+        {/* <FilterComponent /> */}
         {/* <FilterListCustom/> */}
         {/* <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
           <CardDataStats title="Total Surveys Completed" total="3,456" rate="1.2%" levelUp bgColor="bg-blue-100" iconColor="text-blue-600">
@@ -62,13 +87,11 @@ export default function Dashboard() {
             <GroupsIcon />
           </CardDataStats>
         </div> */}
-        <CardStats />
 
         {/* <div className="grid grid-cols-1 gap-6 md:grid-cols-2 ">
           <LineChartCustom />
           <PieChartCustom />
         </div> */}
-        <CustomerDistribution />
         {/* <Map /> */}
       </main>
     </div>
