@@ -18,6 +18,7 @@ import { useMemo } from "react";
 import dynamic from "next/dynamic";
 import CustomerDistribution from "@/components/Dashboard/PieChartAndTable";
 import FilterComponent from "@/components/Dashboard/Filters/ButtonFilterAll";
+import HierarchicalFilter from "@/components/Dashboard/Filters/HierarchicalFilter";
 
 const Map = dynamic(() => import("@/components/Map/Map"), {
   loading: () => <p>A map is loading</p>,
@@ -35,14 +36,16 @@ export default function Dashboard() {
         <div className="relative">
           <BreadcrumbsWithIcon pathName="แดชบอร์ด" />
         </div>
-        <div className="">
+        <div className="flex justify-between">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
             แดชบอร์ด
           </h1>
           {/* <ControlledSelect /> */}
           {/* <FilterTeamCustom/> */}
+          <HierarchicalFilter/>
         </div>
-        <FilterComponent />
+        {/* <FilterComponent /> */}
+       
 
         {/* <FilterListCustom/> */}
         {/* <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
