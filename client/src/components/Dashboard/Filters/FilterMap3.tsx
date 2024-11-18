@@ -3,7 +3,7 @@ import { BiLoader } from "react-icons/bi";
 import { IoMdClose } from "react-icons/io";
 import { MdKeyboardArrowDown } from "react-icons/md";
 
-const HierarchicalFilter = () => {
+const HierarchicalFilterNotUse = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [filters, setFilters] = useState({
     province: "",

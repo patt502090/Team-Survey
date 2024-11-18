@@ -18,6 +18,7 @@ import { useMemo } from "react";
 import dynamic from "next/dynamic";
 import CustomerDistribution from "@/components/Dashboard/PieChartAndTable";
 import FilterComponent from "@/components/Dashboard/Filters/ButtonFilterAll";
+import HierarchicalFilter from "@/components/Dashboard/Filters/HierarchicalFilter";
 
 const Map = dynamic(() => import("@/components/Map/Map"), {
   loading: () => <p>A map is loading</p>,
@@ -42,7 +43,8 @@ export default function Dashboard() {
           {/* <ControlledSelect /> */}
           {/* <FilterTeamCustom/> */}
         </div>
-        <FilterComponent />
+        {/* <FilterComponent /> */}
+        <HierarchicalFilter/>
 
         {/* <FilterListCustom/> */}
         {/* <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
