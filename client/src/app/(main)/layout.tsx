@@ -7,6 +7,8 @@ import AppBarCustom from "../../components/Layouts/Top/AppBar1";
 import React, { ReactNode } from "react";
 import { ContextProvider } from "@/contexts/Auth.context";
 import LabelBottomNavigation from "../../components/Layouts/Down/MobileNavbar";
+import ProtectRoute from "@/conf/AuthRoute";
+import GuestRoute from "@/conf/GuestRoute";
 
 interface LayoutProps {
   children: ReactNode;
@@ -15,6 +17,7 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
   return (
     <ContextProvider>
+      <GuestRoute>
       <div className="flex flex-col min-h-screen bg-gray-50">
         {/* Mobile AppBar */}
         <div className="md:hidden w-full">{/* <ResponsiveAppBar /> */}</div>
@@ -37,6 +40,7 @@ export default function Layout({ children }: LayoutProps) {
           <LabelBottomNavigation />
         </div>
       </div>
+      </GuestRoute>
     </ContextProvider>
   );
 }
