@@ -78,6 +78,8 @@ export default function LoginPage() {
           storageKey = conf.leaderStorageKey;
         } else if (roleName === "Worker") {
           storageKey = conf.workerStorageKey;
+        } else if (roleName === "Authorization") {
+          storageKey = conf.workerStorageKey;
         }
 
         if (storageKey) {

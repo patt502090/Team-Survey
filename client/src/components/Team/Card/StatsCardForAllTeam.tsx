@@ -12,8 +12,8 @@ const StatsCard = ({ title, value, icon, color }: { title: string, value: number
     >
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-gray-600 text-sm font-medium">{title}</p>
-          <p className="text-3xl font-bold mt-2 text-gray-900">{value}</p>
+          <p className="text-gray-600 text-xs md:text-sm font-medium">{title}</p>
+          <p className="text-sm md:text-3xl font-bold mt-2 text-gray-900">{value}</p>
         </div>
         <div className={`${color} p-3 rounded-lg shadow-sm`}>
           {React.createElement(icon, { className: "w-6 h-6 text-white" })}
@@ -39,7 +39,7 @@ const StatsTeamComponent = () => {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
       {stats.map((stat, index) => (
         <StatsCard
           key={index}

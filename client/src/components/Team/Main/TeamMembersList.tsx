@@ -79,20 +79,20 @@ const TeamMembersList: React.FC<TeamMembersListProps> = ({ myTeamData }) => {
 
   return (
     <div
-      className="max-w-4xl mx-auto p-6 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-lg"
+      className="mx-auto md:p-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-lg"
       role="region"
       aria-label="Team Information"
     >
       <h1
-        className="text-3xl font-bold text-center mb-8 text-gray-800 bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600"
+        className="text-2xl md:text-3xl font-bold text-center mb-8 text-gray-800 bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600"
         aria-label={`Team Name: ${myTeamData?.TeamName}`}
       >
         {user.my_team?.TeamName || user.team?.TeamName}
       </h1>
 
-      <div className="mb-10">
+      <div className="mb-8 md:mb-10">
         <div
-          className="bg-white p-6 rounded-lg shadow-md transform hover:scale-102 transition-transform duration-300"
+          className="bg-white p-3 md:p-6 rounded-lg shadow-md transform hover:scale-102 transition-transform duration-300"
           role="article"
           aria-label="Team Leader Information"
         >
@@ -119,7 +119,7 @@ const TeamMembersList: React.FC<TeamMembersListProps> = ({ myTeamData }) => {
                   <FaUserTie className="text-blue-600" />
                   {myTeamData?.manager?.username || "Team Manager"}
                 </h2>
-                <p className="text-gray-600">{"หัวหน้าทีม"}</p>
+                <p className="text-sm md:text-base text-gray-600">{"หัวหน้าทีม"}</p>
               </div>
             </div>
           </div>
@@ -134,7 +134,7 @@ const TeamMembersList: React.FC<TeamMembersListProps> = ({ myTeamData }) => {
         {myTeamData?.members.map((member:any) => (
           <div
             key={member.id}
-            className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 transform hover:-translate-y-1 relative"
+            className="bg-white p-3 md:p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 transform hover:-translate-y-1 relative"
             role="listitem"
           >
             {user?.role?.name == "Team Leader" && (
