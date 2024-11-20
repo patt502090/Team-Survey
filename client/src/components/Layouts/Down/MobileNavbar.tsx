@@ -18,7 +18,7 @@ export default function LabelBottomNavigation() {
     <BottomNavigation
       value={value}
       onChange={handleChange}
-      className="mb-3 border-t-4"
+      className="border-t-4 bg-white shadow-lg fixed bottom-0 left-0 right-0 px-4"
     >
       <BottomNavigationAction
         label="หลัก"
