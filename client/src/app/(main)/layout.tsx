@@ -18,28 +18,28 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <ContextProvider>
       <GuestRoute>
-      <div className="flex flex-col min-h-screen bg-gray-50">
-        {/* Mobile AppBar */}
-        <div className="md:hidden w-full">{/* <ResponsiveAppBar /> */}</div>
+        <div className="flex flex-col min-h-screen bg-gray-50">
+          {/* Mobile AppBar */}
+          <div className="md:hidden w-full">{/* <ResponsiveAppBar /> */}</div>
 
-        {/* Main Content */}
-        <div className="">
-          {/* Sidebar */}
-          <div className="hidden md:block bg-white shadow-lg rounded-xl">
-            <DefaultSidebar />
+          {/* Main Content */}
+          <div className="">
+            {/* Sidebar */}
+            <div className="hidden md:block bg-white shadow-lg rounded-xl">
+              <DefaultSidebar />
+            </div>
+
+            {children}
           </div>
 
-          {children}
+          {/* Mobile Navbar at the bottom */}
+          <div className="md:hidden fixed">
+            <AppBarCustom />
+          </div>
+          <div className="bottom-0 w-full bg-white shadow-lg fixed md:hidden px-8">
+            <LabelBottomNavigation />
+          </div>
         </div>
-
-        {/* Mobile Navbar at the bottom */}
-        <div className="md:hidden fixed">
-          <AppBarCustom />
-        </div>
-        <div className="bottom-0 bg-white shadow-lg fixed md:hidden">
-          <LabelBottomNavigation />
-        </div>
-      </div>
       </GuestRoute>
     </ContextProvider>
   );
