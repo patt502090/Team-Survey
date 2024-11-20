@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import conf from "./main";
@@ -12,7 +11,9 @@ const GuestRoute = ({ children }: { children: JSX.Element }) => {
 
         if (!role) {
             router.replace("/login"); 
-        }
+        } else if (role === conf.authorizedStorageKey) {
+            router.replace("/unauthorized");
+        };
     }, [router]);
 
     return children;

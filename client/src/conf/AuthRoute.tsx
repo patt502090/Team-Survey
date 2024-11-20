@@ -9,9 +9,12 @@ const AuthRoute = ({ children }: { children: JSX.Element }) => {
 
     useEffect(() => {
         const jwt = sessionStorage.getItem(conf.jwtSessionStorageKey);
+        const role = sessionStorage.getItem(conf.roleSessionStorageKey);
 
-        if (jwt) {
+        if (jwt && role !== conf.authorizedStorageKey) {
             router.replace("/dashboard"); 
+        }  else if (jwt) {
+            router.replace("/unauthorized");
         }
     }, [router]);
 
