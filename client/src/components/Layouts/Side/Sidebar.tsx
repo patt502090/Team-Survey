@@ -23,6 +23,7 @@ import { AuthContext } from "@/contexts/Auth.context";
 import { useRouter } from "next/navigation";
 import CenterFocusWeakIcon from "@mui/icons-material/CenterFocusWeak";
 import { ModalLogout } from "@/components/Others/ModalLogout";
+import axios from "axios";
 export default function DefaultSidebar() {
   const { state: ContextState, logout } = useContext(AuthContext);
   const { user } = ContextState;
@@ -60,9 +61,26 @@ export default function DefaultSidebar() {
 
   //   fetchUserData();
   // }, []);
+  const [image,setImage] = useState(null)
+  const fetchImageuser = async() => {
+    try{
+      const token = sessionStorage.getItem("auth.jwt")
+      const response = await axios.get(`http://localhost:1337/api/users/me?populate=*`, {
+        headers:{
+          "Authorization": `Bearer ${token}`
+        }
+      });
+      setImage(response.data);
+    }catch(error){
+      console.log('error fetchImageuser',error);
+    }
+  }
 
   console.log("user",user);
 
+  useEffect(() => {
+    fetchImageuser()
+  }, [])
 
   return (
     <Card
@@ -85,16 +103,20 @@ export default function DefaultSidebar() {
         </div>
       </div>
       {!collapsed && <hr className="mt-3 border-gray-700" />}
-      <div className="text-center mt-3">
-        <AccountBoxIcon
+      <div className="text-center mt-3  flex justify-center items-center">
+        {/* <AccountBoxIcon
           style={{
             fontSize: "70px",
             visibility: collapsed ? "hidden" : "visible",
             color: "white",
           }}
+        /> */}
+        <img
+          className="w-[100px] h-[100px] rounded-full border-4 border-white p-[2px] shadow-md mb-4"
+          src={`http://localhost:1337${image?.picture?.url}`}
+          alt="Profile illustration"
         />
       </div>
-
       {user?.role?.name === "Admin" ? (
         <div className="text-center mt-1">
           <p className="font-medium text-xs md:text-base text-center text-blue-300 ">

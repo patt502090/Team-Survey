@@ -8,6 +8,7 @@ import { Button } from "@material-tailwind/react";
 export default function Profile() {
     const router = useRouter();
     const [profile, setProfile] = useState<any>(null);
+    const [loading, setLoading] = useState<boolean>(false);
     const [editData, setEditData] = useState({
         first: "",
         last: "",
@@ -21,6 +22,7 @@ export default function Profile() {
 
     const GetProfile = async () => {
         try {
+            setLoading(true)
             const token = sessionStorage.getItem("auth.jwt");
             const response = await axios.get(`http://localhost:1337/api/users/me?populate=*`, {
                 headers: {
@@ -37,6 +39,7 @@ export default function Profile() {
         } catch (error) {
             console.log("Error fetching profile:", error);
         }
+        setLoading(false)
     };
     
     const EditProfile = async () => {
@@ -79,12 +82,20 @@ export default function Profile() {
     useEffect(() => {
         GetProfile();
     }, [profile?.picture?.url]);
-
+    
     return (
         <div className="flex flex-col min-h-screen bg-gradient-to-r from-blue-50 to-blue-100">
             <Navbar />
-            <main className="flex flex-col justify-center items-center h-screen container mx-auto p-4 ">
-                <div className="bg-white rounded-lg p-6 shadow-lg border-2 w-full max-w-md flex flex-col">
+            {loading ? (
+                <div className='flex space-x-2 justify-center items-center bg-white h-screen dark:invert'>
+                    <span className='sr-only'>Loading...</span>
+                    <div className='h-8 w-8 bg-black rounded-full animate-bounce [animation-delay:-0.3s]'></div>
+                    <div className='h-8 w-8 bg-black rounded-full animate-bounce [animation-delay:-0.15s]'></div>
+                    <div className='h-8 w-8 bg-black rounded-full animate-bounce'></div>
+                </div>
+            ) : (
+                <main className="flex flex-col justify-center items-center h-screen container mx-auto p-4 ">
+                <div className="bg-white rounded-lg p-6 shadow-lg border-2 w-full max-w-md flex flex-col hover:scale-105 transition-transform duration-300">
                 
                     <dialog id="editProfileModal" className="modal">
                         <div className="modal-box p-8">
@@ -121,25 +132,21 @@ export default function Profile() {
                       </svg>
                     </button>
                     </div>
-                    <div className="min-[0px]:grid min-[0px]:justify-center min-[0px]:items-center lg:flex lg:gap-4">
-                      <div className="justify-self-center lg:borer-r-4 lg:border-r-4 lg:pr-4">
+                    <div className="min-[0px]:grid min-[0px]:justify-center min-[0px]:items-center">
+                      <div className="justify-self-center">
                         <img
-                          className="w-32 h-32 rounded-full border-4 border-blue-200 shadow-md mb-4"
-                          src={`http://localhost:1337${profile?.picture?.url}`}
-                          alt="Profile illustration"
+                        className="w-[150px] h-[150px] rounded-full border-4 p-[4px] border-gray-50 shadow-sm mb-4"
+                        src={`http://localhost:1337${profile?.picture?.url}`}
+                        alt="Profile illustration"
                         />
                       </div>
                       <div>
-                        {profile ? (
                           <div className="w-full flex flex-col gap-4">
-                              <ProfileItem label="ชื่อผู้ใช้" value={`${profile.first_name} ${profile.last_name}`} />
-                              <ProfileItem label="ตำแหน่ง" value={profile.role?.name} />
-                              <ProfileItem label="อีเมล" value={profile.email} />
-                              <ProfileItem label="เบอร์โทร" value={profile.phoneNumber} />
+                          <ProfileItem label="ชื่อผู้ใช้" value={`${profile?.first_name} ${profile?.last_name}`} />
+                          <ProfileItem label="ตำแหน่ง" value={profile?.role?.name} />
+                              <ProfileItem label="อีเมล" value={profile?.email} />
+                              <ProfileItem label="เบอร์โทร" value={profile?.phoneNumber} />
                           </div>
-                        ) : (
-                            <p className="text-center text-gray-600">กำลังโหลด...</p>
-                        )}
                       </div>
                     </div>
 
@@ -150,6 +157,7 @@ export default function Profile() {
                   </button>
                 </div>
             </main>
+        )}
         </div>
     );
 }
