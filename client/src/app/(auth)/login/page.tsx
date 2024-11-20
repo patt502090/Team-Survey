@@ -78,13 +78,19 @@ export default function LoginPage() {
           storageKey = conf.leaderStorageKey;
         } else if (roleName === "Worker") {
           storageKey = conf.workerStorageKey;
+        } else if (roleName === "Authenticated") {
+          storageKey = conf.authorizedStorageKey;
         }
 
         if (storageKey) {
           sessionStorage.setItem(conf.roleSessionStorageKey, storageKey);
         }
         
-        router.push("/dashboard");
+        if (roleName !== "Authenticated") {
+          router.push("/dashboard");
+        } else {
+          router.push("/unauthorized");
+        }
 
         // navigate(roleName === "member" ? "/" : "/admin");
         toast.success("เข้าสู่ระบบสำเร็จ!");

@@ -14,6 +14,9 @@ const conf = {
     "=hru*(kh=+C/2o%{s2S[]aNkLmda)S&,!//BSr_Q<Ug:RwOUp%^pJO*@e`1n<v(",
   leaderStorageKey:
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~",
+  authorizedStorageKey: 
+    "kR7]u%NYw<:KzVm4Q&_1x#o~dJ^LcH/{+>A8)2@=B`Up!s[C*O,aS`r(p%&e>`",
+
   teamEndpoint: "/teams?populate=*&sort[0]=createdAt:desc",
 };
 

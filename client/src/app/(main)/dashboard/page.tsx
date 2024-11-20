@@ -49,7 +49,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="flex flex-1">
+    <div className="flex flex-1 mx-auto">
       <aside className="hidden md:block w-64 bg-white shadow-lg">
         {/* Sidebar content goes here */}
       </aside>
@@ -70,13 +70,13 @@ export default function Dashboard() {
 
         <CardStats />
 
-        <div className="p-4 md:p-auto bg-gray-50">
+        <div className="p-auto bg-gray-50">
           <div className="mx-auto max-w-full bg-white rounded-lg shadow-lg p-4 md:p-6">
             <CustomerDistribution />
           </div>
         </div>
 
-        <div className="p-4 md:p-auto bg-gray-50">
+        <div className="p-auto bg-gray-50">
           <div className="mx-auto max-w-full bg-white rounded-lg shadow-lg p-4 md:p-6">
             <DataTable />
           </div>
