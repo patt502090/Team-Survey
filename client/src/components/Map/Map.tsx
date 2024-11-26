@@ -6,66 +6,11 @@ import { FeatureCollection } from "geojson";
 import { Path } from "leaflet";
 import ax from "@/conf/ax";
 import conf from "@/conf/main";
-import { name } from "@material-tailwind/react/types/components/select";
-
-interface GeoFeature {
-  type: "Feature";
-  properties: {
-    reg_royin?: string;
-    pro_th?: string;
-    amp_th?: string;
-    tam_th?: string;
-    fillColor?: string;
-    pro_id?: number;
-    amp_id?: number;
-    tam_id?: number;
-  };
-  geometry: any;
-}
-interface RegionData {
-  regions: {
-    Region: string;
-    greenCount: number;
-    yellowCount: number;
-    redCount: number;
-    total_customer: number;
-  }[];
-}
-
-interface ProvinceData {
-  provinces: {
-    id: number;
-    province: string;
-    greenCount: number;
-    yellowCount: number;
-    redCount: number;
-    total_customer: number;
-  }[];
-}
-interface DistrictData {
-  districts: {
-    id: number;
-    district: string;
-    greenCount: number;
-    yellowCount: number;
-    redCount: number;
-    total_customer: number;
-  }[];
-}
-interface SubDistrictData {
-  s_districts: {
-    id: number;
-    s_Districts: string;
-    greenCount: number;
-    yellowCount: number;
-    redCount: number;
-    total_customer: number;
-  }[];
-}
-
-interface GeoData extends FeatureCollection {
-  features: GeoFeature[];
-}
+import { SubDistrictData } from "@/modules/subDistrictDataSchema";
+import { RegionData } from "@/modules/regionDataSchema";
+import { DistrictData } from "@/modules/districtDataSchema";
+import { ProvinceData } from "@/modules/provinceDataSchema";
+import { GeoData } from "@/modules/geoDataSchema";
 
 const Map = () => {
   const [currentLayer, setCurrentLayer] = useState<
@@ -229,7 +174,7 @@ const Map = () => {
     []
   );
 
-  const determineFillColor = (province: {
+  const determineFillColor = (counts: {
     greenCount: number;
     yellowCount: number;
     redCount: number;
@@ -237,75 +182,18 @@ const Map = () => {
     let fillColor = "gray";
 
     if (
-      province.greenCount > province.yellowCount &&
-      province.greenCount > province.redCount
+      counts.greenCount > counts.yellowCount &&
+      counts.greenCount > counts.redCount
     ) {
       fillColor = "green";
     } else if (
-      province.yellowCount > province.greenCount &&
-      province.yellowCount > province.redCount
+      counts.yellowCount > counts.greenCount &&
+      counts.yellowCount > counts.redCount
     ) {
       fillColor = "yellow";
     } else if (
-      province.redCount > province.greenCount &&
-      province.redCount > province.yellowCount
-    ) {
-      fillColor = "red";
-    } else {
-      fillColor = "white";
-    }
-
-    return fillColor;
-  };
-  const determineFillColorforD = (district: {
-    greenCount: number;
-    yellowCount: number;
-    redCount: number;
-  }) => {
-    let fillColor = "gray";
-
-    if (
-      district.greenCount > district.yellowCount &&
-      district.greenCount > district.redCount
-    ) {
-      fillColor = "green";
-    } else if (
-      district.yellowCount > district.greenCount &&
-      district.yellowCount > district.redCount
-    ) {
-      fillColor = "yellow";
-    } else if (
-      district.redCount > district.greenCount &&
-      district.redCount > district.yellowCount
-    ) {
-      fillColor = "red";
-    } else {
-      fillColor = "white";
-    }
-
-    return fillColor;
-  };
-
-  const determineFillColorforSD = (s_districts: {
-    greenCount: number;
-    yellowCount: number;
-    redCount: number;
-  }) => {
-    let fillColor = "gray";
-
-    if (
-      s_districts.greenCount > s_districts.yellowCount &&
-      s_districts.greenCount > s_districts.redCount
-    ) {
-      fillColor = "green";
-    } else if (
-      s_districts.yellowCount > s_districts.greenCount &&
-      s_districts.yellowCount > s_districts.redCount
-    ) {
-      fillColor = "yellow";
-    } else if (
-      s_districts.redCount > s_districts.greenCount &&
-      s_districts.redCount > s_districts.yellowCount
+      counts.redCount > counts.greenCount &&
+      counts.redCount > counts.yellowCount
     ) {
       fillColor = "red";
     } else {
@@ -361,7 +249,11 @@ const Map = () => {
             const region = feature.properties
               .reg_royin as keyof typeof regionMapping;
 
-            if (region !== selectedRegion) {
+            if (
+              region !== selectedRegion ||
+              !feature.properties.pro_th ||
+              !matchedProvince?.id
+            ) {
               return false;
             }
 
@@ -399,13 +291,17 @@ const Map = () => {
               );
 
               const province = feature.properties.pro_th;
-              if (province !== selectedProvince.name) {
+              if (
+                province !== selectedProvince.name ||
+                !feature.properties.amp_th ||
+                !matchedDistrict?.id
+              ) {
                 return false;
               }
 
               if (matchedDistrict) {
                 feature.properties.fillColor =
-                  determineFillColorforD(matchedDistrict);
+                  determineFillColor(matchedDistrict);
                 feature.properties.amp_id = matchedDistrict.id;
               }
 
@@ -441,7 +337,7 @@ const Map = () => {
 
               if (matchedSubDistrict) {
                 feature.properties.fillColor =
-                  determineFillColorforSD(matchedSubDistrict);
+                  determineFillColor(matchedSubDistrict);
                 feature.properties.tam_id = matchedSubDistrict.id;
               }
 
@@ -463,17 +359,11 @@ const Map = () => {
           let fillColor = "gray";
 
           if (regionInfo) {
-            const { greenCount, yellowCount, redCount } = regionInfo;
-
-            if (greenCount > yellowCount && greenCount > redCount) {
-              fillColor = "green";
-            } else if (yellowCount > greenCount && yellowCount > redCount) {
-              fillColor = "yellow";
-            } else if (redCount > greenCount && redCount > yellowCount) {
-              fillColor = "red";
-            } else {
-              fillColor = "white";
-            }
+            fillColor = determineFillColor({
+              greenCount: regionInfo.greenCount,
+              yellowCount: regionInfo.yellowCount,
+              redCount: regionInfo.redCount,
+            });
           } else {
             console.warn(`Region ${regionName} not found in regionData`);
           }
@@ -605,7 +495,7 @@ const Map = () => {
         key={`${currentLayer}-${selectedProvince}-${selectedDistrict}-${selectedSubDistrict}`}
         center={[13.736717, 100.523186]}
         zoom={6}
-        style={{ height: "400px", width: "600px" }}
+        style={{ height: "500px", width: "700px" }}
         className="border border-gray-300 rounded-lg"
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />

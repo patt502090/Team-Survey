@@ -103,7 +103,7 @@ export default function Dashboard() {
           <LineChartCustom />
           <PieChartCustom />
         </div> */}
-        {/* <Map /> */}
+        <Map />
       </main>
     </div>
   );

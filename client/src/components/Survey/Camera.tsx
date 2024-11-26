@@ -4,9 +4,10 @@ import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import PartyModeIcon from "@mui/icons-material/PartyMode";
 import axios from "axios";
-import { ocrSchema } from "../../modules/ocrSchema";
+import { OCRResponse, ocrSchema } from "../../modules/ocrSchema";
+import conf from "@/conf/main";
 interface CameraProps {
-  onOCRProcessed: (data: any) => void;
+  onOCRProcessed: (data: OCRResponse) => void;
 }
 export default function Camera({ onOCRProcessed }: CameraProps) {
   const [image, setImage] = useState<string | null>(null);
@@ -77,62 +78,36 @@ export default function Camera({ onOCRProcessed }: CameraProps) {
 
   const uploadPhoto = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setImage(e.target?.result as string);
-      };
-      reader.readAsDataURL(file);
-      const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
+    if (!file) {
+      alert("ไม่พบไฟล์ที่เลือก");
+      return;
+    }
 
-      // ตรวจสอบชนิดไฟล์
-      if (!allowedTypes.includes(file.type)) {
-        alert("กรุณาเลือกไฟล์ภาพที่เป็น .JPG, .JPEG หรือ .PNG เท่านั้น");
-        return;
-      }
+    const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
+    if (!allowedTypes.includes(file.type)) {
+      alert("กรุณาเลือกไฟล์ภาพที่เป็น .JPG, .JPEG หรือ .PNG เท่านั้น");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      const base64 = e.target?.result as string;
+      setImage(base64);
 
       const formData = new FormData();
       formData.append("file", file, file.name);
 
       try {
-        const response = await axios.post(
-          "https://api.aiforthai.in.th/ocr-id-front-iapp",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              Apikey: "YH1mYYlQFqKa1VcAUEB0zAxTDhXDk98A", // แทนที่ด้วย API Key ของคุณ
-            },
-          }
-        );
+        const ocrResponse = await uploadToOCR(formData);
+        console.log("OCR Response:", ocrResponse);
 
-        console.log("OCR Response:", response.data);
-
-        const ocrData = ocrSchema.parse(response.data);
+        const ocrData = ocrSchema.parse(ocrResponse);
         onOCRProcessed(ocrData);
       } catch (error) {
-        if (axios.isAxiosError(error)) {
-          console.error("Error response:", error.response);
-          if (error.response) {
-            if (error.response.status === 403) {
-              console.error("Access Denied: API Key or permissions issue");
-              alert(
-                "ไม่สามารถเข้าถึง API ได้ กรุณาตรวจสอบ API Key หรือการอนุญาต"
-              );
-            } else {
-              console.error("Error details:", error.response.data);
-            }
-          } else {
-            console.error("No response from API");
-          }
-        } else {
-          console.error("OCR processing error:", error);
-          alert("เกิดข้อผิดพลาดในการประมวลผล OCR");
-        }
+        alert("เกิดข้อผิดพลาดในการประมวลผล OCR");
       }
-    } else {
-      alert("ไม่พบไฟล์ที่เลือก");
-    }
+    };
+    reader.readAsDataURL(file);
   };
 
   useEffect(() => {
@@ -140,62 +115,65 @@ export default function Camera({ onOCRProcessed }: CameraProps) {
     return stopStream;
   }, []);
 
-  const toggleCamera = () => {
-    const newFacingMode = facingMode === "user" ? "environment" : "user";
-    setFacingMode(newFacingMode);
-    startCamera(newFacingMode);
-  };
-
-  const processOCR = async (image: string) => {
+  const uploadToOCR = async (formData: FormData) => {
     try {
-      const formData = new FormData();
-
-      const byteString = atob(image.split(",")[1]);
-      const arrayBuffer = new ArrayBuffer(byteString.length);
-      const uint8Array = new Uint8Array(arrayBuffer);
-
-      for (let i = 0; i < byteString.length; i++) {
-        uint8Array[i] = byteString.charCodeAt(i);
-      }
-
-      const blob = new Blob([uint8Array], { type: "image/png" });
-      formData.append("file", blob, "capturedImage.png");
-
-      const response = await axios.post(
-        "https://api.aiforthai.in.th/ocr-id-front-iapp",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Apikey: "YH1mYYlQFqKa1VcAUEB0zAxTDhXDk98A",
-          },
-        }
-      );
-
-      console.log("OCR Response:", response.data);
-
-      const ocrData = ocrSchema.parse(response.data);
-      onOCRProcessed(ocrData);
+      const response = await axios.post(conf.apiAiforthai, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Apikey: conf.apiKeyforAiforthai,
+        },
+      });
+      return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        console.error("Error response:", error.response);
-
-        if (error.response) {
-          if (error.response.status === 403) {
-            console.error("Access Denied: API Key or permissions issue");
+        const { response } = error;
+        if (response) {
+          if (response.status === 403) {
             alert(
               "ไม่สามารถเข้าถึง API ได้ กรุณาตรวจสอบ API Key หรือการอนุญาต"
             );
           } else {
-            console.error("Error details:", error.response.data);
+            console.error("Error details:", response.data);
           }
         } else {
           console.error("No response from API");
         }
       } else {
         console.error("OCR processing error:", error);
-        alert("เกิดข้อผิดพลาดในการประมวลผล OCR");
       }
+      throw error;
+    }
+  };
+  const toggleCamera = () => {
+    const newFacingMode = facingMode === "user" ? "environment" : "user";
+    setFacingMode(newFacingMode);
+    startCamera(newFacingMode);
+  };
+  const base64ToBlob = (base64: string, contentType = "image/png") => {
+    const byteString = atob(base64.split(",")[1]);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const uint8Array = new Uint8Array(arrayBuffer);
+
+    for (let i = 0; i < byteString.length; i++) {
+      uint8Array[i] = byteString.charCodeAt(i);
+    }
+
+    return new Blob([uint8Array], { type: contentType });
+  };
+
+  const processOCR = async (image: string) => {
+    try {
+      const blob = base64ToBlob(image);
+      const formData = new FormData();
+      formData.append("file", blob, "capturedImage.png");
+
+      const ocrResponse = await uploadToOCR(formData);
+      console.log("OCR Response:", ocrResponse);
+
+      const ocrData = ocrSchema.parse(ocrResponse);
+      onOCRProcessed(ocrData);
+    } catch (error) {
+      alert("เกิดข้อผิดพลาดในการประมวลผล OCR");
     }
   };
 
