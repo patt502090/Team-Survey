@@ -5,6 +5,7 @@ import axios from "axios";
 import Navbar from "../../../components/Others/Navbar";
 import { useRouter } from "next/navigation";
 import { Button } from "@material-tailwind/react";
+import ax from "@/conf/ax";
 export default function Profile() {
     const router = useRouter();
     const [profile, setProfile] = useState<any>(null);
@@ -24,11 +25,7 @@ export default function Profile() {
         try {
             setLoading(true)
             const token = sessionStorage.getItem("auth.jwt");
-            const response = await axios.get(`http://localhost:1337/api/users/me?populate=*`, {
-                headers: {
-                    "Authorization": `Bearer ${token}`,
-                },
-            });
+            const response = await ax.get(`users/me?populate=*`);
             setProfile(response.data);
             setEditData({
                 first: response.data.first_name,
@@ -46,7 +43,6 @@ export default function Profile() {
         try {
             const token = sessionStorage.getItem("auth.jwt");
             let pictureId = profile?.picture?.id;
-            if (editData.picture) {
                 const formData = new FormData();
                 formData.append("files", editData.picture);
                 const uploadResponse = await axios.post("http://localhost:1337/api/upload", formData, {
@@ -55,7 +51,6 @@ export default function Profile() {
                     },
                 });
                 pictureId = uploadResponse.data[0]?.id;
-            }
             const response = await axios.put(
                 `http://localhost:1337/api/users/${profile.id}`,
                 {
@@ -95,7 +90,7 @@ export default function Profile() {
                 </div>
             ) : (
                 <main className="flex flex-col justify-center items-center h-screen container mx-auto p-4 ">
-                <div className="bg-white rounded-lg p-6 shadow-lg border-2 w-full max-w-md flex flex-col hover:scale-105 transition-transform duration-300">
+                <div className="bg-white rounded-lg p-6 shadow-lg border-2 w-full max-w-md flex flex-col hover:scale-105 transition-transform duration-300 md:ml-64">
                 
                     <dialog id="editProfileModal" className="modal">
                         <div className="modal-box p-8">
@@ -141,34 +136,43 @@ export default function Profile() {
                         />
                       </div>
                       <div>
-                          <div className="w-full flex flex-col gap-4">
-                          <ProfileItem label="ชื่อผู้ใช้" value={`${profile?.first_name} ${profile?.last_name}`} />
-                          <ProfileItem label="ตำแหน่ง" value={profile?.role?.name} />
-                              <ProfileItem label="อีเมล" value={profile?.email} />
-                              <ProfileItem label="เบอร์โทร" value={profile?.phoneNumber} />
-                          </div>
+                        <div className="grid gap-2">
+                            <div className="flex justify-center items-center">
+                                <div className="text-gray-500 font-semibold w-20">ชื่อ</div>
+                                <div className="flex-1 text-gray-700 font-medium bg-gray-100 py-2 px-4 rounded-lg shadow-sm border-4">
+                                    {profile?.first_name} {profile?.last_name}
+                                </div>
+                            </div>
+                            <div className="flex justify-center items-center">
+                                <div className="text-gray-500 font-semibold w-20">ตำแหน่ง</div>
+                                <div className="flex-1 text-gray-700 font-medium bg-gray-100 py-2 px-4 rounded-lg shadow-sm border-4">
+                                    {profile?.role?.name} 
+                                </div>
+                            </div>
+                            <div className="flex justfiy-center items-center">
+                                <div className="text-gray-500 font-semibold w-20">เบอร์โทร</div>
+                                <div className="flex-1 flex text-gray-700 font-medium bg-gray-100 py-2 px-4 rounded-lg shadow-sm border-4">
+                                    {profile?.phoneNumber}   
+                                </div>
+                            </div>
+                            <div className="flex justfiy-center items-center">
+                                <div className="text-gray-500 font-semibold w-20">email</div>
+                                <div className="flex-1 text-gray-700 font-medium bg-gray-100 py-2 px-4 rounded-lg shadow-sm border-4">
+                                    {profile?.email} 
+                                </div>
+                            </div>
+                        </div>
                       </div>
                     </div>
 
                 </div>
-                <div className="rounded-lg shadow-lg w-full max-w-md flex flex-col items-center mb-16">
+                <div className="rounded-lg shadow-lg w-full max-w-md flex flex-col items-center mb-16 md:ml-64">
                   <button onClick={Logout} className="mt-6 w-full bg-red-500 rounded-md text-white font-bold py-2 px-4 text-xl hover:bg-red-400 transition-shadow duration-200 shadow-md hover:shadow-lg">
                       ออกจากระบบ
                   </button>
                 </div>
             </main>
         )}
-        </div>
-    );
-}
-
-function ProfileItem({ label, value }: { label: string; value: string | undefined }) {
-    return (
-        <div className="flex items-center gap-2">
-            <span className="text-gray-500 font-semibold w-24">{label}:</span>
-            <span className="flex-1 text-gray-700 font-medium bg-gray-100 py-2 px-4 rounded-lg shadow-sm">
-                {value || "N/A"}
-            </span>
         </div>
     );
 }
