@@ -66,10 +66,8 @@ const Map = () => {
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.error(error.message);
-        alert(`Error loading region data: ${error.message}`);
       } else {
         console.error("An unknown error occurred");
-        alert("Error loading region data: An unknown error occurred");
       }
     }
   }, []);
@@ -98,10 +96,8 @@ const Map = () => {
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.error(error.message);
-        alert(`Error loading province data: ${error.message}`);
       } else {
         console.error("An unknown error occurred");
-        alert("Error loading province data: An unknown error occurred");
       }
       return [];
     }
@@ -131,10 +127,8 @@ const Map = () => {
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.error(error.message);
-        alert(`Error loading District data: ${error.message}`);
       } else {
         console.error("An unknown error occurred");
-        alert("Error loading District data: An unknown error occurred");
       }
       return [];
     }
@@ -163,10 +157,8 @@ const Map = () => {
       } catch (error: unknown) {
         if (error instanceof Error) {
           console.error(error.message);
-          alert(`Error loading SubDistrict data: ${error.message}`);
         } else {
           console.error("An unknown error occurred");
-          alert("Error loading SubDistrict data: An unknown error occurred");
         }
         return [];
       }
@@ -179,7 +171,7 @@ const Map = () => {
     yellowCount: number;
     redCount: number;
   }) => {
-    let fillColor = "gray";
+    let fillColor;
 
     if (
       counts.greenCount > counts.yellowCount &&
@@ -213,15 +205,23 @@ const Map = () => {
       let layer: string;
       if (currentLayer === "provinces" || currentLayer === "region") {
         layer = "provinces";
-      } else if (currentLayer === "districts" && selectedProvince?.name) {
+      } else if (
+        currentLayer === "districts" &&
+        selectedProvince?.name &&
+        selectedProvince.id
+      ) {
         layer = "districts";
-      } else if (currentLayer === "subdistricts" && selectedDistrict?.name) {
+      } else if (
+        currentLayer === "subdistricts" &&
+        selectedDistrict?.name &&
+        selectedDistrict.id
+      ) {
         layer = "subdistricts";
       } else {
         return;
       }
 
-      const response = await fetch(`http://localhost:3000/${layer}.geojson`);
+      const response = await fetch(`${conf.apiformap}${layer}.geojson`);
       if (!response.ok) {
         throw new Error(`Failed to load ${layer}.geojson`);
       }
@@ -387,10 +387,8 @@ const Map = () => {
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.error(error.message);
-        alert(`Error loading data: ${error.message}`);
       } else {
         console.error("An unknown error occurred");
-        alert("Error loading data: An unknown error occurred");
       }
     }
   }, [

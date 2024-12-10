@@ -19,6 +19,7 @@ const conf = {
   teamEndpoint: "/teams?populate=*&sort[0]=createdAt:desc",
   apiAiforthai: "https://api.aiforthai.in.th/ocr-id-front-iapp",
   apiKeyforAiforthai: "YH1mYYlQFqKa1VcAUEB0zAxTDhXDk98A",
+  apiformap: "http://localhost:3000/",
 };
 
 export default conf;
